@@ -29,14 +29,15 @@
     border-radius: 0;
   }
 
-  .input_wrapper {
+  /* .input_wrapper {
     width: 100%;
     background-color: #fff;
     border-radius: 31px;
     position: relative;
     z-index: 1;
     outline: none;
-  }
+    margin: 5px;
+  } */
   
   .input {
     font-family: Oswald-Medium;
@@ -46,9 +47,17 @@
     position: relative;
     display: block;
     width: 100%;
+    box-sizing: border-box;
     height: 62px;
     background: #fff;
     border-radius: 31px;
     padding: 0 35px;
-    
+    border-color: seashell;
+    margin: 10px;
+  }
+
+  .button {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
   }

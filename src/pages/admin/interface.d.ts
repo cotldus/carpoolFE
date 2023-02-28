@@ -1,0 +1,1 @@
+export type CarPoolInterval = 'passenger' | 'driver' | 'admin';
