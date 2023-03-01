@@ -1,52 +1,108 @@
 import { useFormik } from "formik";
-import style from "./login.module.css";
-import { Button } from "@mui/material";
 import "../../styles/globals.css";
+import { useRouter } from "next/router";
+import axios from "axios";
+import Image from "next/image";
+import Layout from "@/components/Layout";
+import { ReactElement } from "react";
 
-export default function Login() {
+function Login() {
+  const router = useRouter();
+  const config = {
+    headers: {
+      "content-type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+  };
+  const login = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
+    await axios
+      .post(
+        "/auth",
+        {
+          email,
+          password,
+        },
+        config
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      login(values);
+      // alert(JSON.stringify(values, null, 2));
+      router.push("/admin");
     },
   });
 
   return (
-    <div className={style.login}>
-      <div className="rounded-lg shadow-sm divide-y divide-zinc-600 bg-zinc-400 w-1/4 h-80">
-        <form onSubmit={formik.handleSubmit} className="md:align-center">
-          <div className="relative self-center md:align-center block p-10">
-            <span className={style.login_title}>Login</span>
-            <div className="p-2">
-              <input
-                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Email"
-                onChange={formik.handleChange}
-                value={formik.values.email}
-              ></input>
-            </div>
-            <div className="p-2">
-              <input
-                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                type="password"
-                name="password"
-                placeholder="Password"
-              ></input>
-            </div>
-            <div className={style.button}>
-              <Button variant="outlined" type="submit">
-                Submit
-              </Button>
+    <form onSubmit={formik.handleSubmit}>
+      <section className="flex justify-center items-center h-screen bg-gray-800">
+        <div className="max-w-md w-full bg-gray-900 rounded p-6 space-y-4">
+          <div className="flex justify-center items-center">
+            <Image
+              src="/cab.svg"
+              alt="cab"
+              width={50}
+              height={50}
+              className=""
+            />
+          </div>
+          <div className="mb-4">
+            <p className="text-gray-400">Sign In</p>
+            <h2 className="text-xl font-bold text-white">Carpool Hero</h2>
+          </div>
+          <div>
+            <input
+              className="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Email"
+              onChange={formik.handleChange}
+              value={formik.values.email}
+            />
+          </div>
+          <div>
+            <input
+              className="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600"
+              type="password"
+              name="password"
+              placeholder="Password"
+            />
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="w-full py-4 bg-blue-600 hover:bg-blue-700 rounded text-sm font-bold text-gray-50 transition duration-200"
+            >
+              Sign In
+            </button>
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <a className="text-sm text-blue-600 hover:underline" href="#">
+                Forgot password?
+              </a>
             </div>
           </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      </section>
+    </form>
   );
 }
+export default Login;
