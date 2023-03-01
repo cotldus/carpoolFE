@@ -62,9 +62,16 @@ type Row = {
   pax: number;
 };
 
-const Row = ({ row }: { row: Row }) => {
+const Row = ({ row, saveSuccess, setSaveSuccess }: { row: Row; saveSuccess: boolean, setSaveSuccess: (what: boolean)=> void }) => {
   const [editMode, setEditMode] = useState(false);
-  if (editMode) return <EditLine setEditMode={setEditMode} id={row.id} />;
+  if (editMode)
+    return (
+      <EditLine
+        setEditMode={setEditMode}
+        id={row.id}
+        saveSuccess={saveSuccess}
+      />
+    );
   return (
     <StyledTableRow>
       <StyledTableCell component="th" scope="row">
@@ -73,7 +80,7 @@ const Row = ({ row }: { row: Row }) => {
       <StyledTableCell align="right">{row.dateTime}</StyledTableCell>
       <StyledTableCell align="right">{row.departure}</StyledTableCell>
       <StyledTableCell align="right">{row.pax}</StyledTableCell>
-      <StyledTableCell align="right" onClick={() => setEditMode(true)}>
+      <StyledTableCell align="right" onClick={() => {setSaveSuccess(false);setEditMode(true)}}>
         Edit/Duplicate
       </StyledTableCell>
     </StyledTableRow>
@@ -81,20 +88,28 @@ const Row = ({ row }: { row: Row }) => {
 };
 
 const EditLine = ({
+  saveSuccess,
   setEditMode,
   id,
 }: {
+  saveSuccess: boolean;
   setEditMode: Dispatch<SetStateAction<boolean>>;
   id: string;
 }) => {
-    const value = {setEditMode, id}
+  saveSuccess && setEditMode(false); // TODO: OPTIMISE THIS PLEASE
   return (
     <StyledTableRow>
       <StyledTableCell component="th" scope="row">
-      <TextField name="id" variant="outlined" size="small" value={id} read-only/>
+        <TextField
+          name="id"
+          variant="outlined"
+          size="small"
+          value={id}
+          read-only
+        />
       </StyledTableCell>
       <StyledTableCell align="right">
-        <TextField name="dateTime" variant="outlined" size="small"/>
+        <TextField name="dateTime" variant="outlined" size="small" />
       </StyledTableCell>
       <StyledTableCell align="right">
         <TextField name="departure" variant="outlined" size="small" />
@@ -103,10 +118,7 @@ const EditLine = ({
         <TextField name="pax" variant="outlined" size="small" />
       </StyledTableCell>
       <StyledTableCell align="right">
-        <Button type="submit" variant="outlined" value={id} onClick={(e)=> {
-            e.preventDefault();
-            setEditMode(false)
-        }}>
+        <Button type="submit" variant="outlined">
           Save
         </Button>
       </StyledTableCell>
@@ -114,22 +126,30 @@ const EditLine = ({
   );
 };
 
-const handleSubmit = (e: any) => {
-  // Prevent the browser from reloading the page
-  e.preventDefault();
-
-  // Read the form data
-  const form = e.target;
-  const formData = new FormData(form);
-
-  const formJson = Object.fromEntries(formData.entries());
-  console.log(formJson)
-  axios.post("/save", {
-    ...formJson
-  }, config).catch((e)=> console.log("error"));
-};
-
 const AdminTable = () => {
+  const [saveSuccess, setSaveSuccess] = useState(false); // TODO: Optimise this with redux useSelector
+
+  const handleSubmit = (e: any) => {
+    // Prevent the browser from reloading the page
+    e.preventDefault();
+
+    // Read the form data
+    const form = e.target;
+    const formData = new FormData(form);
+
+    const formJson = Object.fromEntries(formData.entries());
+    console.log(formJson);
+    axios
+      .post(
+        "/save",
+        {
+          ...formJson,
+        },
+        config
+      )
+      .catch((e) => setSaveSuccess(true));
+  };
+
   return (
     <TableContainer component={Paper}>
       <form onSubmit={handleSubmit} method="post" action="#">
@@ -145,7 +165,7 @@ const AdminTable = () => {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <Row row={row} key={row.id} />
+              <Row row={row} key={row.id} saveSuccess={saveSuccess} setSaveSuccess={setSaveSuccess}/>
             ))}
           </TableBody>
         </Table>
@@ -155,3 +175,4 @@ const AdminTable = () => {
 };
 
 export default AdminTable;
+
