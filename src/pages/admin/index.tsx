@@ -8,7 +8,7 @@ import Layout from "../../components/Layout";
 import React from "react";
 import Select from "react-select";
 import AdminTable from "@/components/AdminTable";
-import CarPlateSelector from "@/components/Creatable";
+import CarPlateSelector from "@/components/CarPlateSelector";
 
 function Admin() {
   const [carPlate, setCarPlate] = useState({ value: "", label: "" });
