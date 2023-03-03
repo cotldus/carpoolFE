@@ -3,8 +3,7 @@ import "../../styles/globals.css";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
-import Layout from "@/components/Layout";
-import { ReactElement } from "react";
+import { ROUTES } from "@/constants";
 
 function Login() {
   const router = useRouter();
@@ -45,7 +44,7 @@ function Login() {
     onSubmit: (values) => {
       login(values);
       // alert(JSON.stringify(values, null, 2));
-      router.push("/admin");
+      router.push(ROUTES.ADMIN);
     },
   });
 

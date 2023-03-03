@@ -8,6 +8,7 @@ import Layout from "../../components/Layout";
 import React from "react";
 import Select from "react-select";
 import AdminTable from "@/components/AdminTable";
+import CarPlateSelector from "@/components/Creatable";
 
 function Admin() {
   const [carPlate, setCarPlate] = useState({ value: "", label: "" });
@@ -124,13 +125,7 @@ function Admin() {
                     >
                       Car Plate Assignment:
                     </label>
-                    <Select
-                      value={carPlate}
-                      onChange={() => undefined}
-                      options={CarPlateList}
-                      inputValue={""}
-                      className="relative !z-10"
-                    />
+                    <CarPlateSelector />
                   </div>
                   <div>
                     <label
