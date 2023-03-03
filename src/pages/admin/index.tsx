@@ -1,5 +1,4 @@
 import { ReactElement, useState } from "react";
-import { CarPoolInterval } from "./interface.d.ts";
 import "../../styles/globals.css";
 import { Button } from "@mui/material";
 import DatePickers from "@/utils/datepicker";
