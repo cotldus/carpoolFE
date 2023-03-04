@@ -13,6 +13,7 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Button from "@mui/material/Button";
+import { AutoCompleteField } from "@/utils/AutoCompleteField";
 
 function createData(
   car: string,
@@ -58,14 +59,38 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell align="right">{row.dropOff.join(", ")}</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Placeholder
-              </Typography>
-              Placeholder
-            </Box>
+          <Box sx={{ margin: 1 }}>
+          <Table size="small" aria-label="purchases">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Pickup Location</TableCell>
+                  <TableCell component="th" scope="row">Drop-off Location</TableCell>
+                  <TableCell align="right">Pax</TableCell>
+                  <TableCell align="right">Driver</TableCell>
+                  <TableCell align="right">Driver</TableCell>
+                  <TableCell align="right">Driver</TableCell>
+                  <TableCell align="right">Driver</TableCell>
+                </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableCell sx={{ width: 300 }}>
+                    <AutoCompleteField />
+                  </TableCell>
+                  <TableCell sx={{ width: 300 }}>
+                    <AutoCompleteField />
+                  </TableCell>
+                  <TableCell><input
+                      type="text"
+                      id="passenger_pax"
+                      className="w-full text-right"
+                      placeholder="0"
+                      required
+                    /></TableCell>
+                </TableBody>
+              </Table>
+              </Box>
           </Collapse>
         </TableCell>
       </TableRow>
