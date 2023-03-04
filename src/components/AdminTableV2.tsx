@@ -12,7 +12,6 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Button from "@mui/material/Button";
 import { AutoCompleteField } from "@/utils/AutoCompleteField";
 
 function createData(
@@ -52,27 +51,45 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell component="th" scope="row">
           {row.car}
         </TableCell>
-        <TableCell align="right">{row.date}</TableCell>
+        <TableCell align="right">
+          {row.date}, {row.time}
+        </TableCell>
         <TableCell align="right">{row.time}</TableCell>
         <TableCell align="right">{row.price}</TableCell>
-        <TableCell align="right">{row.pickUp.join(", ")}</TableCell>
-        <TableCell align="right">{row.dropOff.join(", ")}</TableCell>
+        <TableCell align="right">
+          {row.pickUp.map((item) => (
+            <>
+              {item}
+              <br />
+            </>
+          ))}
+        </TableCell>
+        <TableCell align="right">
+          {row.dropOff.map((item) => (
+            <>
+              {item}
+              <br />
+            </>
+          ))}
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-          <Box sx={{ margin: 1 }}>
-          <Table size="small" aria-label="purchases">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Pickup Location</TableCell>
-                  <TableCell component="th" scope="row">Drop-off Location</TableCell>
-                  <TableCell align="right">Pax</TableCell>
-                  <TableCell align="right">Driver</TableCell>
-                  <TableCell align="right">Driver</TableCell>
-                  <TableCell align="right">Driver</TableCell>
-                  <TableCell align="right">Driver</TableCell>
-                </TableRow>
+            <Box sx={{ margin: 1 }}>
+              <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Pickup Location</TableCell>
+                    <TableCell component="th" scope="row">
+                      Drop-off Location
+                    </TableCell>
+                    <TableCell align="right">Pax</TableCell>
+                    <TableCell align="right">Driver</TableCell>
+                    <TableCell align="right">Driver</TableCell>
+                    <TableCell align="right">Driver</TableCell>
+                    <TableCell align="right">Driver</TableCell>
+                  </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableCell sx={{ width: 300 }}>
@@ -81,16 +98,18 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                   <TableCell sx={{ width: 300 }}>
                     <AutoCompleteField />
                   </TableCell>
-                  <TableCell><input
+                  <TableCell>
+                    <input
                       type="text"
                       id="passenger_pax"
                       className="w-full text-right"
                       placeholder="0"
                       required
-                    /></TableCell>
+                    />
+                  </TableCell>
                 </TableBody>
               </Table>
-              </Box>
+            </Box>
           </Collapse>
         </TableCell>
       </TableRow>
@@ -104,8 +123,8 @@ const rows = [
     "1 June",
     "1600",
     24,
-    ["Tmn Megah De Taste", "BT36 KFC"],
-    ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"]
+    ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"],
+    ["Tmn Megah De Taste", "BT36 KFC"]
   ),
   createData(
     "DEF456",
@@ -145,8 +164,11 @@ export default function CollapsibleTable() {
   const headerData = ["Car", "Date", "Time", "Price", "Pick up", "Drop off"];
   return (
     <form>
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
+      <TableContainer
+        component={Paper}
+        sx={{ width: "90vw", overflow: "auto", maxWidth: "max-content" }}
+      >
+        <Table aria-label="collapsible table" sx={{ width: "max-content" }}>
           <TableHead>
             <TableRow>
               <TableCell />
@@ -173,30 +195,3 @@ export default function CollapsibleTable() {
     </form>
   );
 }
-
-// {
-//     "date": "26/02/23",
-//     "time": 1900,
-//     "price": 16,
-//     "pickup": [
-//         "Tmn Megah De Taste",
-//         "BT36 KFC"
-//     ],
-//     "dropoff": [
-//         "JE - Jurong East",
-//         "YS - Yishun",
-//         "PYLB - Paya Lebar"
-//     ]
-// }
-
-// The pickup and dropoff will be replaced with ID.
-// Frontend can create an ENUM for now.
-
-// Drop off
-// 1. Tmn Megah De Taste
-// 2. BT36 KFC
-
-// Pick up
-// 1. Jurong East
-// 2. Yishun
-// 3. Paya Lebar
