@@ -10,11 +10,11 @@ enum NAVIGATE_TO {
 }
 
 export default function Navbar() {
-  const [carPoolInterval, setCarPoolInterval] = useState<CarPoolInterval>(
-    NAVIGATE_TO.ADMIN
-  );
-
   const router = useRouter();
+  const initPage: string = Object.keys(ROUTES)[Object.values(ROUTES).indexOf(router.pathname)];
+  const [carPoolInterval, setCarPoolInterval] = useState<CarPoolInterval>(
+    NAVIGATE_TO[initPage]
+  );
   return (
     <div className="sm:flex sm:flex-col sm:align-center">
       <div className="relative self-center mt-6 bg-zinc-900 rounded-lg p-0.5 flex sm:mt-8 border border-zinc-800">
