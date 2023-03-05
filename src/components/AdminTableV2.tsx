@@ -13,22 +13,22 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { AutoCompleteField } from "@/utils/AutoCompleteField";
+import { Button } from "@mui/material";
+import { driverList } from "@/pages/admin";
 
 function createData(
   car: string,
   date: string,
   time: string,
-  price: number,
-  pickUp: string[],
-  dropOff: string[]
+  pax: number,
+  driver: string
 ) {
   return {
     car,
     date,
     time,
-    price,
-    pickUp,
-    dropOff,
+    pax,
+    driver,
   };
 }
 
@@ -51,26 +51,16 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell component="th" scope="row">
           {row.car}
         </TableCell>
-        <TableCell align="right">
-          {row.date}, {row.time}
-        </TableCell>
+        <TableCell align="right">{row.date}</TableCell>
         <TableCell align="right">{row.time}</TableCell>
-        <TableCell align="right">{row.price}</TableCell>
+        <TableCell align="right">{row.pax}</TableCell>
+        <TableCell align="right">{row.driver}</TableCell>
         <TableCell align="right">
-          {row.pickUp.map((item) => (
-            <>
-              {item}
-              <br />
-            </>
-          ))}
-        </TableCell>
-        <TableCell align="right">
-          {row.dropOff.map((item) => (
-            <>
-              {item}
-              <br />
-            </>
-          ))}
+          <Button
+            onClick={() => console.log(`Send whatsapp message for ${row.car}`)}
+          >
+            Notify
+          </Button>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -118,50 +108,15 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 }
 
 const rows = [
-  createData(
-    "ABC123",
-    "1 June",
-    "1600",
-    24,
-    ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"],
-    ["Tmn Megah De Taste", "BT36 KFC"]
-  ),
-  createData(
-    "DEF456",
-    "2 June",
-    "1600",
-    37,
-    ["Tmn Megah De Taste", "BT36 KFC"],
-    ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"]
-  ),
-  createData(
-    "GHI789",
-    "3 June",
-    "1600",
-    24,
-    ["Tmn Megah De Taste", "BT36 KFC"],
-    ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"]
-  ),
-  createData(
-    "JKL123",
-    "4 June",
-    "1600",
-    67,
-    ["Tmn Megah De Taste", "BT36 KFC"],
-    ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"]
-  ),
-  createData(
-    "MNO456",
-    "5 June",
-    "1600",
-    49,
-    ["Tmn Megah De Taste", "BT36 KFC"],
-    ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"]
-  ),
+  createData("ABC123", "1 June, Monday", "1600", 24, driverList[0].label),
+  createData("DEF456", "2 June, Tuesday", "1600", 37, driverList[1].label),
+  createData("GHI789", "3 June, Wednesday", "1600", 24, driverList[2].label),
+  createData("JKL123", "4 June, Thursday", "1600", 67, driverList[3].label),
+  createData("MNO456", "5 June, Friday", "1600", 49, driverList[4].label),
 ];
 
 export default function CollapsibleTable() {
-  const headerData = ["Car", "Date", "Time", "Price", "Pick up", "Drop off"];
+  const headerData = ["Car", "Date", "Time", "Pax", "Driver", "Notify"];
   return (
     <form>
       <TableContainer

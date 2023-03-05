@@ -10,6 +10,17 @@ import Select from "react-select";
 import AdminTable from "@/components/AdminTable";
 import CarPlateSelector from "@/components/CarPlateSelector";
 
+export const driverList = [
+  { label: "Ronald MacDonald" },
+  { label: "Anwar Ibrahim" },
+  { label: "Ivan The Terrible" },
+  { label: "Bobby MacFly" },
+  { label: "Lee Ji-eun" },
+].map((suggestion) => ({
+  value: suggestion.label,
+  label: suggestion.label,
+}));
+
 function Admin() {
   const [carPlate, setCarPlate] = useState({ value: "", label: "" });
   const [driver, setDriver] = useState({ value: "", label: "" });
@@ -19,16 +30,6 @@ function Admin() {
     { label: "FSH 1235 C" },
     { label: "JD 1345" },
     { label: "DJF 4565 C" },
-  ].map((suggestion) => ({
-    value: suggestion.label,
-    label: suggestion.label,
-  }));
-  const driverList = [
-    { label: "Ronald MacDonald" },
-    { label: "Anwar Ibrahim" },
-    { label: "Ivan The Terrible" },
-    { label: "Bobby MacFly" },
-    { label: "Lee Ji-eun" },
   ].map((suggestion) => ({
     value: suggestion.label,
     label: suggestion.label,
