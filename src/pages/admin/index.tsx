@@ -3,14 +3,11 @@ import "../../styles/globals.css";
 import { Button } from "@mui/material";
 import DatePickers from "@/utils/datepicker";
 import TimePickers from "@/utils/timepicker";
-import { InputActionMeta } from "react-select";
 import Layout from "../../components/Layout";
 import React from "react";
-import Select from "react-select";
 import AdminTable from "@/components/AdminTable";
-import CarPlateSelector from "@/components/CarPlateSelector";
 import MultiSelectCreatable from "@/utils/MultiSelectCreatable";
-import { mockLocationsList } from "../api/mockData/mockLocationsList";
+import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 
 export const driverList = [
   { label: "Ronald MacDonald" },
@@ -23,31 +20,8 @@ export const driverList = [
   label: suggestion.label,
 }));
 
-export const LocationSelector = () => {
-  return (
-    <MultiSelectCreatable
-      objectList={mockLocationsList}
-      sx={{
-        backgroundColor: "white",
-        borderRadius: "4px"
-      }}
-    />
-  );
-};
 
 function Admin() {
-  const [carPlate, setCarPlate] = useState({ value: "", label: "" });
-  const [driver, setDriver] = useState({ value: "", label: "" });
-  const CarPlateList = [
-    { label: "QAA 4567" },
-    { label: "GSF 1234 C" },
-    { label: "FSH 1235 C" },
-    { label: "JD 1345" },
-    { label: "DJF 4565 C" },
-  ].map((suggestion) => ({
-    value: suggestion.label,
-    label: suggestion.label,
-  }));
 
   return (
     <div>
@@ -73,14 +47,7 @@ function Admin() {
                     >
                       Pick-Up Location:
                     </label>
-                    {/* <input
-                      type="text"
-                      id="passenger_pax"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                      placeholder="0"
-                      required
-                    ></input> */}
-                    <LocationSelector />
+                    <AutoCompleteFieldInput/>
                   </div>
                   <div>
                     <label
@@ -97,7 +64,7 @@ function Admin() {
                       required
                     /> */}
 
-                    <LocationSelector />
+                    <AutoCompleteFieldInput />
                   </div>
                 </div>
                 <div className="sm:grid sm:grid-cols-2 sm:mx-0 xl:grid-cols-2 xl:mx-0 pt-4">

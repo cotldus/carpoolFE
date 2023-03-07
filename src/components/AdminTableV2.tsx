@@ -8,7 +8,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -51,8 +50,8 @@ function Row(props: { row: ReturnType<typeof createData>, assignment: journeyAss
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }} className="pt-1">
-            {assignment?.map((details) => (
-              <ExpandAdminTable assignmentDetails={details}/>
+            {assignment?.map((details, id) => (
+              <ExpandAdminTable key={id} assignmentDetails={details}/>
             ))}
             </Box>
           </Collapse>
