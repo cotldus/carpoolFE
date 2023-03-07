@@ -13,7 +13,7 @@ export default function Navbar() {
   const router = useRouter();
   const initPage: string = Object.entries(ROUTES).find(route => route[1] === router.pathname)?.at(1) || "";
   const [carPoolInterval, setCarPoolInterval] = useState<NAVIGATE_TO>(
-    NAVIGATE_TO[initPage]
+    NAVIGATE_TO[initPage as keyof typeof NAVIGATE_TO]
   );
   return (
     <div className="sm:flex sm:flex-col sm:align-center">
