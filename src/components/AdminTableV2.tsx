@@ -26,7 +26,7 @@ function Row(props: {
 
   return (
     <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+      <TableRow sx={{ "& > *": { borderBottom: "unset"} }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -75,7 +75,8 @@ function Row(props: {
         </TableCell> */}
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
+        <TableCell style={{ padding:0}} colSpan={5}>
+      <div className="bg-slate-100">
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }} className="pt-1">
               {assignment?.map((details, id) => (
@@ -83,6 +84,7 @@ function Row(props: {
               ))}
             </Box>
           </Collapse>
+        </div>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -111,7 +113,7 @@ export default function CollapsibleTable() {
       >
         <Table aria-label="collapsible table" sx={{ width: "max-content" }}>
           <TableHead sx={{ backgroundColor: "#111827" }}>
-            <TableRow sx={{ "& .MuiTableCell-root": { color: "white" } }}>
+            <TableRow sx={{ "& .MuiTableCell-root": { color: "white", fontWeight: 600} }}>
               <TableCell />
               {headerData.map((title) => (
                 <TableCell align="right" key={`${title}-title`}>
@@ -123,7 +125,7 @@ export default function CollapsibleTable() {
           <TableBody>
             {rows.map((row) => (
               <Row
-                key={row.journeyId}
+                key={`${row.journeyId}-journey`}
                 row={row}
                 assignment={row.journeyAssignment}
               />

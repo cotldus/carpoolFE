@@ -27,7 +27,7 @@ export const ExpandAdminTable = (props: {
   return (
     <Table size="small" aria-label="purchases">
       <TableHead>
-        <TableRow>
+        <TableRow sx={{"& th": {color: "#64748b"}}}>
           <TableCell align="right">Car Plate Assignment</TableCell>
           <TableCell component="th" scope="row" align="right">
             Driver Assignment
