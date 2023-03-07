@@ -22,7 +22,8 @@ export const ExpandAdminTable = (props: {
     dataLabelValueMapper(mockCarplateList)
   );
   const [groupList, setGroupList] = useState(passengerMapper(mockGroupList));
-  const [driverList, setDriverList] = useState(driverMapper(mockDriverList))
+  const [driverList, setDriverList] = useState(driverMapper(mockDriverList));
+  const [paxAssigned, setPaxAssigned] = useState(2);
 
   return (
     <Table size="small" aria-label="purchases">
@@ -44,17 +45,17 @@ export const ExpandAdminTable = (props: {
           />
         </TableCell>
         <TableCell sx={{ width: 300 }}>
-          <AutoCompleteFieldDropdown objectList={driverList} />
+          <AutoCompleteFieldDropdown objectList={driverList} existingValue={assignmentDetails.driver}/>
         </TableCell>
         <TableCell sx={{ width: 300 }}>
           <MultipleSelect optionsList={groupList.map((item) => item.label || "")} />
         </TableCell>
-        <TableCell>
+        <TableCell width="80px">
           <input
             type="text"
             id="passenger_pax"
             className="w-full text-right"
-            placeholder="3/10"
+            placeholder={`${paxAssigned}/70`}
             disabled
           />
         </TableCell>

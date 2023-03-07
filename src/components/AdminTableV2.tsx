@@ -16,6 +16,7 @@ import { ExpandAdminTable } from "./ExpandAdminTable";
 import { journeyAssignmentPayload } from "./interface";
 import { createData } from "./helper";
 import { mockJourneyList } from "@/pages/api/mockData/mockJourneyList";
+import { Queue } from "@mui/icons-material";
 
 function Row(props: {
   row: ReturnType<typeof createData>;
@@ -23,10 +24,21 @@ function Row(props: {
 }) {
   const { row, assignment } = props;
   const [open, setOpen] = React.useState(false);
+  const [journeyAssignment, setJourneyAssignment] =
+    React.useState<journeyAssignmentPayload[]>(assignment);
+  const addNewAssignmentRow = () => {
+    const newAssignment: journeyAssignmentPayload = {
+      driver: "",
+      car: "",
+      groupId: "",
+      groupPax: 0,
+    };
+    setJourneyAssignment((prev) => [...prev, newAssignment]);
+  };
 
   return (
     <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset"} }}>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -75,16 +87,30 @@ function Row(props: {
         </TableCell> */}
       </TableRow>
       <TableRow>
-        <TableCell style={{ padding:0}} colSpan={5}>
-      <div className="bg-slate-100">
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }} className="pt-1">
-              {assignment?.map((details, id) => (
-                <ExpandAdminTable key={id} assignmentDetails={details} />
-              ))}
-            </Box>
-          </Collapse>
-        </div>
+        <TableCell style={{ padding: 0 }} colSpan={5}>
+          <div className="bg-slate-100">
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1, marginTop: 0 }}>
+                <IconButton
+                  color="primary"
+                  aria-label="add assignment"
+                  size="small"
+                  sx={{
+                    marginLeft: "auto",
+                    display: "block",
+                    textSizeAdjust: "auto",
+                  }}
+                  onClick={addNewAssignmentRow}
+                >
+                  <Queue />
+                  Add
+                </IconButton>
+                {journeyAssignment?.map((details, id) => (
+                  <ExpandAdminTable key={id} assignmentDetails={details} />
+                ))}
+              </Box>
+            </Collapse>
+          </div>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -113,7 +139,11 @@ export default function CollapsibleTable() {
       >
         <Table aria-label="collapsible table" sx={{ width: "max-content" }}>
           <TableHead sx={{ backgroundColor: "#111827" }}>
-            <TableRow sx={{ "& .MuiTableCell-root": { color: "white", fontWeight: 600} }}>
+            <TableRow
+              sx={{
+                "& .MuiTableCell-root": { color: "white", fontWeight: 600 },
+              }}
+            >
               <TableCell />
               {headerData.map((title) => (
                 <TableCell align="right" key={`${title}-title`}>
