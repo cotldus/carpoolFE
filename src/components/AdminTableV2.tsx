@@ -17,8 +17,10 @@ import { journeyAssignmentPayload } from "./interface";
 import { createData } from "./helper";
 import { mockJourneyList } from "@/pages/api/mockData/mockJourneyList";
 
-
-function Row(props: { row: ReturnType<typeof createData>, assignment: journeyAssignmentPayload[] }) {
+function Row(props: {
+  row: ReturnType<typeof createData>;
+  assignment: journeyAssignmentPayload[];
+}) {
   const { row, assignment } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -36,8 +38,34 @@ function Row(props: { row: ReturnType<typeof createData>, assignment: journeyAss
         </TableCell>
         <TableCell align="right">{row.date}</TableCell>
         <TableCell align="right">{row.time}</TableCell>
-        <TableCell align="right">{row.pickup}</TableCell>
-        <TableCell align="right">{row.dropoff}</TableCell>
+        <TableCell align="right">
+          {row.pickup.reduce((locations, location, id) => {
+            return (
+              <>
+                {id > 0 && (
+                  <>
+                    {locations},<br></br>
+                  </>
+                )}
+                {location}
+              </>
+            );
+          }, <></>)}
+        </TableCell>
+        <TableCell align="right">
+          {row.dropoff.reduce((locations, location, id) => {
+            return (
+              <>
+                {id > 0 && (
+                  <>
+                    {locations},<br></br>
+                  </>
+                )}
+                {location}
+              </>
+            );
+          }, <></>)}
+        </TableCell>
         {/* <TableCell align="right">
           <Button
             onClick={() => alert(`Send whatsapp message for ${row.journeyId}`)}
@@ -50,9 +78,9 @@ function Row(props: { row: ReturnType<typeof createData>, assignment: journeyAss
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }} className="pt-1">
-            {assignment?.map((details, id) => (
-              <ExpandAdminTable key={id} assignmentDetails={details}/>
-            ))}
+              {assignment?.map((details, id) => (
+                <ExpandAdminTable key={id} assignmentDetails={details} />
+              ))}
             </Box>
           </Collapse>
         </TableCell>
@@ -61,7 +89,17 @@ function Row(props: { row: ReturnType<typeof createData>, assignment: journeyAss
   );
 }
 
-const rows = mockJourneyList.map(item => createData(item.journeyId, item.date, item.time, item.totalPax, item.pickup, item.dropoff, item.assignment));
+const rows = mockJourneyList.map((item) =>
+  createData(
+    item.journeyId,
+    item.date,
+    item.time,
+    item.totalPax,
+    item.pickup,
+    item.dropoff,
+    item.assignment
+  )
+);
 
 export default function CollapsibleTable() {
   const headerData = ["Date", "Time", "Pickup", "Dropoff"];
@@ -72,8 +110,8 @@ export default function CollapsibleTable() {
         sx={{ width: "90vw", overflow: "auto", maxWidth: "max-content" }}
       >
         <Table aria-label="collapsible table" sx={{ width: "max-content" }}>
-          <TableHead>
-            <TableRow>
+          <TableHead sx={{ backgroundColor: "#111827" }}>
+            <TableRow sx={{ "& .MuiTableCell-root": { color: "white" } }}>
               <TableCell />
               {headerData.map((title) => (
                 <TableCell align="right" key={`${title}-title`}>
@@ -84,7 +122,11 @@ export default function CollapsibleTable() {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <Row key={row.journeyId} row={row} assignment={row.journeyAssignment}/>
+              <Row
+                key={row.journeyId}
+                row={row}
+                assignment={row.journeyAssignment}
+              />
             ))}
           </TableBody>
         </Table>
