@@ -1,6 +1,7 @@
 import { mockCarplateList } from "@/pages/api/mockData/mockCarplateList";
 import { mockGroupList } from "@/pages/api/mockData/mockGroupList";
 import { AutoCompleteFieldDropdown } from "@/utils/AutoCompleteFieldDropdown";
+import MultipleSelect from "@/utils/MultiSelect";
 import {
   Table,
   TableHead,
@@ -35,13 +36,16 @@ export const ExpandAdminTable = (props: {
       </TableHead>
       <TableBody>
         <TableCell sx={{ width: 300 }}>
-          <AutoCompleteFieldDropdown objectList={carplateList} existingValue={assignmentDetails.car}/>
+          <AutoCompleteFieldDropdown
+            objectList={carplateList}
+            existingValue={assignmentDetails.car}
+          />
         </TableCell>
         <TableCell sx={{ width: 300 }}>
           <AutoCompleteFieldDropdown objectList={carplateList} />
         </TableCell>
         <TableCell sx={{ width: 300 }}>
-          <AutoCompleteFieldDropdown objectList={groupList} />
+          <MultipleSelect optionsList={groupList.map((item) => item.label)} />
         </TableCell>
         <TableCell>
           <input

@@ -9,6 +9,8 @@ import React from "react";
 import Select from "react-select";
 import AdminTable from "@/components/AdminTable";
 import CarPlateSelector from "@/components/CarPlateSelector";
+import MultiSelectCreatable from "@/utils/MultiSelectCreatable";
+import { mockLocationsList } from "../api/mockData/mockLocationsList";
 
 export const driverList = [
   { label: "Ronald MacDonald" },
@@ -20,6 +22,18 @@ export const driverList = [
   value: suggestion.label,
   label: suggestion.label,
 }));
+
+export const LocationSelector = () => {
+  return (
+    <MultiSelectCreatable
+      objectList={mockLocationsList}
+      sx={{
+        backgroundColor: "white",
+        borderRadius: "4px"
+      }}
+    />
+  );
+};
 
 function Admin() {
   const [carPlate, setCarPlate] = useState({ value: "", label: "" });
@@ -43,7 +57,7 @@ function Admin() {
             <div className="rounded-lg shadow-sm divide-y divide-zinc-600 bg-zinc-900 overflow-visible">
               <div className="p-6">
                 <h2 className="text-2xl leading-6 font-semibold text-white">
-                  Assigning slots
+                  Create new schedule
                 </h2>
                 <p className="mt-4 text-zinc-300 pb-10">
                   Description - At the front it has two bumpers and a modified
@@ -59,13 +73,14 @@ function Admin() {
                     >
                       Pick-Up Location:
                     </label>
-                    <input
+                    {/* <input
                       type="text"
                       id="passenger_pax"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                       placeholder="0"
                       required
-                    />
+                    ></input> */}
+                    <LocationSelector />
                   </div>
                   <div>
                     <label
@@ -74,13 +89,15 @@ function Admin() {
                     >
                       Drop-off location:
                     </label>
-                    <input
+                    {/* <input
                       type="text"
                       id="passenger_pax"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                       placeholder="0"
                       required
-                    />
+                    /> */}
+
+                    <LocationSelector />
                   </div>
                 </div>
                 <div className="sm:grid sm:grid-cols-2 sm:mx-0 xl:grid-cols-2 xl:mx-0 pt-4">
@@ -117,32 +134,6 @@ function Admin() {
                     placeholder="0"
                     required
                   />
-                </div>
-                <div className="sm:grid sm:grid-cols-2 sm:mx-0 xl:grid-cols-2 xl:mx-0 pt-4">
-                  <div className="pr-3">
-                    <label
-                      placeholder="date_departure"
-                      className="block mb-2 text-sm font-medium text-zinc-300 dark:text-white"
-                    >
-                      Car Plate Assignment:
-                    </label>
-                    <CarPlateSelector />
-                  </div>
-                  <div>
-                    <label
-                      placeholder="time_departure"
-                      className="block mb-2 text-sm font-medium text-zinc-300 dark:text-white"
-                    >
-                      Driver:
-                    </label>
-                    <Select
-                      value={driver}
-                      onChange={() => undefined}
-                      options={driverList}
-                      inputValue={""}
-                      className="relative z-10"
-                    />
-                  </div>
                 </div>
                 <Button
                   type="button"

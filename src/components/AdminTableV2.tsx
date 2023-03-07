@@ -37,16 +37,15 @@ function Row(props: { row: ReturnType<typeof createData>, assignment: journeyAss
         </TableCell>
         <TableCell align="right">{row.date}</TableCell>
         <TableCell align="right">{row.time}</TableCell>
-        <TableCell align="right">{row.pax}</TableCell>
         <TableCell align="right">{row.pickup}</TableCell>
         <TableCell align="right">{row.dropoff}</TableCell>
-        <TableCell align="right">
+        {/* <TableCell align="right">
           <Button
             onClick={() => alert(`Send whatsapp message for ${row.journeyId}`)}
           >
             Notify
           </Button>
-        </TableCell>
+        </TableCell> */}
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
@@ -63,18 +62,10 @@ function Row(props: { row: ReturnType<typeof createData>, assignment: journeyAss
   );
 }
 
-// const rows = [
-//   createData("1 June, Monday", "1600", 24, driverList[0].label),
-//   createData("2 June, Tuesday", "1600", 37, driverList[1].label),
-//   createData("3 June, Wednesday", "1600", 24, driverList[2].label),
-//   createData("4 June, Thursday", "1600", 67, driverList[3].label),
-//   createData("5 June, Friday", "1600", 49, driverList[4].label),
-// ];
-
 const rows = mockJourneyList.map(item => createData(item.journeyId, item.date, item.time, item.totalPax, item.pickup, item.dropoff, item.assignment));
 
 export default function CollapsibleTable() {
-  const headerData = ["Date", "Time", "Pax", "Pickup", "Dropoff", "Notify"];
+  const headerData = ["Date", "Time", "Pickup", "Dropoff"];
   return (
     <form>
       <TableContainer

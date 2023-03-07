@@ -12,10 +12,20 @@ type Options = {
 
 const filter = createFilterOptions<Options>();
 
-export default function MultiSelectCreatable() {
+export default function MultiSelectCreatable({
+  objectList,
+  ...props
+}: {
+  objectList: string[];
+  [x:string]: any;
+}) {
   const [selected, setSelected] = useState<Options[]>([]);
   const [options, setOptions] = useState<Options[]>([]);
 
+  const data = objectList.map((obj, id) => ({
+    id,
+    name: obj,
+  }));
   useEffect(() => {
     setOptions(data);
   }, []);
@@ -88,7 +98,8 @@ export default function MultiSelectCreatable() {
         <li {...props}>{option.create ? option.label : option.name}</li>
       )}
       freeSolo
-      renderInput={(params) => <TextField {...params} label="Tags" />}
+      renderInput={(params) => <TextField {...params} label="" />}
+      {...props}
     />
   );
 }
