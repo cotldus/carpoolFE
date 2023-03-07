@@ -1,9 +1,9 @@
+import { labelObject } from "@/components/interface";
 import { Autocomplete, createFilterOptions, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 
-type labelObject = { label: string; value: string };
 const filter = createFilterOptions<any>();
-export const AutoCompleteField = () => {
+export const AutoCompleteFieldInput = () => {
   const [value, setValue] = useState<labelObject[]>([]);
   const [mockPickUpLocation, setMockPickUpLocation] = useState<labelObject[]>([
     { label: "Place 01", value: "Place 01" },

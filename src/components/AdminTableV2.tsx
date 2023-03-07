@@ -12,28 +12,15 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { AutoCompleteField } from "@/utils/AutoCompleteField";
 import { Button } from "@mui/material";
-import { driverList } from "@/pages/admin";
+import { ExpandAdminTable } from "./ExpandAdminTable";
+import { journeyAssignmentPayload } from "./interface";
+import { createData } from "./helper";
+import { mockJourneyList } from "@/pages/api/mockData/mockJourneyList";
 
-function createData(
-  car: string,
-  date: string,
-  time: string,
-  pax: number,
-  driver: string
-) {
-  return {
-    car,
-    date,
-    time,
-    pax,
-    driver,
-  };
-}
 
-function Row(props: { row: ReturnType<typeof createData> }) {
-  const { row } = props;
+function Row(props: { row: ReturnType<typeof createData>, assignment: journeyAssignmentPayload[] }) {
+  const { row, assignment } = props;
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -48,16 +35,14 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
-          {row.car}
-        </TableCell>
         <TableCell align="right">{row.date}</TableCell>
         <TableCell align="right">{row.time}</TableCell>
         <TableCell align="right">{row.pax}</TableCell>
-        <TableCell align="right">{row.driver}</TableCell>
+        <TableCell align="right">{row.pickup}</TableCell>
+        <TableCell align="right">{row.dropoff}</TableCell>
         <TableCell align="right">
           <Button
-            onClick={() => console.log(`Send whatsapp message for ${row.car}`)}
+            onClick={() => alert(`Send whatsapp message for ${row.journeyId}`)}
           >
             Notify
           </Button>
@@ -66,39 +51,10 @@ function Row(props: { row: ReturnType<typeof createData> }) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Pickup Location</TableCell>
-                    <TableCell component="th" scope="row">
-                      Drop-off Location
-                    </TableCell>
-                    <TableCell align="right">Pax</TableCell>
-                    <TableCell align="right">Driver</TableCell>
-                    <TableCell align="right">Driver</TableCell>
-                    <TableCell align="right">Driver</TableCell>
-                    <TableCell align="right">Driver</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableCell sx={{ width: 300 }}>
-                    <AutoCompleteField />
-                  </TableCell>
-                  <TableCell sx={{ width: 300 }}>
-                    <AutoCompleteField />
-                  </TableCell>
-                  <TableCell>
-                    <input
-                      type="text"
-                      id="passenger_pax"
-                      className="w-full text-right"
-                      placeholder="0"
-                      required
-                    />
-                  </TableCell>
-                </TableBody>
-              </Table>
+            <Box sx={{ margin: 1 }} className="pt-1">
+            {assignment?.map((details) => (
+              <ExpandAdminTable assignmentDetails={details}/>
+            ))}
             </Box>
           </Collapse>
         </TableCell>
@@ -107,16 +63,18 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   );
 }
 
-const rows = [
-  createData("ABC123", "1 June, Monday", "1600", 24, driverList[0].label),
-  createData("DEF456", "2 June, Tuesday", "1600", 37, driverList[1].label),
-  createData("GHI789", "3 June, Wednesday", "1600", 24, driverList[2].label),
-  createData("JKL123", "4 June, Thursday", "1600", 67, driverList[3].label),
-  createData("MNO456", "5 June, Friday", "1600", 49, driverList[4].label),
-];
+// const rows = [
+//   createData("1 June, Monday", "1600", 24, driverList[0].label),
+//   createData("2 June, Tuesday", "1600", 37, driverList[1].label),
+//   createData("3 June, Wednesday", "1600", 24, driverList[2].label),
+//   createData("4 June, Thursday", "1600", 67, driverList[3].label),
+//   createData("5 June, Friday", "1600", 49, driverList[4].label),
+// ];
+
+const rows = mockJourneyList.map(item => createData(item.journeyId, item.date, item.time, item.totalPax, item.pickup, item.dropoff, item.assignment));
 
 export default function CollapsibleTable() {
-  const headerData = ["Car", "Date", "Time", "Pax", "Driver", "Notify"];
+  const headerData = ["Date", "Time", "Pax", "Pickup", "Dropoff", "Notify"];
   return (
     <form>
       <TableContainer
@@ -136,7 +94,7 @@ export default function CollapsibleTable() {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <Row key={row.car} row={row} />
+              <Row key={row.journeyId} row={row} assignment={row.journeyAssignment}/>
             ))}
           </TableBody>
         </Table>
