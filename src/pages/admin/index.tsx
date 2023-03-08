@@ -40,7 +40,7 @@ function Admin() {
                   cylinder heads and the{" "}
                 </p>
                 <div className="sm:grid sm:grid-cols-2 sm:mx-0 xl:grid-cols-2 xl:mx-0 pt-4">
-                  <div className="pr-3">
+                  <div className="sm:pr-3">
                     <label
                       placeholder="date_departure"
                       className="block mb-2 text-sm font-medium text-zinc-300 dark:text-white"
@@ -68,7 +68,7 @@ function Admin() {
                   </div>
                 </div>
                 <div className="sm:grid sm:grid-cols-2 sm:mx-0 xl:grid-cols-2 xl:mx-0 pt-4">
-                  <div className="pr-3">
+                  <div className="sm:pr-3">
                     <label
                       placeholder="date_departure"
                       className="block mb-2 text-sm font-medium text-zinc-300 dark:text-white"

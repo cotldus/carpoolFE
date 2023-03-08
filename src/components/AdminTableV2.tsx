@@ -73,21 +73,21 @@ function Row(props: {
                     {locations},<br></br>
                   </>
                 )}
-                {location}
+                {location}{}
               </>
             );
           }, <></>)}
         </TableCell>
-        {/* <TableCell align="right">
+        <TableCell align="right">
           <Button
             onClick={() => alert(`Send whatsapp message for ${row.journeyId}`)}
           >
             Notify
           </Button>
-        </TableCell> */}
+        </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ padding: 0 }} colSpan={5}>
+        <TableCell style={{ padding: 0 }} colSpan={6}>
           <div className="bg-slate-100">
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1, marginTop: 0 }}>
@@ -130,7 +130,7 @@ const rows = mockJourneyList.map((item) =>
 );
 
 export default function CollapsibleTable() {
-  const headerData = ["Date", "Time", "Pickup", "Dropoff"];
+  const headerData = ["Date", "Time", "Pickup", "Dropoff", ""];
   return (
     <form>
       <TableContainer
