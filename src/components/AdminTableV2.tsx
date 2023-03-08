@@ -163,12 +163,6 @@ export default function CollapsibleTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <button
-        type="submit"
-        className="w-full py-4 bg-slate-800 hover:bg-slate-900 rounded text-sm font-bold text-gray-50 transition duration-200"
-      >
-        Save
-      </button>
     </form>
   );
 }

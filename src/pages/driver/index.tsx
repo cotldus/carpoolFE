@@ -1,13 +1,19 @@
 import AdminTableV2 from "@/components/AdminTableV2";
+import CreateCar from "@/components/CreateCar";
 import Layout from "@/components/Layout";
 import { ReactElement } from "react";
 
 function Driver() {
   return (
-    <div className="flex justify-center">
-      <div className="md:flex md:flex-col md:align-center">
+    <div className="flex-col">
+      <div className="flex justify-center">
         <div className="p-6">
           <AdminTableV2 />
+        </div>
+      </div>
+      <div className="flex justify-center">
+      <div className="p-0">
+          <CreateCar />
         </div>
       </div>
     </div>
