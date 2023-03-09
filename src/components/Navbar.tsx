@@ -2,6 +2,8 @@ import { CarPoolInterval } from "@/pages/admin/interface";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { ROUTES } from "@/constants";
+import en from "../locales/en-US"
+import cn from "../locales/zh-CN"
 
 enum NAVIGATE_TO {
   ADMIN = "admin",
@@ -11,6 +13,8 @@ enum NAVIGATE_TO {
 
 export default function Navbar() {
   const router = useRouter();
+  const {locale} = router;
+  const t = locale === 'en-US' ? en: cn;
   const initPage: string = Object.entries(ROUTES).find(route => route[1] === router.pathname)?.at(1) || "";
   const [carPoolInterval, setCarPoolInterval] = useState<NAVIGATE_TO>(
     NAVIGATE_TO[initPage as keyof typeof NAVIGATE_TO]
@@ -30,7 +34,7 @@ export default function Navbar() {
               : "ml-0.5 relative w-2/3 border border-transparent text-zinc-400"
           } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-grey-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
         >
-          Passenger
+          {t.passenger_title}
         </button>
         <button
           onClick={() => {
@@ -44,7 +48,7 @@ export default function Navbar() {
               : "ml-0.5 relative w-2/3 border border-transparent text-zinc-400"
           } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-grey-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
         >
-          Driver
+          {t.driver_title}
         </button>
         <button
           onClick={() => {
@@ -58,7 +62,7 @@ export default function Navbar() {
               : "ml-0.5 relative w-2/3 border border-transparent text-zinc-400"
           } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-grey-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
         >
-          Adminstrator
+          {t.admin_title}
         </button>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import { Toggles } from "./Toggles";
 
 export default function Layout({
   children,
@@ -8,6 +9,7 @@ export default function Layout({
   return (
     <>
       <Navbar />
+      <Toggles/>
       <main>{children}</main>
     </>
   );
