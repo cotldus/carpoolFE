@@ -1,6 +1,11 @@
 import { journeyAssignmentPayload, labelObject } from "./interface";
 
-export const dataLabelValueMapper = (data: any[]) => {
+export type Car = {
+  name: string;
+  pax: number
+}
+
+export const dataLabelValueMapper = (data: Car[]) => {
   const labelValueMapped: labelObject[] = data.map((item) => ({
     label: `#${item.name} - ${item.pax} pax`,
     value: item.name,

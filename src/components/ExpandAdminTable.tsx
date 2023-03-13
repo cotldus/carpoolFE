@@ -4,15 +4,12 @@ import { mockGroupList } from "@/pages/api/mockData/mockGroupList";
 import { AutoCompleteFieldDropdown } from "@/utils/AutoCompleteFieldDropdown";
 import MultipleSelect from "@/utils/MultiSelect";
 import {
-  Table,
-  TableHead,
-  TableBody,
-  TableCell,
-  TableRow,
+  Table, TableBody,
+  TableCell, TableHead, TableRow
 } from "@mui/material";
 import { useState } from "react";
 import { dataLabelValueMapper, driverMapper, passengerMapper } from "./helper";
-import { journeyAssignmentPayload, labelObject } from "./interface";
+import { journeyAssignmentPayload } from "./interface";
 
 export const ExpandAdminTable = (props: {
   assignmentDetails: journeyAssignmentPayload;
@@ -23,12 +20,19 @@ export const ExpandAdminTable = (props: {
   );
   const [groupList, setGroupList] = useState(passengerMapper(mockGroupList));
   const [driverList, setDriverList] = useState(driverMapper(mockDriverList));
-  const [paxAssigned, setPaxAssigned] = useState(2);
+  const [journey, setJourney] = useState({
+    car: assignmentDetails.car,
+    driver: assignmentDetails.driver,
+    groups: assignmentDetails.groups,
+    pax: assignmentDetails.groupPax,
+  });
+
+  console.log("groups", journey.groups);
 
   return (
     <Table size="small" aria-label="purchases">
       <TableHead>
-        <TableRow sx={{"& th": {color: "#64748b"}}}>
+        <TableRow sx={{ "& th": { color: "#64748b" } }}>
           <TableCell align="right">Car Plate Assignment</TableCell>
           <TableCell component="th" scope="row" align="right">
             Driver Assignment
@@ -41,21 +45,48 @@ export const ExpandAdminTable = (props: {
         <TableCell sx={{ width: 300 }}>
           <AutoCompleteFieldDropdown
             objectList={carplateList}
-            existingValue={assignmentDetails.car}
+            existingValue={assignmentDetails.car?.name}
+            setContext={(value) =>
+              setJourney({
+                ...journey,
+                car: mockCarplateList.find((car) => car.name === value.value),
+              })
+            }
           />
         </TableCell>
         <TableCell sx={{ width: 300 }}>
-          <AutoCompleteFieldDropdown objectList={driverList} existingValue={assignmentDetails.driver}/>
+          <AutoCompleteFieldDropdown
+            objectList={driverList}
+            existingValue={assignmentDetails.driver}
+          />
         </TableCell>
         <TableCell sx={{ width: 300 }}>
-          <MultipleSelect optionsList={groupList.map((item) => item.label || "")} />
+          <MultipleSelect
+            optionsList={groupList.map((item) => item.label || "")}
+            setContext={(value: string[]) =>
+              setJourney({
+                ...journey,
+                groups:
+                  value.map((value) =>
+                    mockGroupList.find(
+                      (group) => group.groupid === value.split(" - ")[0]
+                    )
+                  ) || [],
+              })
+            }
+          />
         </TableCell>
         <TableCell width="80px">
           <input
             type="text"
             id="passenger_pax"
             className="w-full text-right"
-            placeholder={`${paxAssigned}/70`}
+            placeholder={`${
+              journey.groups?.reduce(
+                (prev, curr) => prev + (curr?.pax || 0),
+                0
+              ) || 0
+            }/${journey.car?.pax || 0}`}
             disabled
           />
         </TableCell>

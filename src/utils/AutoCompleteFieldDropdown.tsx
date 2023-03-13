@@ -5,13 +5,14 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export const AutoCompleteFieldDropdown = (props: {
   objectList: labelObject[];
   existingValue?: string;
+  setContext?: (value: labelObject) => void;
 }) => {
-  const { objectList, existingValue } = props;
+  const { objectList, existingValue, setContext } = props;
   const [value, setValue] = useState<labelObject>({
     label: existingValue,
     value: existingValue,
@@ -24,6 +25,7 @@ export const AutoCompleteFieldDropdown = (props: {
       clearOnEscape
       onChange={(event, newValue) => {
         setValue(newValue || {});
+        setContext && setContext(newValue || {});
       }}
       value={value}
       renderInput={(params) => (
