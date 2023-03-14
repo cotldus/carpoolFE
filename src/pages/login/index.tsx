@@ -4,6 +4,9 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
 import { ROUTES } from "@/constants";
+import TextboxWithSelection from "@/utils/TextboxWithSelection";
+import { DropdownWithIcon } from "@/utils/DropdownWithIcon";
+import { useEffect, useState } from "react";
 
 function Login() {
   const router = useRouter();
@@ -13,6 +16,8 @@ function Login() {
       "Access-Control-Allow-Origin": "*",
     },
   };
+  const [countryCode, setCountryCode]= useState(65);
+  useEffect(() => {console.log("TEST", countryCode)}, [countryCode])
   const login = async ({
     email,
     password,
@@ -66,7 +71,7 @@ function Login() {
             <h2 className="text-xl font-bold text-white">Carpool Hero</h2>
           </div>
           <div>
-            <input
+            {/* <input
               className="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600"
               id="email"
               name="email"
@@ -74,7 +79,8 @@ function Login() {
               placeholder="Email"
               onChange={formik.handleChange}
               value={formik.values.email}
-            />
+            /> */}
+            <TextboxWithSelection IconSelection={<DropdownWithIcon value={countryCode} setValue={setCountryCode}/>}/>
           </div>
           <div>
             <input
