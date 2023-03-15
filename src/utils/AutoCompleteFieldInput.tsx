@@ -1,10 +1,10 @@
 import { labelObject } from "@/components/interface";
 import { mockLocationsList } from "@/pages/api/mockData/mockLocationsList";
 import { Autocomplete, createFilterOptions, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const filter = createFilterOptions<any>();
-export const AutoCompleteFieldInput = () => {
+export const AutoCompleteFieldInput = ({ name }: { name?: string }) => {
   const [value, setValue] = useState<labelObject[]>([]);
   const [mockPickUpLocation, setMockPickUpLocation] = useState<labelObject[]>(
     mockLocationsList.map((item) => ({ label: item, value: item }))
@@ -47,13 +47,20 @@ export const AutoCompleteFieldInput = () => {
         return filtered;
       }}
       renderInput={(params) => (
-        <TextField
-          {...params}
-          sx={{padding: "0px"}}
-          size="small"
-          placeholder=""
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        />
+        <>
+          <TextField
+            {...params}
+            sx={{ padding: "0px" }}
+            size="small"
+            placeholder=""
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          />
+          <input
+            type="hidden"
+            name={name}
+            value={value.map((val) => val.value).join(", ")}
+          ></input>
+        </>
       )}
     />
   );

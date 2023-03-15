@@ -27,8 +27,6 @@ export const ExpandAdminTable = (props: {
     pax: assignmentDetails.groupPax,
   });
 
-  console.log("groups", journey.groups);
-
   return (
     <Table size="small" aria-label="purchases">
       <TableHead>

@@ -1,13 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { TextField } from '@mui/material';
-import "../styles/globals.css"
+import React from "react";
+import PropTypes from "prop-types";
+import { TextField } from "@mui/material";
+import "../styles/globals.css";
 
-function DatePickers() {
-
+function DatePickers({ name }: { name?: string }) {
   return (
-    <form className="flex flex-wrap" noValidate>
       <TextField
+        name={name}
         id="date"
         type="date"
         defaultValue="2017-05-24"
@@ -16,9 +15,7 @@ function DatePickers() {
           shrink: true,
         }}
       />
-    </form>
   );
 }
-
 
 export default DatePickers;

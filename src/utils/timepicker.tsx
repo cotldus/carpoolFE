@@ -6,7 +6,6 @@ import "../styles/globals.css"
 function TimePickers() {
 
   return (
-    <form className="flex flex-wrap" noValidate>
       <TextField
         id="time"
         type="time"
@@ -19,7 +18,6 @@ function TimePickers() {
           step: 300, // 5 min
         }}
       />
-    </form>
   );
 }
 
