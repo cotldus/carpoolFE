@@ -4,15 +4,17 @@ import TextField from "@mui/material/TextField";
 
 export default function TextboxWithSelection({
   IconSelection,
+  ...props
 }: {
   IconSelection?: JSX.Element;
+  [x: string]: any;
 }) {
   return (
     <Box
       className="w-full text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600"
-      sx={{}}
+      sx={{boxShadow: "none"}}
     >
-      <IconTextField label="Email" iconStart={IconSelection} />
+      <IconTextField iconStart={IconSelection} {...props}/>
     </Box>
   );
 }
@@ -28,6 +30,7 @@ const IconTextField = ({
   return (
     <TextField
       className="w-full text-sm"
+      sx={{boxShadow: "none"}}
       {...props}
       InputProps={{
         ...InputProps,

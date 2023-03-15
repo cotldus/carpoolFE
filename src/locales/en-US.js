@@ -4,4 +4,5 @@ export default {
     admin_title: 'Admin',
     driver_title: 'Driver',
     passenger_title: 'Passenger',
+    phone_number: "Phone Number"
 };

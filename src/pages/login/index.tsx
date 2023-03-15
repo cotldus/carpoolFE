@@ -3,21 +3,32 @@ import "../../styles/globals.css";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
-import { ROUTES } from "@/constants";
+import { countryOptions, ROUTES } from "@/constants";
 import TextboxWithSelection from "@/utils/TextboxWithSelection";
 import { DropdownWithIcon } from "@/utils/DropdownWithIcon";
 import { useEffect, useState } from "react";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import en from "../../locales/en-US"
+import cn from "../../locales/zh-CN"
 
 function Login() {
   const router = useRouter();
+  const {locale} = router;
+  const t = locale === 'en-US' ? en: cn;
   const config = {
     headers: {
       "content-type": "application/json",
       "Access-Control-Allow-Origin": "*",
     },
   };
-  const [countryCode, setCountryCode]= useState(65);
-  useEffect(() => {console.log("TEST", countryCode)}, [countryCode])
+  const [countryCode, setCountryCode] = useState(countryOptions[0].countryCode);
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
   const login = async ({
     email,
     password,
@@ -71,23 +82,47 @@ function Login() {
             <h2 className="text-xl font-bold text-white">Carpool Hero</h2>
           </div>
           <div>
-            {/* <input
-              className="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600"
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Email"
-              onChange={formik.handleChange}
-              value={formik.values.email}
-            /> */}
-            <TextboxWithSelection IconSelection={<DropdownWithIcon value={countryCode} setValue={setCountryCode}/>}/>
+            <TextboxWithSelection
+              IconSelection={
+                <DropdownWithIcon
+                  value={countryCode}
+                  setValue={setCountryCode}
+                  selectionList={countryOptions}
+                />
+              }
+              placeholder={t.phone_number}
+              type="phoneNumber"
+              name="phoneNumber"
+            />
           </div>
           <div>
-            <input
+            {/* <input
               className="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600"
               type="password"
               name="password"
               placeholder="Password"
+            /> */}
+            <TextField
+            className="w-full text-sm bg-white"
+              id="password-input"
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              autoComplete="current-password"
+              InputProps={{
+                endAdornment: (<InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    onMouseUp={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>)
+              }}
+             
             />
           </div>
           <div>
