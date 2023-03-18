@@ -5,10 +5,14 @@ export const DropdownWithIcon = ({
   defaultValue,
   setValue,
   selectionList,
+  className,
+  ...props
 }: {
   defaultValue?: string | number;
   setValue?: any;
   selectionList?: any[];
+  className: string
+  [x: string]: any;
 }) => {
   return (
     <Select
@@ -18,12 +22,13 @@ export const DropdownWithIcon = ({
       }}
       id="demo-simple-select"
       label="countryCode"
-      value={defaultValue}
+      defaultValue={defaultValue}
       onChange={(event) => setValue(event.target.value)}
       renderValue={(selected) => `+${selected}`}
       variant="standard"
       disableUnderline
-      type="hidden"
+      className={className}
+      {...props}
     >
       {selectionList?.map((item, index) => {
         return (

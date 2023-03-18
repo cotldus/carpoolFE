@@ -1,4 +1,3 @@
-import { useFormik } from "formik";
 import "../../styles/globals.css";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -9,20 +8,19 @@ import { DropdownWithIcon } from "@/utils/DropdownWithIcon";
 import { useEffect, useState } from "react";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import en from "../../locales/en-US"
-import cn from "../../locales/zh-CN"
+import en from "../../locales/en-US";
+import cn from "../../locales/zh-CN";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-
 export type Inputs = {
-  phoneNumber: number,
-  password: string,
+  phoneNumber: number;
+  password: string;
 };
 
 function Login() {
   const router = useRouter();
-  const {locale} = router;
-  const t = locale === 'en-US' ? en: cn;
+  const { locale } = router;
+  const t = locale === "en-US" ? en : cn;
   const config = {
     headers: {
       "content-type": "application/json",
@@ -32,11 +30,19 @@ function Login() {
   const [countryCode, setCountryCode] = useState(countryOptions[0].countryCode);
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
-  const { register, handleSubmit, control , watch, formState: { errors } } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   const login = async ({
     email,
@@ -81,11 +87,12 @@ function Login() {
           </div>
           <div>
             <TextboxWithSelection
-              IconSelection={
+              SeperateSelection={
                 <DropdownWithIcon
                   defaultValue={countryCode}
                   setValue={setCountryCode}
                   selectionList={countryOptions}
+                  className="px-2 border-r"
                 />
               }
               placeholder={t.phone_number}
@@ -96,39 +103,44 @@ function Login() {
           </div>
           <div>
             <TextField
-            className="w-full text-sm bg-white"
+              sx={{ boxShadow: "none", "& fieldset": { border: "none" } }}
+              className="w-full text-sm bg-white focus:outline-none border border-gray-200 rounded text-gray-600 flex"
               id="password-input"
               {...register("password")}
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               autoComplete="current-password"
               InputProps={{
-                endAdornment: (<InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    onMouseUp={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>)
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      onMouseUp={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
-             
             />
           </div>
           <div>
             <button
               type="submit"
-              className="w-full py-4 bg-blue-600 hover:bg-blue-700 rounded text-sm font-bold text-gray-50 transition duration-200"
+              className="inline-block w-full rounded px-6 pt-2.5 pb-2 text-md font-medium uppercase leading-normal text-white  bg-blue-600 hover:bg-blue-700 transition duration-200"
             >
               Sign In
             </button>
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <a className="text-sm text-blue-600 hover:underline" href="#signup">
+              <a
+                className="text-sm text-blue-600 hover:underline"
+                href="#signup"
+              >
                 New? Sign Up Here!
               </a>
             </div>
