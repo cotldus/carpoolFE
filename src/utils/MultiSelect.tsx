@@ -43,14 +43,17 @@ function getStyles(name: string, personName: string[], theme: Theme) {
 export default function MultipleSelect({
   optionsList = names,
   setContext,
+  name,
 }: {
   optionsList?: string[];
   setContext?: (value: string[]) => void;
+  name?: string;
+  onChange?: () => void;
 }) {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState<string[]>([]);
 
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+  const handleChange = (event: any) => {
     const {
       target: { value },
     } = event;
@@ -70,6 +73,7 @@ export default function MultipleSelect({
           id="demo-multiple-name"
           multiple
           value={personName}
+          name={name}
           onChange={handleChange}
           input={<Input />}
           MenuProps={MenuProps}

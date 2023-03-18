@@ -1,4 +1,5 @@
-export const mockJourneyList = [
+import { mockJourneyList as MockJourneyList } from "../../../components/interface";
+export const mockJourneyList: MockJourneyList[] = [
   {
     journeyId: "12",
     date: "26/02/23",
@@ -9,15 +10,29 @@ export const mockJourneyList = [
     assignment: [
       {
         driver: "Ji-Eun (IU)",
-        car: "HD1234",
-        groupId: "3",
-        groupPax: 4,
+        car: {
+          name: "HD1234",
+          pax: 10,
+        },
+        groups: [
+          {
+            groupid: "3",
+            pax: 4,
+          },
+        ],
       },
       {
         driver: "",
-        car: "D1234HS",
-        groupId: "5",
-        groupPax: 2,
+        car: {
+          name: "D1234HS",
+          pax: 10,
+        },
+        groups: [
+          {
+            groupid: "5",
+            pax: 2,
+          },
+        ],
       },
     ],
   },
@@ -36,5 +51,5 @@ export const submitJourney = {
   journeyId: "213",
   driver: "Ivan",
   car: "D1234HS",
-  groupId: "5",
+  groupid: "5",
 };

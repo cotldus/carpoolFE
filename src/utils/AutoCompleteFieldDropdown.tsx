@@ -10,9 +10,10 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 export const AutoCompleteFieldDropdown = (props: {
   objectList: labelObject[];
   existingValue?: string;
+  name?: string;
   setContext?: (value: labelObject) => void;
 }) => {
-  const { objectList, existingValue, setContext } = props;
+  const { objectList, existingValue, setContext, name } = props;
   const [value, setValue] = useState<labelObject>({
     label: existingValue,
     value: existingValue,
@@ -29,7 +30,10 @@ export const AutoCompleteFieldDropdown = (props: {
       }}
       value={value}
       renderInput={(params) => (
-        <TextField {...params} label="" variant="standard" />
+        <>
+          <TextField {...params} label="" variant="standard" />
+          <input type="hidden" name={name} value={value.value}></input>
+        </>
       )}
     />
   );

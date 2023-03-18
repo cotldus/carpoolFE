@@ -29,8 +29,11 @@ function Row(props: {
   const addNewAssignmentRow = () => {
     const newAssignment: journeyAssignmentPayload = {
       driver: "",
-      car: "",
-      groupId: "",
+      car: {
+        name: "",
+        pax: 0,
+      },
+      groups: [],
       groupPax: 0,
     };
     setJourneyAssignment((prev) => [...prev, newAssignment]);
@@ -73,7 +76,8 @@ function Row(props: {
                     {locations},<br></br>
                   </>
                 )}
-                {location}{}
+                {location}
+                {}
               </>
             );
           }, <></>)}
