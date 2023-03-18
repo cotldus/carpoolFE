@@ -2,11 +2,11 @@ import { MenuItem, Select } from "@mui/material";
 import CountryCodeMenuItem from "./CountryCodeMenuIcons";
 
 export const DropdownWithIcon = ({
-  value,
+  defaultValue,
   setValue,
   selectionList,
 }: {
-  value?: string | number;
+  defaultValue?: string | number;
   setValue?: any;
   selectionList?: any[];
 }) => {
@@ -17,12 +17,13 @@ export const DropdownWithIcon = ({
         ".MuiOutlinedInput-notchedOutline": { border: 0 },
       }}
       id="demo-simple-select"
-      value={value}
       label="countryCode"
+      value={defaultValue}
       onChange={(event) => setValue(event.target.value)}
       renderValue={(selected) => `+${selected}`}
       variant="standard"
       disableUnderline
+      type="hidden"
     >
       {selectionList?.map((item, index) => {
         return (

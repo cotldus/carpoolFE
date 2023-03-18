@@ -11,6 +11,13 @@ import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import en from "../../locales/en-US"
 import cn from "../../locales/zh-CN"
+import { SubmitHandler, useForm } from "react-hook-form";
+
+
+export type Inputs = {
+  phoneNumber: number,
+  password: string,
+};
 
 function Login() {
   const router = useRouter();
@@ -28,6 +35,8 @@ function Login() {
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
+  const { register, handleSubmit, control , watch, formState: { errors } } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
 
   const login = async ({
     email,
@@ -52,20 +61,9 @@ function Login() {
         console.log(e);
       });
   };
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit: (values) => {
-      login(values);
-      // alert(JSON.stringify(values, null, 2));
-      router.push(ROUTES.ADMIN);
-    },
-  });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <section className="flex justify-center items-center h-screen bg-gray-800">
         <div className="max-w-md w-full bg-gray-900 rounded p-6 space-y-4">
           <div className="flex justify-center items-center">
@@ -85,27 +83,22 @@ function Login() {
             <TextboxWithSelection
               IconSelection={
                 <DropdownWithIcon
-                  value={countryCode}
+                  defaultValue={countryCode}
                   setValue={setCountryCode}
                   selectionList={countryOptions}
                 />
               }
               placeholder={t.phone_number}
-              type="phoneNumber"
-              name="phoneNumber"
+              register={register("phoneNumber")}
+              name={"phoneNumber"}
+              control={control}
             />
           </div>
           <div>
-            {/* <input
-              className="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600"
-              type="password"
-              name="password"
-              placeholder="Password"
-            /> */}
             <TextField
             className="w-full text-sm bg-white"
               id="password-input"
-              name="password"
+              {...register("password")}
               type={showPassword ? 'text' : 'password'}
               placeholder="Password"
               autoComplete="current-password"
@@ -135,8 +128,8 @@ function Login() {
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <a className="text-sm text-blue-600 hover:underline" href="#">
-                Forgot password?
+              <a className="text-sm text-blue-600 hover:underline" href="#signup">
+                New? Sign Up Here!
               </a>
             </div>
           </div>
