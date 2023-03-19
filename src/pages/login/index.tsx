@@ -10,6 +10,7 @@ import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import en from "../../locales/en-US";
 import cn from "../../locales/zh-CN";
+import { signIn } from "next-auth/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 export type Inputs = {
@@ -42,32 +43,17 @@ function Login() {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => onHandleSubmit(data);
 
-  const login = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
-    await axios
-      .post(
-        "/auth",
-        {
-          email,
-          password,
-        },
-        config
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
+  const onHandleSubmit = async (data: Inputs) => {
+    console.log("Sign in as: ", data);
+    const res = await signIn("credentials", {
+      phoneNumber: data.phoneNumber,
+      password: data.password,
+      redirect: false,
+    });
+    console.log("Login status: ", res);
+  }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <section className="flex justify-center items-center h-screen bg-gray-800">
