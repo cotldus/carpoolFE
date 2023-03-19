@@ -1,5 +1,5 @@
 import "../../styles/globals.css";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
 import { countryOptions, ROUTES } from "@/constants";
@@ -53,6 +53,8 @@ function Login() {
       redirect: false,
     });
     console.log("Login status: ", res);
+    
+    res?.status === 200 && router.push('/admin')
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
