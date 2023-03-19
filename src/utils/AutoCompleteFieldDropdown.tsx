@@ -11,7 +11,7 @@ export const AutoCompleteFieldDropdown = (props: {
   objectList: labelObject[];
   existingValue?: string;
   name?: string;
-  setContext?: (value: labelObject) => void;
+  setContext?: (value: any) => void;
 }) => {
   const { objectList, existingValue, setContext, name } = props;
   const [value, setValue] = useState<labelObject>({

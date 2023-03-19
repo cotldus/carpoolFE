@@ -10,7 +10,7 @@ export type journeyAssignmentPayload = {
   groupPax?: number;
 };
 
-type group = {
+export type group = {
   groupid: string;
   pax: number;
 } | undefined;

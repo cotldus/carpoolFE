@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import { TextField } from "@mui/material";
 import "../styles/globals.css";
 
-function TimePickers() {
+function TimePickers({ name }: { name: string }) {
   return (
     <TextField
+      name={name}
       id="time"
       type="time"
       defaultValue="07:30"

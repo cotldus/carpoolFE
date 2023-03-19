@@ -92,7 +92,7 @@ export const CreateSchedule = () => {
                   >
                     Depature time:
                   </label>
-                  <TimePickers />
+                  <TimePickers name="time"/>
                 </div>
               </div>
               <div className="pt-4">

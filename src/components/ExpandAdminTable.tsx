@@ -10,9 +10,22 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { useState } from "react";
-import { dataLabelValueMapper, driverMapper, passengerMapper } from "./helper";
-import { journeyAssignmentPayload } from "./interface";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import {
+  Car,
+  dataLabelValueMapper,
+  driverMapper,
+  passengerMapper,
+} from "./helper";
+import { group, journeyAssignmentPayload } from "./interface";
+
+type Journey = {
+  car?: Car;
+  driver?: string;
+  groups?: group[];
+  pax?: number;
+};
 
 export const ExpandAdminTable = (props: {
   assignmentDetails: journeyAssignmentPayload;
@@ -30,17 +43,42 @@ export const ExpandAdminTable = (props: {
     pax: assignmentDetails.groupPax,
   });
 
+  const config = {
+    headers: {
+      "content-type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+  };
+
+  const handleSave = async (journey: Journey) => {
+    await axios
+      .post("/journey", journey, config)
+      .then((res) => {
+        console.log(res);
+        console.log("save", journey);
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log("save", journey);
+      });
+  };
+
+  useEffect(() => {
+    setJourney({
+      ...journey,
+      pax:
+        journey.groups?.reduce((prev, curr) => prev + (curr?.pax || 0), 0) || 0,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [journey.groups]);
+
+  useEffect(() => {
+    handleSave(journey);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [journey]);
+
   return (
-    <form
-      onSelect={(e) => {
-        e.preventDefault();
-        console.log("save");
-      }}
-      onSubmit={(e) => {
-        e.preventDefault();
-        console.log("save");
-      }}
-    >
+    <form>
       <Table size="small" aria-label="purchases">
         <TableHead>
           <TableRow sx={{ "& th": { color: "#64748b" } }}>
@@ -71,6 +109,11 @@ export const ExpandAdminTable = (props: {
               name="driver"
               objectList={driverList}
               existingValue={assignmentDetails.driver}
+              setContext={(value: string) =>
+                setJourney({
+                  ...journey,
+                  driver: value
+                })}
             />
           </TableCell>
           <TableCell sx={{ width: 300 }}>
@@ -96,12 +139,7 @@ export const ExpandAdminTable = (props: {
               type="text"
               id="passenger_pax"
               className="w-full text-right"
-              placeholder={`${
-                journey.groups?.reduce(
-                  (prev, curr) => prev + (curr?.pax || 0),
-                  0
-                ) || 0
-              }/${journey.car?.pax || 0}`}
+              placeholder={`${journey.pax}/${journey.car?.pax || 0}`}
               disabled
             />
           </TableCell>
