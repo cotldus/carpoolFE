@@ -13,76 +13,73 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Button } from "@mui/material";
 import { ExpandAdminTable } from "./ExpandAdminTable";
-import { journeyAssignmentPayload } from "./interface";
 import { createData } from "./helper";
 import { mockJourneyList } from "@/pages/api/mockData/mockJourneyList";
 import { Queue } from "@mui/icons-material";
 import axios from "axios";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 
-const config = {
-  headers: {
-    "content-type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-  },
+const getJourneyList = async (scheduleId: string) =>
+  await axios
+    .get(`/journeyList/?scheduleId=${scheduleId}`)
+    .then((res) => res.data)
+    .catch(
+      () =>
+        mockJourneyList.find((journey) => journey.scheduleId === scheduleId)
+          ?.assignment
+    );
+
+const useJourneyList = (scheduleId: string) => {
+  return useQuery({
+    queryKey: ["journeyList", scheduleId],
+    queryFn: () => getJourneyList(scheduleId),
+  });
 };
 
-function Row(props: {
-  row: ReturnType<typeof createData>;
-  assignment: journeyAssignmentPayload[];
-  id: string;
-}) {
-  const { row, assignment, id } = props;
+const addJourney = (scheduleId: string) => {
+  axios
+    .patch(`/new/journey/${scheduleId}`)
+    .then((response) => response.data)
+    .catch((e) => null);
+  return Promise.resolve({
+    data: Math.floor(Math.random() * 100).toString(),
+    status: 200,
+  });
+};
+
+const useAddJourney = (scheduleId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => addJourney(scheduleId),
+    onSuccess: (res) => {
+      queryClient.setQueryData(
+        ["journeyList", scheduleId],
+        (journeyList: any) => {
+          return [
+            ...(journeyList as []),
+            {
+              driver: "",
+              car: {
+                name: "",
+                pax: 0,
+              },
+              groups: [],
+              journeyId: res.data,
+            },
+          ];
+        }
+      );
+    },
+  });
+};
+
+function Row(props: { row: ReturnType<typeof createData>; id: string }) {
+  const { row, id: scheduleId } = props;
   const [open, setOpen] = React.useState(false);
-  const [journeyAssignment, setJourneyAssignment] = React.useState<
-    journeyAssignmentPayload[]
-  >([]);
-  const addNewAssignmentRow = async () => {
-    const newAssignment: journeyAssignmentPayload = {
-      driver: "",
-      car: {
-        name: "",
-        pax: 0,
-      },
-      groups: [],
-      groupPax: 0,
-    };
+  const addJourney = useAddJourney(scheduleId);
+  const addNewAssignmentRow = async () => addJourney.mutate();
 
-    await axios
-      .post("/journey/new", "", config)
-      .then((res) => {
-        console.log(res);
-        setJourneyAssignment((prev) => [
-          ...prev,
-          {
-            ...newAssignment,
-            journeyId: res.data,
-          },
-        ]);
-      })
-      .catch((e) => {
-        console.log(e);
-        setJourneyAssignment((prev) => [
-          ...prev,
-          {
-            ...newAssignment,
-            journeyId: Math.floor(Math.random() * 100).toString(),
-          },
-        ]);
-      });
-  };
-
-  React.useEffect(() => {
-    axios
-      .get(`/journeyList/?scheduleId=${id}`)
-      .then((res) => {
-        console.log(res);
-        setJourneyAssignment(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-        setJourneyAssignment(assignment);
-      });
-  }, [id, assignment]);
+  const { data: journeyAssignment } = useJourneyList(scheduleId);
 
   return (
     <React.Fragment>
@@ -129,7 +126,9 @@ function Row(props: {
         </TableCell>
         <TableCell align="right">
           <Button
-            onClick={() => alert(`Send whatsapp message for schedule ${row.scheduleId}`)}
+            onClick={() =>
+              alert(`Send whatsapp message for schedule ${row.scheduleId}`)
+            }
           >
             Notify
           </Button>
@@ -154,8 +153,12 @@ function Row(props: {
                   <Queue />
                   Add
                 </IconButton>
-                {journeyAssignment?.map((details, id) => (
-                  <ExpandAdminTable key={id} assignmentDetails={details} />
+                {journeyAssignment?.map((details: any, id: any) => (
+                  <ExpandAdminTable
+                    key={id}
+                    assignmentDetails={details}
+                    scheduleId={scheduleId}
+                  />
                 ))}
               </Box>
             </Collapse>
@@ -222,7 +225,6 @@ export default function CollapsibleTable() {
                 <Row
                   key={`${row.scheduleId}-journey`}
                   row={row}
-                  assignment={row.journeyAssignment}
                   id={row.scheduleId}
                 />
               );

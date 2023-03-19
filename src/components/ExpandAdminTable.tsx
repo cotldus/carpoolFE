@@ -19,6 +19,7 @@ import {
   passengerMapper,
 } from "./helper";
 import { group, journeyAssignmentPayload, labelObject } from "./interface";
+import { useQuery } from "@tanstack/react-query";
 
 type Journey = {
   car?: Car;
@@ -30,19 +31,48 @@ type Journey = {
 const calculatePax = (groups: group[]) =>
   groups.reduce((prev, curr) => prev + (curr?.pax || 0), 0) || 0;
 
+const getCarList = async () =>
+  await axios
+    .get("/carList")
+    .then((res) => res.data)
+    .catch(() => dataLabelValueMapper(mockCarplateList));
+
+const useCarList = () => {
+  return useQuery(["carList"], getCarList);
+};
+
+const getDriverList = async () =>
+  await axios
+    .get("/driverList")
+    .then((res) => res.data)
+    .catch(() => driverMapper(mockDriverList));
+
+const useDriverList = () => {
+  return useQuery(["driverList"], getDriverList);
+};
+
+const getGroupsList = async (scheduleId: string) =>
+  await axios
+    .get(`/groupsList?scheduleId=${scheduleId}`)
+    .then((res) => res.data)
+    .catch(() => passengerMapper(mockGroupList));
+
+const useGroupsList = (scheduleId: string) => {
+  return useQuery(["groupsList", scheduleId], () => getGroupsList(scheduleId));
+};
+
 export const ExpandAdminTable = (props: {
   assignmentDetails: journeyAssignmentPayload;
+  scheduleId: string;
 }) => {
-  const { assignmentDetails } = props;
+  const { assignmentDetails, scheduleId } = props;
   const getJourney = {
     car: assignmentDetails.car,
     driver: assignmentDetails.driver,
     groups: assignmentDetails.groups,
     pax: assignmentDetails.groups ? calculatePax(assignmentDetails.groups) : 0,
   };
-  const [carplateList, setCarplateList] = useState<any[]>([]);
-  const [groupList, setGroupList] = useState<any[]>([]);
-  const [driverList, setDriverList] = useState<any[]>([]);
+
   const [journey, setJourney] = useState(getJourney);
 
   const config = {
@@ -52,44 +82,9 @@ export const ExpandAdminTable = (props: {
     },
   };
 
-  useEffect(() => {
-    axios
-      .get("/carList")
-      .then((res) => {
-        console.log(res);
-        setCarplateList(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-        setCarplateList(dataLabelValueMapper(mockCarplateList));
-      });
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("/driverList")
-      .then((res) => {
-        console.log(res);
-        setDriverList(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-        setDriverList(driverMapper(mockDriverList));
-      });
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("/groupsList")
-      .then((res) => {
-        console.log(res);
-        setGroupList(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-        setGroupList(passengerMapper(mockGroupList));
-      });
-  }, []);
+  const { data: carList, error, isLoading } = useCarList();
+  const { data: driverList } = useDriverList();
+  const { data: groupsList } = useGroupsList(scheduleId);
 
   const handleSave = async (journey: Journey) => {
     await axios
@@ -105,7 +100,7 @@ export const ExpandAdminTable = (props: {
   };
 
   const isFirstRender = useRef(true);
-  
+
   useEffect(() => {
     if (isFirstRender.current) {
       console.log("first");
@@ -133,7 +128,7 @@ export const ExpandAdminTable = (props: {
           <TableCell sx={{ width: 300 }}>
             <AutoCompleteFieldDropdown
               name="car"
-              objectList={carplateList}
+              objectList={carList}
               existingValue={assignmentDetails.car?.name}
               setContext={(value) =>
                 setJourney({
@@ -159,7 +154,9 @@ export const ExpandAdminTable = (props: {
           <TableCell sx={{ width: 300 }}>
             <MultipleSelect
               name="groups"
-              optionsList={groupList.map((item) => item.label || "")}
+              optionsList={
+                groupsList?.map((item: any) => item.label || "") || []
+              }
               setContext={(value: string[]) => {
                 const groups =
                   value.map((value) =>
