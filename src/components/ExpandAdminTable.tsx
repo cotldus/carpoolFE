@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Car,
   dataLabelValueMapper,
@@ -27,19 +27,23 @@ type Journey = {
   pax?: number;
 };
 
+const calculatePax = (groups: group[]) =>
+  groups.reduce((prev, curr) => prev + (curr?.pax || 0), 0) || 0;
+
 export const ExpandAdminTable = (props: {
   assignmentDetails: journeyAssignmentPayload;
 }) => {
   const { assignmentDetails } = props;
-  const [carplateList, setCarplateList] = useState<any[]>([]);
-  const [groupList, setGroupList] = useState<any[]>([]);
-  const [driverList, setDriverList] = useState<any[]>([]);
-  const [journey, setJourney] = useState({
+  const getJourney = {
     car: assignmentDetails.car,
     driver: assignmentDetails.driver,
     groups: assignmentDetails.groups,
-    pax: assignmentDetails.groupPax,
-  });
+    pax: assignmentDetails.groups ? calculatePax(assignmentDetails.groups) : 0,
+  };
+  const [carplateList, setCarplateList] = useState<any[]>([]);
+  const [groupList, setGroupList] = useState<any[]>([]);
+  const [driverList, setDriverList] = useState<any[]>([]);
+  const [journey, setJourney] = useState(getJourney);
 
   const config = {
     headers: {
@@ -100,17 +104,15 @@ export const ExpandAdminTable = (props: {
       });
   };
 
+  const isFirstRender = useRef(true);
+  
   useEffect(() => {
-    setJourney({
-      ...journey,
-      pax:
-        journey.groups?.reduce((prev, curr) => prev + (curr?.pax || 0), 0) || 0,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [journey.groups]);
-
-  useEffect(() => {
-    handleSave(journey);
+    if (isFirstRender.current) {
+      console.log("first");
+      isFirstRender.current = false;
+    } else {
+      handleSave(journey);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [journey]);
 
@@ -158,17 +160,19 @@ export const ExpandAdminTable = (props: {
             <MultipleSelect
               name="groups"
               optionsList={groupList.map((item) => item.label || "")}
-              setContext={(value: string[]) =>
+              setContext={(value: string[]) => {
+                const groups =
+                  value.map((value) =>
+                    mockGroupList.find(
+                      (group) => group.groupid === value.split(" - ")[0]
+                    )
+                  ) || [];
                 setJourney({
                   ...journey,
-                  groups:
-                    value.map((value) =>
-                      mockGroupList.find(
-                        (group) => group.groupid === value.split(" - ")[0]
-                      )
-                    ) || [],
-                })
-              }
+                  groups,
+                  pax: calculatePax(groups),
+                });
+              }}
             />
           </TableCell>
           <TableCell width="80px">
