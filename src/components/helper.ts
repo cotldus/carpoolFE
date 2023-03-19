@@ -30,7 +30,7 @@ export const driverMapper = (data: any[]) => {
 };
 
 export const createData = (
-  journeyId: string,
+  scheduleId: string,
   date: string,
   time: number,
   pax: number,
@@ -39,7 +39,7 @@ export const createData = (
   journeyAssignment: journeyAssignmentPayload[]
 ) => {
   return {
-    journeyId,
+    scheduleId,
     date,
     time,
     pax,

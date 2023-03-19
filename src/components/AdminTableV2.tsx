@@ -17,16 +17,26 @@ import { journeyAssignmentPayload } from "./interface";
 import { createData } from "./helper";
 import { mockJourneyList } from "@/pages/api/mockData/mockJourneyList";
 import { Queue } from "@mui/icons-material";
+import axios from "axios";
+
+const config = {
+  headers: {
+    "content-type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  },
+};
 
 function Row(props: {
   row: ReturnType<typeof createData>;
   assignment: journeyAssignmentPayload[];
+  id: string;
 }) {
-  const { row, assignment } = props;
+  const { row, assignment, id } = props;
   const [open, setOpen] = React.useState(false);
-  const [journeyAssignment, setJourneyAssignment] =
-    React.useState<journeyAssignmentPayload[]>(assignment);
-  const addNewAssignmentRow = () => {
+  const [journeyAssignment, setJourneyAssignment] = React.useState<
+    journeyAssignmentPayload[]
+  >([]);
+  const addNewAssignmentRow = async () => {
     const newAssignment: journeyAssignmentPayload = {
       driver: "",
       car: {
@@ -36,8 +46,43 @@ function Row(props: {
       groups: [],
       groupPax: 0,
     };
-    setJourneyAssignment((prev) => [...prev, newAssignment]);
+
+    await axios
+      .post("/journey/new", "", config)
+      .then((res) => {
+        console.log(res);
+        setJourneyAssignment((prev) => [
+          ...prev,
+          {
+            ...newAssignment,
+            journeyId: res.data,
+          },
+        ]);
+      })
+      .catch((e) => {
+        console.log(e);
+        setJourneyAssignment((prev) => [
+          ...prev,
+          {
+            ...newAssignment,
+            journeyId: Math.floor(Math.random() * 100).toString(),
+          },
+        ]);
+      });
   };
+
+  React.useEffect(() => {
+    axios
+      .get(`/journeyList/?scheduleId=${id}`)
+      .then((res) => {
+        console.log(res);
+        setJourneyAssignment(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        setJourneyAssignment(assignment);
+      });
+  }, [id, assignment]);
 
   return (
     <React.Fragment>
@@ -84,7 +129,7 @@ function Row(props: {
         </TableCell>
         <TableCell align="right">
           <Button
-            onClick={() => alert(`Send whatsapp message for ${row.journeyId}`)}
+            onClick={() => alert(`Send whatsapp message for schedule ${row.scheduleId}`)}
           >
             Notify
           </Button>
@@ -123,7 +168,7 @@ function Row(props: {
 
 const rows = mockJourneyList.map((item) =>
   createData(
-    item.journeyId,
+    item.scheduleId,
     item.date,
     item.time,
     item.totalPax,
@@ -135,6 +180,20 @@ const rows = mockJourneyList.map((item) =>
 
 export default function CollapsibleTable() {
   const headerData = ["Date", "Time", "Pickup", "Dropoff", ""];
+  const [scheduleList, setScheduleList] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    axios
+      .get("/scheduleList")
+      .then((res) => {
+        console.log(res);
+        setScheduleList(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        setScheduleList(rows);
+      });
+  }, []);
   return (
     <form>
       <TableContainer
@@ -157,13 +216,17 @@ export default function CollapsibleTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <Row
-                key={`${row.journeyId}-journey`}
-                row={row}
-                assignment={row.journeyAssignment}
-              />
-            ))}
+            {scheduleList.map((row) => {
+              console.log("row1", row);
+              return (
+                <Row
+                  key={`${row.scheduleId}-journey`}
+                  row={row}
+                  assignment={row.journeyAssignment}
+                  id={row.scheduleId}
+                />
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

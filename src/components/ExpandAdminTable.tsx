@@ -18,7 +18,7 @@ import {
   driverMapper,
   passengerMapper,
 } from "./helper";
-import { group, journeyAssignmentPayload } from "./interface";
+import { group, journeyAssignmentPayload, labelObject } from "./interface";
 
 type Journey = {
   car?: Car;
@@ -31,11 +31,9 @@ export const ExpandAdminTable = (props: {
   assignmentDetails: journeyAssignmentPayload;
 }) => {
   const { assignmentDetails } = props;
-  const [carplateList, setCarplateList] = useState(
-    dataLabelValueMapper(mockCarplateList)
-  );
-  const [groupList, setGroupList] = useState(passengerMapper(mockGroupList));
-  const [driverList, setDriverList] = useState(driverMapper(mockDriverList));
+  const [carplateList, setCarplateList] = useState<any[]>([]);
+  const [groupList, setGroupList] = useState<any[]>([]);
+  const [driverList, setDriverList] = useState<any[]>([]);
   const [journey, setJourney] = useState({
     car: assignmentDetails.car,
     driver: assignmentDetails.driver,
@@ -50,9 +48,48 @@ export const ExpandAdminTable = (props: {
     },
   };
 
+  useEffect(() => {
+    axios
+      .get("/carList")
+      .then((res) => {
+        console.log(res);
+        setCarplateList(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        setCarplateList(dataLabelValueMapper(mockCarplateList));
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("/driverList")
+      .then((res) => {
+        console.log(res);
+        setDriverList(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        setDriverList(driverMapper(mockDriverList));
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("/groupsList")
+      .then((res) => {
+        console.log(res);
+        setGroupList(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        setGroupList(passengerMapper(mockGroupList));
+      });
+  }, []);
+
   const handleSave = async (journey: Journey) => {
     await axios
-      .post("/journey", journey, config)
+      .put(`/journey/${assignmentDetails.journeyId}`, journey, config)
       .then((res) => {
         console.log(res);
         console.log("save", journey);
@@ -69,12 +106,12 @@ export const ExpandAdminTable = (props: {
       pax:
         journey.groups?.reduce((prev, curr) => prev + (curr?.pax || 0), 0) || 0,
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [journey.groups]);
 
   useEffect(() => {
     handleSave(journey);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [journey]);
 
   return (
@@ -109,11 +146,12 @@ export const ExpandAdminTable = (props: {
               name="driver"
               objectList={driverList}
               existingValue={assignmentDetails.driver}
-              setContext={(value: string) =>
+              setContext={(value: labelObject) =>
                 setJourney({
                   ...journey,
-                  driver: value
-                })}
+                  driver: value.value,
+                })
+              }
             />
           </TableCell>
           <TableCell sx={{ width: 300 }}>

@@ -1,7 +1,7 @@
 import { mockJourneyList as MockJourneyList } from "../../../components/interface";
 export const mockJourneyList: MockJourneyList[] = [
   {
-    journeyId: "12",
+    scheduleId: "12",
     date: "26/02/23",
     time: 1900,
     totalPax: 16,
@@ -9,6 +9,7 @@ export const mockJourneyList: MockJourneyList[] = [
     dropoff: ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"],
     assignment: [
       {
+        journeyId: "34",
         driver: "Ji-Eun (IU)",
         car: {
           name: "HD1234",
@@ -22,6 +23,7 @@ export const mockJourneyList: MockJourneyList[] = [
         ],
       },
       {
+        journeyId: "28",
         driver: "",
         car: {
           name: "D1234HS",
@@ -37,7 +39,7 @@ export const mockJourneyList: MockJourneyList[] = [
     ],
   },
   {
-    journeyId: "456",
+    scheduleId: "456",
     date: "26/02/23",
     time: 1900,
     totalPax: 16,

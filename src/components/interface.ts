@@ -3,7 +3,7 @@ import { Car } from "./helper";
 export type labelObject = { label?: string; value?: string };
 
 export type journeyAssignmentPayload = {
-  journeyId?: number;
+  journeyId?: string;
   car?: Car;
   driver?: string;
   groups?: group[];
@@ -16,7 +16,7 @@ export type group = {
 } | undefined;
 
 export type mockJourneyList = {
-  journeyId: string;
+  scheduleId: string;
   date: string;
   time: number;
   totalPax: number;
