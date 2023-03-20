@@ -1,4 +1,4 @@
-import { labelObject } from "@/components/interface";
+import { labelObject } from "@/services/interface";
 import { mockLocationsList } from "@/pages/api/mockData/mockLocationsList";
 import { Autocomplete, createFilterOptions, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";

@@ -1,4 +1,4 @@
-import { labelObject } from "@/components/interface";
+import { labelObject } from "@/services/interface";
 import {
   Autocomplete,
   createFilterOptions,

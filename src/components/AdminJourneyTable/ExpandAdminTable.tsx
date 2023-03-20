@@ -1,5 +1,4 @@
 import { mockCarplateList } from "@/pages/api/mockData/mockCarplateList";
-import { mockDriverList } from "@/pages/api/mockData/mockDriverList";
 import { mockGroupList } from "@/pages/api/mockData/mockGroupList";
 import { AutoCompleteFieldDropdown } from "@/utils/AutoCompleteFieldDropdown";
 import MultipleSelect from "@/utils/MultiSelect";
@@ -10,56 +9,13 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import {
-  Car,
-  dataLabelValueMapper,
-  driverMapper,
-  passengerMapper,
-} from "./helper";
-import { group, journeyAssignmentPayload, labelObject } from "./interface";
-import { useQuery } from "@tanstack/react-query";
-
-type Journey = {
-  car?: Car;
-  driver?: string;
-  groups?: group[];
-  pax?: number;
-};
-
-const calculatePax = (groups: group[]) =>
-  groups.reduce((prev, curr) => prev + (curr?.pax || 0), 0) || 0;
-
-const getCarList = async () =>
-  await axios
-    .get("/carList")
-    .then((res) => res.data)
-    .catch(() => dataLabelValueMapper(mockCarplateList));
-
-const useCarList = () => {
-  return useQuery(["carList"], getCarList);
-};
-
-const getDriverList = async () =>
-  await axios
-    .get("/driverList")
-    .then((res) => res.data)
-    .catch(() => driverMapper(mockDriverList));
-
-const useDriverList = () => {
-  return useQuery(["driverList"], getDriverList);
-};
-
-const getGroupsList = async (scheduleId: string) =>
-  await axios
-    .get(`/groupsList?scheduleId=${scheduleId}`)
-    .then((res) => res.data)
-    .catch(() => passengerMapper(mockGroupList));
-
-const useGroupsList = (scheduleId: string) => {
-  return useQuery(["groupsList", scheduleId], () => getGroupsList(scheduleId));
-};
+import { calculatePax } from "../helper";
+import { journeyAssignmentPayload, labelObject } from "../../services/interface";
+import { useCarList } from "@/hooks/useCarList";
+import { useDriverList } from "@/hooks/useDriverList";
+import { useGroupsList } from "@/hooks/useGroupsList";
+import { saveJourney } from "@/services";
 
 export const ExpandAdminTable = (props: {
   assignmentDetails: journeyAssignmentPayload;
@@ -75,29 +31,9 @@ export const ExpandAdminTable = (props: {
 
   const [journey, setJourney] = useState(getJourney);
 
-  const config = {
-    headers: {
-      "content-type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    },
-  };
-
   const { data: carList, error, isLoading } = useCarList();
   const { data: driverList } = useDriverList();
   const { data: groupsList } = useGroupsList(scheduleId);
-
-  const handleSave = async (journey: Journey) => {
-    await axios
-      .put(`/journey/${assignmentDetails.journeyId}`, journey, config)
-      .then((res) => {
-        console.log(res);
-        console.log("save", journey);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log("save", journey);
-      });
-  };
 
   const isFirstRender = useRef(true);
 
@@ -106,7 +42,7 @@ export const ExpandAdminTable = (props: {
       console.log("first");
       isFirstRender.current = false;
     } else {
-      handleSave(journey);
+      saveJourney(journey, assignmentDetails);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [journey]);

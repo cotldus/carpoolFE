@@ -1,4 +1,4 @@
-import AdminTableV2 from "@/components/AdminTableV2";
+import AdminTableV2 from "@/components/AdminJourneyTable/Index";
 import CreateCar from "@/components/CreateCar";
 import Layout from "@/components/Layout";
 import { ReactElement } from "react";
@@ -12,7 +12,7 @@ function Driver() {
         </div>
       </div>
       <div className="flex justify-center">
-      <div className="p-0">
+        <div className="p-0">
           <CreateCar />
         </div>
       </div>

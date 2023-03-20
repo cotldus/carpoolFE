@@ -1,4 +1,4 @@
-import { mockJourneyList as MockJourneyList } from "../../../components/interface";
+import { mockJourneyList as MockJourneyList } from "../../../services/interface";
 export const mockJourneyList: MockJourneyList[] = [
   {
     scheduleId: "12",

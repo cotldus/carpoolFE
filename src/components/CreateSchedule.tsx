@@ -1,42 +1,15 @@
+import { submitSchedule } from "@/services";
 import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 import DatePickers from "@/utils/datepicker";
 import TimePickers from "@/utils/timepicker";
 import { Button } from "@mui/material";
-import axios from "axios";
-
-export const driverList = [
-  { label: "Ronald MacDonald" },
-  { label: "Anwar Ibrahim" },
-  { label: "Ivan The Terrible" },
-  { label: "Bobby MacFly" },
-  { label: "Lee Ji-eun" },
-].map((suggestion) => ({
-  value: suggestion.label,
-  label: suggestion.label,
-}));
-
-const config = {
-  headers: {
-    "content-type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-  },
-};
 
 const onSubmit = async (e: any) => {
   e.preventDefault();
   const form = e.target;
   const formData = new FormData(form);
   const formJson = Object.fromEntries(formData.entries());
-  await axios
-    .post("/schedule", formJson, config)
-    .then((res) => {
-      console.log(res);
-      console.log(formJson);
-    })
-    .catch((e) => {
-      console.log(e);
-      console.log(formJson);
-    });
+  await submitSchedule(formJson);
 };
 
 export const CreateSchedule = () => {
@@ -92,7 +65,7 @@ export const CreateSchedule = () => {
                   >
                     Depature time:
                   </label>
-                  <TimePickers name="time"/>
+                  <TimePickers name="time" />
                 </div>
               </div>
               <div className="pt-4">

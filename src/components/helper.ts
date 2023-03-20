@@ -1,9 +1,8 @@
-import { journeyAssignmentPayload, labelObject } from "./interface";
+import { Car } from "@/services/interface";
+import { group, journeyAssignmentPayload, labelObject } from "../services/interface";
 
-export type Car = {
-  name: string;
-  pax: number
-}
+export const calculatePax = (groups: group[]) =>
+  groups.reduce((prev, curr) => prev + (curr?.pax || 0), 0) || 0;
 
 export const dataLabelValueMapper = (data: Car[]) => {
   const labelValueMapped: labelObject[] = data.map((item) => ({

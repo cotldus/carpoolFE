@@ -1,30 +1,13 @@
+import { createCar } from "@/services";
 import { Button } from "@mui/material";
-import axios from "axios";
 
 const CreateCar = () => {
-  const config = {
-    headers: {
-      "content-type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    },
-  };
-
   const onSubmit = async (e: any) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
-    await axios
-      .post("/car", formJson, config)
-      .then((res) => {
-        console.log(res);
-        console.log(formJson);
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(formJson);
-      });
+    await createCar(formJson);
   };
   return (
     <form method="post" onSubmit={onSubmit}>
@@ -52,7 +35,7 @@ const CreateCar = () => {
                   <input
                     type="text"
                     id="car_plate_number"
-                    name= "carPlateNumber"
+                    name="carPlateNumber"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Car plate number"
                     required
@@ -68,7 +51,7 @@ const CreateCar = () => {
                   <input
                     type="text"
                     id="passenger_pax"
-                    name= "maxPassengers"
+                    name="maxPassengers"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                     placeholder="0"
                     required

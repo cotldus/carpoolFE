@@ -1,5 +1,3 @@
-import { Car } from "./helper";
-
 export type labelObject = { label?: string; value?: string };
 
 export type journeyAssignmentPayload = {
@@ -10,10 +8,12 @@ export type journeyAssignmentPayload = {
   groupPax?: number;
 };
 
-export type group = {
-  groupid: string;
-  pax: number;
-} | undefined;
+export type group =
+  | {
+      groupid: string;
+      pax: number;
+    }
+  | undefined;
 
 export type mockJourneyList = {
   scheduleId: string;
@@ -24,3 +24,21 @@ export type mockJourneyList = {
   dropoff: string[];
   assignment: journeyAssignmentPayload[];
 };
+
+export type Journey = {
+  car?: Car;
+  driver?: string;
+  groups?: group[];
+  pax?: number;
+};
+
+export type Car = {
+  name: string;
+  pax: number;
+};
+
+export interface CarPlateList {
+  inputValue?: string;
+  label: string;
+  value?: string;
+}
