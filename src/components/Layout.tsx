@@ -3,7 +3,6 @@ import { useSession } from "next-auth/react";
 import Router from "next/router";
 import { useEffect } from "react";
 import Navbar from "./Navbar";
-import { Toggles } from "./Toggles";
 
 export default function Layout({
   children,
@@ -28,7 +27,7 @@ export default function Layout({
     return (
       <>
       <Navbar />
-      <Toggles/>
+      {/* <Toggles/> */}
       <main>{children}</main>
     </>
     );

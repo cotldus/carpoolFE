@@ -58,7 +58,7 @@ function Login() {
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <section className="flex justify-center items-center h-screen bg-gray-800">
+      <section className="flex justify-center items-center h-screen bg-gray-400">
         <div className="max-w-md w-full bg-gray-900 rounded p-6 space-y-4">
           <div className="flex justify-center items-center">
             <Image
@@ -70,8 +70,8 @@ function Login() {
             />
           </div>
           <div className="mb-4">
-            <p className="text-gray-400">Sign In</p>
-            <h2 className="text-xl font-bold text-white">Carpool Hero</h2>
+            <p className="text-gray-400">{t.sign_in}</p>
+            <h2 className="text-xl font-bold text-white">{t.carpool_hero}</h2>
           </div>
           <div>
             <TextboxWithSelection
@@ -96,7 +96,7 @@ function Login() {
               id="password-input"
               {...register("password")}
               type={showPassword ? "text" : "password"}
-              placeholder="Password"
+              placeholder={t.password}
               autoComplete="current-password"
               InputProps={{
                 endAdornment: (
@@ -120,7 +120,7 @@ function Login() {
               type="submit"
               className="inline-block w-full rounded px-6 pt-2.5 pb-2 text-md font-medium uppercase leading-normal text-white  bg-blue-600 hover:bg-blue-700 transition duration-200"
             >
-              Sign In
+              {t.sign_in}
             </button>
           </div>
           <div className="flex items-center justify-between">

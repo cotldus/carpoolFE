@@ -5,6 +5,7 @@ import { ReactElement, ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { GlobalToggles } from "@/components/GlobalToggles";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,7 +34,10 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       // you have a short session maxAge time. Shown here with default values.
       session={pageProps.session}
     >
+      
       <QueryClientProvider client={queryClient}>
+        <GlobalToggles/>
+
         {getLayout(<Component {...pageProps} />)}
         {process.env.NODE_ENV === "development" && (
           <ReactQueryDevtools initialIsOpen={false} />
