@@ -3,14 +3,15 @@ import { useSession } from "next-auth/react";
 import Router from "next/router";
 import { useEffect } from "react";
 import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 export default function Layout({
   children,
 }: {
   children: string | JSX.Element;
 }) {
-  const {data, status} = useSession();
-  console.log("USER SESSION: ",data)
+  const { data, status } = useSession();
+  console.log("USER SESSION: ", data);
   // return (
   //   <>
   //     <Navbar />
@@ -25,17 +26,21 @@ export default function Layout({
 
   if (status === "authenticated")
     return (
-      <>
-      <Navbar />
-      {/* <Toggles/> */}
-      <main>{children}</main>
-    </>
+      <div className="flex">
+        <div style={{width: "25%"}}>
+          <Sidebar />
+        </div>
+        {/* <Toggles/> */}
+        <main>{children}</main>
+      </div>
     );
 
-  return (<Backdrop
-    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-    open={true}
-  >
-    <CircularProgress color="inherit" />
-  </Backdrop>);
+  return (
+    <Backdrop
+      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      open={true}
+    >
+      <CircularProgress color="inherit" />
+    </Backdrop>
+  );
 }
