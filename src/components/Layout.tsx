@@ -27,9 +27,7 @@ export default function Layout({
   if (status === "authenticated")
     return (
       <div className="flex">
-        <div style={{width: "25%"}}>
-          <Sidebar />
-        </div>
+        <Sidebar />
         {/* <Toggles/> */}
         <main>{children}</main>
       </div>
