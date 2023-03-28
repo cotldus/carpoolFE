@@ -46,13 +46,11 @@ function Login() {
   const onSubmit: SubmitHandler<Inputs> = (data) => onHandleSubmit(data);
 
   const onHandleSubmit = async (data: Inputs) => {
-    console.log("Sign in as: ", data);
     const res = await signIn("credentials", {
       phoneNumber: data.phoneNumber,
       password: data.password,
       redirect: false,
     });
-    console.log("Login status: ", res);
     
     res?.status === 200 && router.push('/admin')
   }

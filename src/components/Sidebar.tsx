@@ -1,5 +1,6 @@
 import { ROUTES } from "@/constants";
 import { FolderIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { DoorBack } from "@mui/icons-material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -16,10 +17,11 @@ import ListItemText from "@mui/material/ListItemText";
 import { CSSObject, styled, Theme, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import * as React from "react";
 import en from "../locales/en-US";
 import cn from "../locales/zh-CN";
+import { signOut } from "next-auth/react";
 
 enum NAVIGATE_TO {
   ADMIN = "admin",
@@ -134,7 +136,11 @@ export default function MiniDrawer() {
   return (
     <>
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ background: "#000000", filter: "invert(65%)" }}>
+      <AppBar
+        position="fixed"
+        open={open}
+        sx={{ background: "#000000", filter: "invert(65%)" }}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -149,7 +155,7 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="overline" noWrap component="div">
-            {navigation.find(item => router.pathname === item.href)?.name}
+            {navigation.find((item) => router.pathname === item.href)?.name}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -213,6 +219,39 @@ export default function MiniDrawer() {
             );
           })}
         </List>
+        <a
+          key={"logout"}
+          onClick={(e) => {e.preventDefault(); signOut({redirect: false}); Router.push(ROUTES.LOGIN)}}
+          className=""
+        >
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            className={classNames(
+              "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
+              "group flex items-center rounded-md px-2 py-2 text-sm font-medium"
+            )}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <DoorBack
+                className={classNames(
+                  "text-gray-400 group-hover:text-gray-500",
+                  "ml-3 h-6 w-6 flex-shrink-0"
+                )}
+              />
+            </ListItemIcon>
+            <ListItemText primary={"Logout"} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </a>
       </Drawer>
     </>
   );

@@ -15,7 +15,7 @@ const onSubmit = async (e: any) => {
 export const CreateSchedule = () => {
   return (
     <form method="post" onSubmit={onSubmit}>
-      <div className="mt-12 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-1 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-1 w-4/5 ">
+      <div className="space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-1 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-1 w-full ">
         <div className="md:flex md:flex-col md:align-center">
           <div className="rounded-lg shadow-sm divide-y divide-zinc-600 bg-zinc-900 overflow-visible">
             <div className="p-6">
