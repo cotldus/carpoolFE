@@ -26,10 +26,9 @@ export default function Layout({
 
   if (status === "authenticated")
     return (
-      <div className="flex">
-        <Sidebar />
-        {/* <Toggles/> */}
-        <main>{children}</main>
+      <div className="inline-flex w-full">
+        <Sidebar/>
+        <main >{children}</main>
       </div>
     );
 
