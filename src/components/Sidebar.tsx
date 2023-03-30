@@ -1,8 +1,10 @@
 import { ROUTES } from "@/constants";
-import { FolderIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline";
-import { DoorBack } from "@mui/icons-material";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import DriveEtaIcon from "@mui/icons-material/DriveEta";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,11 +19,11 @@ import ListItemText from "@mui/material/ListItemText";
 import { CSSObject, styled, Theme, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { signOut } from "next-auth/react";
 import Router, { useRouter } from "next/router";
 import * as React from "react";
 import en from "../locales/en-US";
 import cn from "../locales/zh-CN";
-import { signOut } from "next-auth/react";
 
 enum NAVIGATE_TO {
   ADMIN = "admin",
@@ -108,15 +110,15 @@ export default function MiniDrawer() {
   const [open, setOpen] = React.useState(false);
 
   const navigation = [
-    { name: "Admin", icon: HomeIcon, href: ROUTES.ADMIN },
+    { name: "Admin", icon: CalendarMonthIcon, href: ROUTES.ADMIN },
     {
       name: "Passengers",
-      icon: UsersIcon,
+      icon: EmojiPeopleIcon,
       href: ROUTES.PASSENGER,
     },
     {
       name: "Driver",
-      icon: FolderIcon,
+      icon: DriveEtaIcon,
       href: ROUTES.DRIVER,
     },
   ];
@@ -159,7 +161,11 @@ export default function MiniDrawer() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open} sx={{ "& .MuiPaper-root": {position: "relative", height: "100vh"}}}>
+      <Drawer
+        variant="permanent"
+        open={open}
+        sx={{ "& .MuiPaper-root": { position: "relative", height: "100vh" } }}
+      >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
@@ -221,7 +227,11 @@ export default function MiniDrawer() {
         </List>
         <a
           key={"logout"}
-          onClick={(e) => {e.preventDefault(); signOut({redirect: false}); Router.push(ROUTES.LOGIN)}}
+          onClick={(e) => {
+            e.preventDefault();
+            signOut({ redirect: false });
+            Router.push(ROUTES.LOGIN);
+          }}
           className="absolute bottom-0"
         >
           <ListItemButton
@@ -242,7 +252,7 @@ export default function MiniDrawer() {
                 justifyContent: "center",
               }}
             >
-              <DoorBack
+              <MeetingRoomIcon
                 className={classNames(
                   "text-gray-400 group-hover:text-gray-500",
                   "ml-3 h-6 w-6 flex-shrink-0"
