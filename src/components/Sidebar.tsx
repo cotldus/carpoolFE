@@ -159,7 +159,7 @@ export default function MiniDrawer() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} sx={{ "& .MuiPaper-root": {position: "relative", height: "100vh"}}}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
@@ -222,7 +222,7 @@ export default function MiniDrawer() {
         <a
           key={"logout"}
           onClick={(e) => {e.preventDefault(); signOut({redirect: false}); Router.push(ROUTES.LOGIN)}}
-          className=""
+          className="absolute bottom-0"
         >
           <ListItemButton
             sx={{
