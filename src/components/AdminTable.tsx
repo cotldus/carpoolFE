@@ -104,13 +104,13 @@ const EditLine = ({
 
 const AdminTable = () => {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className="w-full">
       <form>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <Table sx={{ maxWidth: "100%", width: 1 }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Journey ID</StyledTableCell>
-              <StyledTableCell align="right">Date/ Time</StyledTableCell>
+              <StyledTableCell align="right" width="20%">Date/ Time</StyledTableCell>
               <StyledTableCell align="right">Pick up</StyledTableCell>
               <StyledTableCell align="right">Departure</StyledTableCell>
               <StyledTableCell align="right">Pax</StyledTableCell>

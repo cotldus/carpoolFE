@@ -36,8 +36,6 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     >
       
       <QueryClientProvider client={queryClient}>
-        <GlobalToggles/>
-
         {getLayout(<Component {...pageProps} />)}
         {process.env.NODE_ENV === "development" && (
           <ReactQueryDevtools initialIsOpen={false} />

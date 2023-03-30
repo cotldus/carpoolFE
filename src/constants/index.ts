@@ -2,6 +2,7 @@ export enum ROUTES {
   ADMIN = "/admin",
   DRIVER = "/driver",
   PASSENGER = "/passenger",
+  LOGIN = "/login"
 }
 
 export const countryOptions = [
