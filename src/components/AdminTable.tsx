@@ -7,6 +7,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import EditIcon from "@mui/icons-material/Edit";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -66,8 +68,13 @@ const Row = ({ row }: { row: Row }) => {
       <StyledTableCell align="right">{row.pickup}</StyledTableCell>
       <StyledTableCell align="right">{row.departure}</StyledTableCell>
       <StyledTableCell align="right">{row.pax}</StyledTableCell>
-      <StyledTableCell align="right" onClick={() => setEditMode(true)}>
-        Edit/Duplicate
+      <StyledTableCell align="right">
+        {
+          <div>
+            <EditIcon onClick={() => setEditMode(true)} />
+            <ContentCopyIcon />
+          </div>
+        }
       </StyledTableCell>
     </StyledTableRow>
   );
@@ -106,11 +113,16 @@ const AdminTable = () => {
   return (
     <TableContainer component={Paper} className="w-full">
       <form>
-        <Table sx={{ maxWidth: "100%", width: 1 }} aria-label="customized table">
+        <Table
+          sx={{ maxWidth: "100%", width: 1 }}
+          aria-label="customized table"
+        >
           <TableHead>
             <TableRow>
               <StyledTableCell>Journey ID</StyledTableCell>
-              <StyledTableCell align="right" width="20%">Date/ Time</StyledTableCell>
+              <StyledTableCell align="right" width="20%">
+                Date/ Time
+              </StyledTableCell>
               <StyledTableCell align="right">Pick up</StyledTableCell>
               <StyledTableCell align="right">Departure</StyledTableCell>
               <StyledTableCell align="right">Pax</StyledTableCell>
