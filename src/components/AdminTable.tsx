@@ -13,6 +13,7 @@ import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 import DatePickers from "@/utils/datepicker";
 import TimePickers from "@/utils/timepicker";
 import SaveIcon from "@mui/icons-material/Save";
+import { labelObject } from "@/services/interface";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,8 +39,8 @@ function createData(
   id: string,
   date: string,
   time: string,
-  pickup: string,
-  departure: string,
+  pickup: labelObject[],
+  departure: labelObject[],
   pax: number
 ) {
   return { id, date, time, pickup, departure, pax };
@@ -48,42 +49,42 @@ function createData(
 const rows = [
   createData(
     "159",
-    "22 June",
-    "10:30am",
-    "Tmn Megah De Taste",
-    "Jurong East",
+    "2023-06-22",
+    "10:30",
+    [{ label: "Tmn Megah De Taste", value: "Tmn Megah De Taste" }],
+    [{ label: "Jurong East", value: "Jurong East" }],
     24
   ),
   createData(
     "123",
-    "23 June",
-    "10:30am",
-    "Tmn Megah De Taste",
-    "Jurong East",
+    "2023-06-22",
+    "10:30",
+    [{ label: "Tmn Megah De Taste", value: "Tmn Megah De Taste" }],
+    [{ label: "Jurong East", value: "Jurong East" }],
     37
   ),
   createData(
     "156",
-    "24 June",
-    "10:30am",
-    "Tmn Megah De Taste",
-    "Jurong East",
+    "2023-06-22",
+    "10:30",
+    [{ label: "Tmn Megah De Taste", value: "Tmn Megah De Taste" }],
+    [{ label: "Jurong East", value: "Jurong East" }],
     24
   ),
   createData(
     "124",
-    "25 June",
-    "10:30am",
-    "Tmn Megah De Taste",
-    "Jurong East",
+    "2023-06-22",
+    "10:30",
+    [{ label: "Tmn Megah De Taste", value: "Tmn Megah De Taste" }],
+    [{ label: "Jurong East", value: "Jurong East" }],
     67
   ),
   createData(
     "175",
     "26 June",
-    "10:30am",
-    "Tmn Megah De Taste",
-    "Jurong East",
+    "10:30",
+    [{ label: "Tmn Megah De Taste", value: "Tmn Megah De Taste" }],
+    [{ label: "Jurong East", value: "Jurong East" }],
     49
   ),
 ];
@@ -92,17 +93,16 @@ type Row = {
   id: string;
   date: string;
   time: string;
-  departure: string;
-  pickup: string;
+  departure: labelObject[];
+  pickup: labelObject[];
   pax: number;
 };
 
 const Row = ({ row }: { row: Row }) => {
   const [editMode, setEditMode] = useState(false);
-  if (editMode)
-    return <EditLine setEditMode={setEditMode} journeyId={row.id} />;
+  if (editMode) return <EditLine setEditMode={setEditMode} row={row} />;
   function duplicateSchedule(id: string): void {
-    console.log("duplicate " + id)
+    console.log("duplicate " + id);
   }
 
   return (
@@ -112,14 +112,18 @@ const Row = ({ row }: { row: Row }) => {
       </StyledTableCell>
       <StyledTableCell align="right">{row.date}</StyledTableCell>
       <StyledTableCell align="right">{row.time}</StyledTableCell>
-      <StyledTableCell align="right">{row.pickup}</StyledTableCell>
-      <StyledTableCell align="right">{row.departure}</StyledTableCell>
+      <StyledTableCell align="right">
+        {row.pickup.map((item) => item.label).join(", ")}
+      </StyledTableCell>
+      <StyledTableCell align="right">
+        {row.departure.map((item) => item.label).join(", ")}
+      </StyledTableCell>
       <StyledTableCell align="right">{row.pax}</StyledTableCell>
       <StyledTableCell align="right">
         {
           <div>
             <EditIcon onClick={() => setEditMode(true)} />
-            <ContentCopyIcon onClick={() => duplicateSchedule(row.id)}/>
+            <ContentCopyIcon onClick={() => duplicateSchedule(row.id)} />
           </div>
         }
       </StyledTableCell>
@@ -129,27 +133,27 @@ const Row = ({ row }: { row: Row }) => {
 
 const EditLine = ({
   setEditMode,
-  journeyId,
+  row,
 }: {
   setEditMode: Dispatch<SetStateAction<boolean>>;
-  journeyId: string;
+  row: Row;
 }) => {
   return (
     <StyledTableRow>
       <StyledTableCell component="th" scope="row">
-        {journeyId}
+        {row.id}
       </StyledTableCell>
       <StyledTableCell align="right">
-        <DatePickers name="date" />
+        <DatePickers name="date" initValue={row.date} />
       </StyledTableCell>
       <StyledTableCell align="right">
-        <TimePickers name="time" />
+        <TimePickers name="time" initValue={row.time} />
       </StyledTableCell>
       <StyledTableCell align="right">
-        <AutoCompleteFieldInput name="pickUp" />
+        <AutoCompleteFieldInput name="pickUp" initValue={row.pickup} />
       </StyledTableCell>
       <StyledTableCell align="right">
-        <AutoCompleteFieldInput name="dropOff" />
+        <AutoCompleteFieldInput name="dropOff" initValue={row.departure} />
       </StyledTableCell>
       <StyledTableCell align="right">
         <input
@@ -157,7 +161,7 @@ const EditLine = ({
           type="text"
           id="passenger_pax"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-          placeholder="0"
+          defaultValue={row.pax.toString()}
           required
         />
       </StyledTableCell>

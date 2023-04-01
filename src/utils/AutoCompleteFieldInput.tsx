@@ -4,8 +4,14 @@ import { Autocomplete, createFilterOptions, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
 const filter = createFilterOptions<any>();
-export const AutoCompleteFieldInput = ({ name }: { name?: string }) => {
-  const [value, setValue] = useState<labelObject[]>([]);
+export const AutoCompleteFieldInput = ({
+  name,
+  initValue,
+}: {
+  name?: string;
+  initValue?: labelObject[];
+}) => {
+  const [value, setValue] = useState<labelObject[]>(initValue || []);
   const [mockPickUpLocation, setMockPickUpLocation] = useState<labelObject[]>(
     mockLocationsList.map((item) => ({ label: item, value: item }))
   );
