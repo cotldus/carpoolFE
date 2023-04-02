@@ -5,6 +5,7 @@ import React from "react";
 import AdminTable from "@/components/AdminTable";
 import { CreateSchedule } from "@/components/CreateSchedule";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Close } from "@mui/icons-material";
 
 function Admin() {
   const [openCreateJourney, setOpenCreateJourney] = useState<boolean>(false);
@@ -12,7 +13,12 @@ function Admin() {
     <div>
       <div className="inline-block justify-center mt-16 px-2">
         <div className="relative p-4">
-          <Button variant="outlined" onClick={() => setOpenCreateJourney(true)} className="absolute right-0 left-auto" size="small">
+          <Button
+            variant="outlined"
+            onClick={() => setOpenCreateJourney(true)}
+            className="absolute right-0 left-auto"
+            size="small"
+          >
             Create Journey
           </Button>
         </div>
@@ -26,11 +32,25 @@ function Admin() {
         open={openCreateJourney}
         onClose={() => setOpenCreateJourney(false)}
       >
-        <DialogContent>
-          <div className="flex justify-center">
-            <CreateSchedule setOpenCreateJourney={setOpenCreateJourney}/>
-          </div>
-        </DialogContent>
+        <div className="dialog-bkg">
+          <DialogTitle
+            sx={{ padding: 1, justifyContent: "right", display: "flex" }}
+            className=""
+          >
+            <Button
+              className="right"
+              sx={{ padding: 0, margin: 0, minWidth: "24px" }}
+              onClick={() => setOpenCreateJourney(false)}
+            >
+              <Close color="info"/>
+            </Button>
+          </DialogTitle>
+          <DialogContent sx={{ padding: 0 }} className="">
+            <div className="flex justify-center">
+              <CreateSchedule />
+            </div>
+          </DialogContent>
+        </div>
       </Dialog>
     </div>
   );

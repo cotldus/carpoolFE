@@ -7,7 +7,18 @@ module.exports = {
     "./src/pages/api/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "light-grey": "#DCE3E7",
+        "mint-green": "#D7FDF0",
+        "minimalist-white": "#F5F5F5",
+        "liight-blue": "#ECEFF1"
+        // add more custom colors here
+      },
+      fontFamily: {
+        'lora': ['Lora', 'serif']
+      }
+    },
   },
   plugins: [],
 }
