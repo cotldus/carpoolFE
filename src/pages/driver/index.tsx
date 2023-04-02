@@ -1,12 +1,14 @@
 import AdminTableV2 from "@/components/AdminJourneyTable/Index";
 import CreateCar from "@/components/CreateCar";
 import Layout from "@/components/Layout";
+import { useCarList } from "@/hooks/useCarList";
 import { Close } from "@mui/icons-material";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { ReactElement, useState } from "react";
 
 function Driver() {
   const [openCreateJourney, setOpenCreateJourney] = useState<boolean>(false);
+  useCarList();
   return (
     <div className="flex-col">
       <div className="inline-block justify-center mt-16 px-2">
@@ -40,12 +42,12 @@ function Driver() {
               sx={{ padding: 0, margin: 0, minWidth: "24px" }}
               onClick={() => setOpenCreateJourney(false)}
             >
-              <Close color="info"/>
+              <Close color="info" />
             </Button>
           </DialogTitle>
           <DialogContent sx={{ padding: 0 }} className="">
             <div className="flex justify-center">
-              <CreateCar />
+              <CreateCar setOpenCreateJourney={setOpenCreateJourney} />
             </div>
           </DialogContent>
         </div>

@@ -14,6 +14,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useState, Fragment } from "react";
 import { ExpandAdminTable } from "./ExpandAdminTable";
 import { createData } from "../helper";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useDeleteSchedule } from "@/hooks/useDeleteSchedule";
 
 export default function ExpandableRow(props: {
   row: ReturnType<typeof createData>;
@@ -23,7 +25,7 @@ export default function ExpandableRow(props: {
   const [open, setOpen] = useState(false);
   const addJourney = useAddJourney(scheduleId);
   const addNewAssignmentRow = async () => addJourney.mutate();
-
+  const deleteSchedule = useDeleteSchedule();
   const { data: journeyAssignment } = useJourneyList(scheduleId);
 
   return (
@@ -78,9 +80,12 @@ export default function ExpandableRow(props: {
             Notify
           </Button>
         </TableCell>
+        <TableCell align="right">
+          <DeleteIcon onClick={() => deleteSchedule.mutate(scheduleId)} />
+        </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ padding: 0 }} colSpan={6}>
+        <TableCell style={{ padding: 0 }} colSpan={7}>
           <div className="bg-slate-100">
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1, marginTop: 0 }}>

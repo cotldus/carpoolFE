@@ -10,7 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import ExpandableRow from "./ExpandableRow";
 
 export default function AdminJourneyTable() {
-  const headerData = ["Date", "Time", "Pickup", "Dropoff", ""];
+  const headerData = ["Date", "Time", "Pickup", "Dropoff", "Notify", "Delete"];
 
   const { data: scheduleList = [] } = useScheduleList(mockGetScheduleList);
   return (
@@ -36,7 +36,6 @@ export default function AdminJourneyTable() {
           </TableHead>
           <TableBody>
             {scheduleList.map((row: any) => {
-              console.log("row1", row);
               return (
                 <ExpandableRow
                   key={`${row.scheduleId}-journey`}

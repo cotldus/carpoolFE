@@ -5,10 +5,10 @@ import { Journey, journeyAssignmentPayload } from "./interface";
 
 export const saveJourney = async (
   journey: Journey,
-  assignmentDetails: journeyAssignmentPayload
+  journeyId: string
 ) => {
   await axios
-    .put(`/journey/${assignmentDetails.journeyId}`, journey, config)
+    .put(`/journey/save/${journeyId}`, journey, config)
     .then((res) => {
       console.log(res);
       console.log("save", journey);
@@ -17,6 +17,10 @@ export const saveJourney = async (
       console.log(e);
       console.log("save", journey);
     });
+
+  return Promise.resolve({
+    status: 200
+  })
 };
 
 export const getJourneyList = async (scheduleId: string) =>

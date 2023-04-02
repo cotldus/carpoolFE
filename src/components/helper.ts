@@ -5,9 +5,9 @@ export const calculatePax = (groups: group[]) =>
   groups.reduce((prev, curr) => prev + (curr?.pax || 0), 0) || 0;
 
 export const dataLabelValueMapper = (data: Car[]) => {
-  const labelValueMapped: labelObject[] = data.map((item) => ({
-    label: `#${item.name} - ${item.pax} pax`,
-    value: item.name,
+  const labelValueMapped: labelObject[] = data?.map((item) => ({
+    label: `#${item.carPlateNumber} - ${item.maxPax} pax`,
+    value: item.carPlateNumber,
   }));
   return labelValueMapped;
 };

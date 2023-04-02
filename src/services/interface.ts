@@ -33,8 +33,8 @@ export type Journey = {
 };
 
 export type Car = {
-  name: string;
-  pax: number;
+  carPlateNumber: string;
+  maxPax: number;
 };
 
 export interface CarPlateList {

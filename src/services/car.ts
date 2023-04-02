@@ -5,7 +5,7 @@ import { config } from ".";
 
 export const createCar = async (formJson: {
   [key: string]: FormDataEntryValue;
-}) =>
+}) => {
   await axios
     .post("/car", formJson, config)
     .then((res) => {
@@ -17,8 +17,14 @@ export const createCar = async (formJson: {
       console.log(formJson);
     });
 
+    return Promise.resolve({
+      status: 200
+    })
+}
+  
+
 export const getCarList = async () =>
   await axios
     .get("/carList")
     .then((res) => res.data)
-    .catch(() => dataLabelValueMapper(mockCarplateList));
+    .catch(() => mockCarplateList);
