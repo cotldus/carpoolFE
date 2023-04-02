@@ -1,7 +1,8 @@
 import { labelObject } from "@/services/interface";
-import { mockLocationsList } from "@/pages/api/mockData/mockLocationsList";
-import { Autocomplete, createFilterOptions, TextField } from "@mui/material";
+import { mockLocationsList, mockLocationsListNew } from "@/pages/api/mockData/mockLocationsList";
+import { Autocomplete, createFilterOptions, InputAdornment, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
+import { DoorBack } from "@mui/icons-material";
 
 const filter = createFilterOptions<any>();
 export const AutoCompleteFieldInput = ({
@@ -13,7 +14,7 @@ export const AutoCompleteFieldInput = ({
 }) => {
   const [value, setValue] = useState<labelObject[]>(initValue || []);
   const [mockPickUpLocation, setMockPickUpLocation] = useState<labelObject[]>(
-    mockLocationsList.map((item) => ({ label: item, value: item }))
+    mockLocationsListNew.map((item) => ({ label: item.value, value: item.value, category: item.country }))
   );
   return (
     <Autocomplete
@@ -23,6 +24,7 @@ export const AutoCompleteFieldInput = ({
       value={value}
       selectOnFocus
       clearOnBlur
+      groupBy={(option => option?.category || "")}
       onChange={(event, newValue) => {
         if (newValue.length <= 0) {
           setValue([]);
