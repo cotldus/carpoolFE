@@ -20,6 +20,7 @@ import { useDriverList } from "@/hooks/useDriverList";
 import { useGroupsList } from "@/hooks/useGroupsList";
 import { useSaveJourney } from "@/hooks/useSaveJourney";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useDeleteJourney } from "@/hooks/useDeleteJourney";
 
 export const ExpandAdminTable = (props: {
   assignmentDetails: journeyAssignmentPayload;
@@ -40,7 +41,7 @@ export const ExpandAdminTable = (props: {
   const { data: carList, error, isLoading } = useCarList();
   const { data: driverList } = useDriverList();
   const { data: groupsList } = useGroupsList(scheduleId);
-
+  const deleteJourney = useDeleteJourney(scheduleId);
   const isFirstRender = useRef(true);
 
   useEffect(() => {
@@ -131,7 +132,7 @@ export const ExpandAdminTable = (props: {
             />
           </TableCell>
           <TableCell width="40px">
-            <DeleteIcon />
+            <DeleteIcon onClick={() => deleteJourney.mutate(assignmentDetails.journeyId || "")}/>
           </TableCell>
         </TableBody>
       </Table>

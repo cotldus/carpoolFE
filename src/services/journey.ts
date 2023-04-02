@@ -35,11 +35,26 @@ export const getJourneyList = async (scheduleId: string) =>
 
 export const addJourney = (scheduleId: string) => {
   axios
-    .patch(`/new/journey/${scheduleId}`)
+    .patch(`/journey/new/${scheduleId}`)
     .then((response) => response.data)
     .catch((e) => null);
   return Promise.resolve({
     data: Math.floor(Math.random() * 100).toString(),
+    status: 200,
+  });
+};
+
+export const deleteJourney = async (id: string) => {
+  await axios
+    .delete(`/journey/delete/${id}`, config)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+
+  return Promise.resolve({
     status: 200,
   });
 };
