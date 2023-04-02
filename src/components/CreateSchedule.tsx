@@ -99,6 +99,19 @@ export const CreateSchedule = () => {
                     className="w-full"
                   />
                 </div>
+                <div className="item2 col-span-1">
+                  <label placeholder="country" className="dialog-text-font-1">
+                    To:
+                  </label>
+                  <DropdownWithIcon
+                    key={"country-select-to"}
+                    defaultValue={newSchedule?.to}
+                    setValue={onHandleTo}
+                    selectionList={countryOptionsFilter}
+                    withPhoneNumber={false}
+                    className="w-full"
+                  />
+                </div>
               </div>
               <div className="sm:grid sm:grid-cols-2 sm:mx-0 xl:grid-cols-2 xl:mx-0 pt-4">
                 <div className="sm:pr-3">
