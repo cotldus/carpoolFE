@@ -1,14 +1,25 @@
-import { createCar } from "@/services";
+import { useAddCar } from "@/hooks/useAddCar";
 import { Button } from "@mui/material";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
-const CreateCar = () => {
+const CreateCar = ({
+  setOpenCreateJourney,
+}: {
+  setOpenCreateJourney: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const addCar = useAddCar();
   const onSubmit = async (e: any) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
-    await createCar(formJson);
+    addCar.mutate(formJson);
   };
+
+  useEffect(() => {
+    addCar.isSuccess && setOpenCreateJourney(false);
+  }, [addCar.isSuccess]);
+
   return (
     <form method="post" onSubmit={onSubmit}>
       <div className="flex justify-center">

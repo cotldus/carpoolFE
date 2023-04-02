@@ -1,4 +1,15 @@
-import { mockJourneyList as MockJourneyList } from "../../../services/interface";
+import {
+  Car,
+  group,
+  mockJourneyList as MockJourneyList,
+} from "../../../services/interface";
+
+export type Journey = {
+  journeyId: string;
+  driver: string;
+  car: Car;
+  groups: group[];
+};
 export const mockJourneyList: MockJourneyList[] = [
   {
     scheduleId: "12",
@@ -12,8 +23,8 @@ export const mockJourneyList: MockJourneyList[] = [
         journeyId: "34",
         driver: "Ji-Eun (IU)",
         car: {
-          name: "HD1234",
-          pax: 10,
+          carPlateNumber: "HD1234",
+          maxPax: 10,
         },
         groups: [
           {
@@ -26,8 +37,8 @@ export const mockJourneyList: MockJourneyList[] = [
         journeyId: "28",
         driver: "",
         car: {
-          name: "D1234HS",
-          pax: 10,
+          carPlateNumber: "D1234HS",
+          maxPax: 10,
         },
         groups: [
           {
