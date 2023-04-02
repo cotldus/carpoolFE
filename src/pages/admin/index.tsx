@@ -28,7 +28,7 @@ function Admin() {
       >
         <DialogContent>
           <div className="flex justify-center">
-            <CreateSchedule />
+            <CreateSchedule setOpenCreateJourney={setOpenCreateJourney}/>
           </div>
         </DialogContent>
       </Dialog>

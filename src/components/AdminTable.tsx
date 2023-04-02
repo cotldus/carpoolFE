@@ -110,8 +110,6 @@ const Row = ({ row }: { row: Row }) => {
 
   if (editMode) return <EditLine setEditMode={setEditMode} row={row} />;
 
-  !row.pickup && console.log("row", row);
-
   return (
     <StyledTableRow>
       <StyledTableCell component="th" scope="row">
@@ -218,12 +216,14 @@ const EditLine = ({
 const AdminTable = () => {
   const { data } = useScheduleList(rows);
 
+  console.log(data);
+
   return (
     <TableContainer component={Paper} className="w-full">
       <Table sx={{ maxWidth: "100%", width: 1 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Journey ID</StyledTableCell>
+            <StyledTableCell>Schedule ID</StyledTableCell>
             <StyledTableCell align="right">Date</StyledTableCell>
             <StyledTableCell align="right">Time</StyledTableCell>
             <StyledTableCell align="right">Pick up</StyledTableCell>

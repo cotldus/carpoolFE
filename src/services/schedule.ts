@@ -9,7 +9,7 @@ export const getScheduleList = async <T>(mock: T): Promise<T> =>
 
 export const submitSchedule = async (formJson: {
   [key: string]: FormDataEntryValue;
-}) =>
+}) => {
   await axios
     .post("/schedule/submit", formJson, config)
     .then((res) => {
@@ -17,7 +17,7 @@ export const submitSchedule = async (formJson: {
       console.log(formJson);
       return {
         data: {
-          scheduleId: "828282",
+          scheduleId: Math.floor(Math.random() * 100).toString(),
         },
       };
     })
@@ -26,10 +26,17 @@ export const submitSchedule = async (formJson: {
       console.log(formJson);
       return {
         data: {
-          scheduleId: "828282",
+          scheduleId: Math.floor(Math.random() * 100).toString(),
         },
       };
     });
+  return Promise.resolve({
+    status: 200,
+    data: {
+      scheduleId: Math.floor(Math.random() * 100).toString(),
+    },
+  });
+};
 
 export const updateSchedule = async (formJson: {
   [key: string]: FormDataEntryValue;
