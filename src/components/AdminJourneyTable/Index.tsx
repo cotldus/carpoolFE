@@ -1,4 +1,5 @@
 import { useScheduleList } from "@/hooks/useScheduleList";
+import { mockGetScheduleList } from "@/services/mocks";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,7 +12,7 @@ import ExpandableRow from "./ExpandableRow";
 export default function AdminJourneyTable() {
   const headerData = ["Date", "Time", "Pickup", "Dropoff", ""];
 
-  const { data: scheduleList = [] } = useScheduleList();
+  const { data: scheduleList = [] } = useScheduleList(mockGetScheduleList);
   return (
     <form>
       <TableContainer

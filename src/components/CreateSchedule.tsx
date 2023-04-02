@@ -1,18 +1,29 @@
-import { submitSchedule } from "@/services";
+import { useAddSchedule } from "@/hooks/useAddSchedule";
 import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 import DatePickers from "@/utils/datepicker";
 import TimePickers from "@/utils/timepicker";
 import { Button } from "@mui/material";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
-const onSubmit = async (e: any) => {
-  e.preventDefault();
-  const form = e.target;
-  const formData = new FormData(form);
-  const formJson = Object.fromEntries(formData.entries());
-  await submitSchedule(formJson);
-};
+export const CreateSchedule = ({
+  setOpenCreateJourney,
+}: {
+  setOpenCreateJourney: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const addSchedule = useAddSchedule();
 
-export const CreateSchedule = () => {
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const formJson = Object.fromEntries(formData.entries());
+    addSchedule.mutate(formJson);
+  };
+
+  useEffect(() => {
+    addSchedule.isSuccess && setOpenCreateJourney(false);
+  }, [addSchedule.isSuccess]);
+
   return (
     <form method="post" onSubmit={onSubmit}>
       <div className="space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-1 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-1 w-full ">
@@ -36,7 +47,7 @@ export const CreateSchedule = () => {
                   >
                     Pick-Up Location:
                   </label>
-                  <AutoCompleteFieldInput name="pickUp" />
+                  <AutoCompleteFieldInput name="pickup" />
                 </div>
                 <div>
                   <label
@@ -45,7 +56,7 @@ export const CreateSchedule = () => {
                   >
                     Drop-off location:
                   </label>
-                  <AutoCompleteFieldInput name="dropOff" />
+                  <AutoCompleteFieldInput name="departure" />
                 </div>
               </div>
               <div className="sm:grid sm:grid-cols-2 sm:mx-0 xl:grid-cols-2 xl:mx-0 pt-4">
@@ -76,7 +87,7 @@ export const CreateSchedule = () => {
                   Number of Pax:
                 </label>
                 <input
-                  name="totalPax"
+                  name="pax"
                   type="text"
                   id="passenger_pax"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"

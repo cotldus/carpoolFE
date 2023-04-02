@@ -47,3 +47,57 @@ export const mockGetScheduleList = mockJourneyList.map((item) =>
     item.assignment
   )
 );
+
+function createRowData(
+  id: string,
+  date: string,
+  time: string,
+  pickup: string,
+  departure: string,
+  pax: number
+) {
+  return { id, date, time, pickup, departure, pax };
+}
+
+export const rows = [
+  createRowData(
+    "159",
+    "2023-06-22",
+    "10:30",
+    "Tmn Megah De Taste",
+    "Jurong East",
+    24
+  ),
+  createRowData(
+    "123",
+    "2023-06-22",
+    "10:30",
+    "Tmn Megah De Taste",
+    "Jurong East",
+    37
+  ),
+  createRowData(
+    "156",
+    "2023-06-22",
+    "10:30",
+    "Tmn Megah De Taste",
+    "Jurong East",
+    24
+  ),
+  createRowData(
+    "124",
+    "2023-06-22",
+    "10:30",
+    "Tmn Megah De Taste",
+    "Jurong East",
+    67
+  ),
+  createRowData(
+    "175",
+    "2023-06-22",
+    "10:30",
+    "Tmn Megah De Taste",
+    "Jurong East",
+    49
+  ),
+];
