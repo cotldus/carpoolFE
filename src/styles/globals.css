@@ -18,6 +18,10 @@
   @apply block mb-2 text-sm font-medium font-lora;
 }
 
+.bg-custom-blue-grad {
+  @apply bg-gradient-to-b from-[#DCE3E7] via-light-grey to-sky-blue;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

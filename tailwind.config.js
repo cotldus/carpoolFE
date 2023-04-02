@@ -12,7 +12,8 @@ module.exports = {
         "light-grey": "#DCE3E7",
         "mint-green": "#D7FDF0",
         "minimalist-white": "#F5F5F5",
-        "liight-blue": "#ECEFF1"
+        "liight-blue": "#ECEFF1",
+        "sky-blue": "#87CEEB"
         // add more custom colors here
       },
       fontFamily: {
