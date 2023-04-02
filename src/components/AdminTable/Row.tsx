@@ -12,9 +12,9 @@ export type Row = {
   id: string;
   date: string;
   time: string;
-  departure: labelObject[];
+  dropoff: labelObject[];
   pickup: labelObject[];
-  pax: number;
+  totalPax: number;
 };
 
 export const Row = ({ row }: { row: Row }) => {
@@ -35,9 +35,9 @@ export const Row = ({ row }: { row: Row }) => {
         {row.pickup?.map((item) => item.label).join(", ")}
       </StyledTableCell>
       <StyledTableCell align="right">
-        {row.departure?.map((item) => item.label).join(", ")}
+        {row.dropoff?.map((item) => item.label).join(", ")}
       </StyledTableCell>
-      <StyledTableCell align="right">{row.pax}</StyledTableCell>
+      <StyledTableCell align="right">{row.totalPax}</StyledTableCell>
       <StyledTableCell align="right">
         {
           <div>

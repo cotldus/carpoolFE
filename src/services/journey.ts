@@ -8,7 +8,7 @@ export const saveJourney = async (
   assignmentDetails: journeyAssignmentPayload
 ) => {
   await axios
-    .put(`/journey/${assignmentDetails.journeyId}`, journey, config)
+    .put(`/journey/save/${assignmentDetails.journeyId}`, journey, config)
     .then((res) => {
       console.log(res);
       console.log("save", journey);
@@ -31,7 +31,7 @@ export const getJourneyList = async (scheduleId: string) =>
 
 export const addJourney = (scheduleId: string) => {
   axios
-    .patch(`/new/journey/${scheduleId}`)
+    .patch(`/journey/new/${scheduleId}`)
     .then((response) => response.data)
     .catch((e) => null);
   return Promise.resolve({

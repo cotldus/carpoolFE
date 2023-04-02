@@ -4,6 +4,6 @@ import axios from "axios";
 
 export const getGroupsList = async (scheduleId: string) =>
   await axios
-    .get(`/groupsList?scheduleId=${scheduleId}`)
+    .get(`/groupsList/?scheduleId=${scheduleId}`)
     .then((res) => res.data)
     .catch(() => passengerMapper(mockGroupList));

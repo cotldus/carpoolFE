@@ -7,7 +7,7 @@ export const createCar = async (formJson: {
   [key: string]: FormDataEntryValue;
 }) =>
   await axios
-    .post("/car", formJson, config)
+    .post("/car/create", formJson, config)
     .then((res) => {
       console.log(res);
       console.log(formJson);

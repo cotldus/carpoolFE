@@ -1,3 +1,4 @@
+import { useDeleteSchedule } from "@/hooks/useDeleteSchedule";
 import { useScheduleList } from "@/hooks/useScheduleList";
 import { rows } from "@/services/mocks";
 import Paper from "@mui/material/Paper";
@@ -33,8 +34,6 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const AdminTable = () => {
   const { data } = useScheduleList(rows);
 
-  console.log(data);
-
   return (
     <TableContainer component={Paper} className="w-full">
       <Table sx={{ maxWidth: "100%", width: 1 }} aria-label="customized table">
@@ -44,7 +43,7 @@ const AdminTable = () => {
             <StyledTableCell align="right">Date</StyledTableCell>
             <StyledTableCell align="right">Time</StyledTableCell>
             <StyledTableCell align="right">Pick up</StyledTableCell>
-            <StyledTableCell align="right">Departure</StyledTableCell>
+            <StyledTableCell align="right">Dropoff</StyledTableCell>
             <StyledTableCell align="right">Pax</StyledTableCell>
             <StyledTableCell align="right">Actions</StyledTableCell>
           </TableRow>
@@ -63,7 +62,7 @@ const AdminTable = () => {
             const mapRow = {
               ...row,
               pickup: makeLabel(row.pickup),
-              departure: makeLabel(row.departure),
+              dropoff: makeLabel(row.dropoff),
             };
 
             return <Row row={mapRow} key={row.id} />;

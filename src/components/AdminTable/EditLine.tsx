@@ -57,17 +57,17 @@ export const EditLine = ({
               </StyledTableCell>
               <StyledTableCell align="right">
                 <AutoCompleteFieldInput
-                  name="departure"
-                  initValue={row.departure}
+                  name="dropoff"
+                  initValue={row.dropoff}
                 />
               </StyledTableCell>
               <StyledTableCell align="right">
                 <input
-                  name="pax"
+                  name="totalPax"
                   type="text"
                   id="passenger_pax"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                  defaultValue={row.pax.toString()}
+                  defaultValue={row.totalPax.toString()}
                   required
                 />
               </StyledTableCell>
