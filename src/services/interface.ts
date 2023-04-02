@@ -1,4 +1,4 @@
-export type labelObject = { label?: string; value?: string };
+export type labelObject = { label?: string; value?: string; category?: string };
 
 export type journeyAssignmentPayload = {
   journeyId?: string;

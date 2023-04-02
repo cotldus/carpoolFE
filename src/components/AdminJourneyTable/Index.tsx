@@ -16,7 +16,7 @@ export default function AdminJourneyTable() {
     <form>
       <TableContainer
         component={Paper}
-        sx={{ width: "90vw", overflow: "auto", maxWidth: "max-content" }}
+        sx={{ width: "100%", overflow: "auto", maxWidth: "max-content" }}
       >
         <Table aria-label="collapsible table" sx={{ width: "max-content" }}>
           <TableHead sx={{ backgroundColor: "#111827" }}>

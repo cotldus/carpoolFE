@@ -15,7 +15,7 @@
 }
 
 .dialog-text-font-1 {
-  @apply block mb-2 text-sm font-medium text-purple-500 font-lora;
+  @apply block mb-2 text-sm font-medium font-lora;
 }
 
 * {

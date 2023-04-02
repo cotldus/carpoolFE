@@ -34,7 +34,7 @@ function Admin() {
       >
         <div className="dialog-bkg">
           <DialogTitle
-            sx={{ padding: 0, justifyContent: "right", display: "flex" }}
+            sx={{ padding: 1, justifyContent: "right", display: "flex" }}
             className=""
           >
             <Button

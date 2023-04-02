@@ -12,14 +12,14 @@ const CreateCar = () => {
   return (
     <form method="post" onSubmit={onSubmit}>
       <div className="flex justify-center">
-        <div className="mt-12 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-1 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-1 w-4/5 ">
+        <div className="">
           <div className="md:flex md:flex-col md:align-center">
-            <div className="rounded-lg shadow-sm divide-y divide-zinc-600 bg-zinc-900 overflow-visible">
+            <div className=" overflow-visible">
               <div className="p-6">
                 <h2 className="text-2xl leading-6 font-semibold text-white">
                   Create new car
                 </h2>
-                <p className="mt-4 text-zinc-300 pb-10">
+                <p className="mt-4  pb-10">
                   Description - At the front it has two bumpers and a modified
                   grille and it is very difficult to miss. The 905cc boxer
                   engine was also re-designed and was slightly redesigned
@@ -28,7 +28,7 @@ const CreateCar = () => {
                 <div className="pt-4">
                   <label
                     placeholder="car_plate_number"
-                    className="block mb-2 text-sm font-medium text-zinc-300 dark:text-white"
+                    className="block mb-2 text-sm font-medium dark:text-white"
                   >
                     Car Plate Number
                   </label>
@@ -44,7 +44,7 @@ const CreateCar = () => {
                 <div className="pt-4">
                   <label
                     placeholder="passenger_pax"
-                    className="block mb-2 text-sm font-medium text-zinc-300 dark:text-white"
+                    className="block mb-2 text-sm font-medium  dark:text-white"
                   >
                     Maximum pax
                   </label>
