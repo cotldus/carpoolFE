@@ -11,7 +11,10 @@ import {
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { calculatePax } from "../helper";
-import { journeyAssignmentPayload, labelObject } from "../../services/interface";
+import {
+  journeyAssignmentPayload,
+  labelObject,
+} from "../../services/interface";
 import { useCarList } from "@/hooks/useCarList";
 import { useDriverList } from "@/hooks/useDriverList";
 import { useGroupsList } from "@/hooks/useGroupsList";
@@ -65,11 +68,13 @@ export const ExpandAdminTable = (props: {
             <AutoCompleteFieldDropdown
               name="car"
               objectList={carList}
-              existingValue={assignmentDetails.car?.name}
+              existingValue={assignmentDetails.car?.carPlateNumber}
               setContext={(value) =>
                 setJourney({
                   ...journey,
-                  car: mockCarplateList.find((car) => car.name === value.value),
+                  car: mockCarplateList.find(
+                    (car) => car.carPlateNumber === value.value
+                  ),
                 })
               }
             />
@@ -114,7 +119,7 @@ export const ExpandAdminTable = (props: {
               type="text"
               id="passenger_pax"
               className="w-full text-right"
-              placeholder={`${journey.pax}/${journey.car?.pax || 0}`}
+              placeholder={`${journey.pax}/${journey.car?.maxPax || 0}`}
               disabled
             />
           </TableCell>

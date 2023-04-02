@@ -53,10 +53,10 @@ function createRowData(
   date: string,
   time: string,
   pickup: string,
-  departure: string,
-  pax: number
+  dropoff: string,
+  totalPax: number
 ) {
-  return { id, date, time, pickup, departure, pax };
+  return { id, date, time, pickup, dropoff, totalPax };
 }
 
 export const rows = [

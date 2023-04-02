@@ -1,22 +1,22 @@
 export const mockCarplateList = [
     {
-        name: "SJ2442S",
-        pax: 8,
+        carPlateNumber: "SJ2442S",
+        maxPax: 8,
     },
     {
-        name: "D742623",
-        pax: 10,
+        carPlateNumber: "D742623",
+        maxPax: 10,
     },
     {
-        name: "SDA2938",
-        pax: 14,
+        carPlateNumber: "SDA2938",
+        maxPax: 14,
     },
     {
-        name: "O12341",
-        pax: 6,
+        carPlateNumber: "O12341",
+        maxPax: 6,
     },
     {
-        name: "SJ2442S",
-        pax: 4,
+        carPlateNumber: "SJ2442S",
+        maxPax: 4,
     },
 ]

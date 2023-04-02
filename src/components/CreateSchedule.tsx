@@ -55,7 +55,7 @@ export const CreateSchedule = () => {
               <div className="sm:grid sm:grid-cols-5 sm:mx-0 xl:grid-cols-5 xl:mx-0 pt-4">
                 <div className="sm:pr-3 item1 col-span-4">
                   <label
-                    placeholder="date_departure"
+                    placeholder="date_dropoff"
                     className="dialog-text-font-1"
                   >
                     Pick-Up Location:
@@ -79,12 +79,12 @@ export const CreateSchedule = () => {
               <div className="grid grid-cols-5 xl:mx-0 pt-4">
                 <div className="sm:pr-3 item1 col-span-4">
                   <label
-                    placeholder="time_departure"
+                    placeholder="time_dropoff"
                     className="dialog-text-font-1"
                   >
                     Drop-off location:
                   </label>
-                  <AutoCompleteFieldInput name="departure" />
+                  <AutoCompleteFieldInput name="dropoff" />
                 </div>
                 <div className="item2 col-span-1">
                   <label placeholder="country" className="dialog-text-font-1">
@@ -116,7 +116,7 @@ export const CreateSchedule = () => {
               <div className="sm:grid sm:grid-cols-2 sm:mx-0 xl:grid-cols-2 xl:mx-0 pt-4">
                 <div className="sm:pr-3">
                   <label
-                    placeholder="date_departure"
+                    placeholder="date_dropoff"
                     className="dialog-text-font-1"
                   >
                     Depature date:
@@ -125,7 +125,7 @@ export const CreateSchedule = () => {
                 </div>
                 <div>
                   <label
-                    placeholder="time_departure"
+                    placeholder="time_dropoff"
                     className="dialog-text-font-1"
                   >
                     Depature time:

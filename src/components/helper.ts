@@ -6,8 +6,8 @@ export const calculatePax = (groups: group[]) =>
 
 export const dataLabelValueMapper = (data: Car[]) => {
   const labelValueMapped: labelObject[] = data.map((item) => ({
-    label: `#${item.name} - ${item.pax} pax`,
-    value: item.name,
+    label: `#${item.carPlateNumber} - ${item.maxPax} pax`,
+    value: item.carPlateNumber,
   }));
   return labelValueMapped;
 };
