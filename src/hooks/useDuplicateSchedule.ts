@@ -1,21 +1,23 @@
 import { submitSchedule } from "@/services";
+import { Schedule } from "@/services/interface";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useDuplicateSchedule = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (previousSchedule: { [key: string]: any }) =>
+    mutationFn: (previousSchedule: Schedule) =>
       submitSchedule(previousSchedule),
     onSuccess: (res, previousSchedule) => {
-      queryClient.setQueryData(["ScheduleList"], (scheduleList: any) => {
-        return [
-          ...(scheduleList as []),
-          {
+      queryClient.setQueryData(
+        ["ScheduleList"],
+        (scheduleList?: Schedule[]) => {
+          const newSchedule = {
             ...previousSchedule,
-            id: res.data.scheduleId,
-          },
-        ];
-      });
+            scheduleId: res.data.scheduleId,
+          };
+          return [...(scheduleList as []), newSchedule];
+        }
+      );
     },
   });
 };

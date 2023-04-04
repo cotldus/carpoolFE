@@ -1,4 +1,5 @@
 import { useUpdateSchedule } from "@/hooks/useUpdateSchedule";
+import { Schedule } from "@/services/interface";
 import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 import DatePickers from "@/utils/datepicker";
 import TimePickers from "@/utils/timepicker";
@@ -6,6 +7,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { Table, TableBody } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { StyledTableCell, StyledTableRow } from ".";
+import { dataLabelValueMapper, stringLabelValueMapper } from "../helper";
 import { Row } from "./Row";
 
 export const EditLine = ({
@@ -13,7 +15,7 @@ export const EditLine = ({
   row,
 }: {
   setEditMode: Dispatch<SetStateAction<boolean>>;
-  row: Row;
+  row: Schedule;
 }) => {
   const editSchedule = useUpdateSchedule();
 
@@ -25,16 +27,12 @@ export const EditLine = ({
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const formJson = Object.fromEntries(formData.entries());
-    const updateScheduleDetailes = {
-      ...formJson,
-      id: row.id,
+    const formJson: unknown = Object.fromEntries(formData.entries());
+    const updateScheduleDetails: Schedule = {
+      ...(formJson as Schedule),
+      scheduleId: row.scheduleId,
     };
-    console.log(updateScheduleDetailes);
-    editSchedule.mutate({
-      ...formJson,
-      id: row.id,
-    });
+    editSchedule.mutate(updateScheduleDetails);
   };
 
   return (
@@ -44,7 +42,7 @@ export const EditLine = ({
           <TableBody>
             <StyledTableRow>
               <StyledTableCell component="th" scope="row">
-                {row.id}
+                {row.scheduleId}
               </StyledTableCell>
               <StyledTableCell align="right">
                 <DatePickers name="date" initValue={row.date} />
@@ -53,12 +51,15 @@ export const EditLine = ({
                 <TimePickers name="time" initValue={row.time} />
               </StyledTableCell>
               <StyledTableCell align="right">
-                <AutoCompleteFieldInput name="pickup" initValue={row.pickup} />
+                <AutoCompleteFieldInput
+                  name="pickup"
+                  initValue={stringLabelValueMapper(row.pickup)}
+                />
               </StyledTableCell>
               <StyledTableCell align="right">
                 <AutoCompleteFieldInput
                   name="dropoff"
-                  initValue={row.dropoff}
+                  initValue={stringLabelValueMapper(row.dropoff)}
                 />
               </StyledTableCell>
               <StyledTableCell align="right">

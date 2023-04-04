@@ -24,6 +24,7 @@ import Router, { useRouter } from "next/router";
 import * as React from "react";
 import en from "../locales/en-US";
 import cn from "../locales/zh-CN";
+import { GlobalToggles } from "./GlobalToggles";
 
 enum NAVIGATE_TO {
   ADMIN = "admin",
@@ -159,6 +160,7 @@ export default function MiniDrawer() {
           <Typography variant="overline" noWrap component="div">
             {navigation.find((item) => router.pathname === item.href)?.name}
           </Typography>
+          <GlobalToggles/>
         </Toolbar>
       </AppBar>
       <Drawer

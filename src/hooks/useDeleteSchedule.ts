@@ -1,3 +1,4 @@
+import { Schedule } from "@/services/interface";
 import { deleteSchedule } from "@/services/schedule";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -6,9 +7,16 @@ export const useDeleteSchedule = () => {
   return useMutation({
     mutationFn: (id: string) => deleteSchedule(id),
     onSuccess: (res, id) => {
-      queryClient.setQueryData(["ScheduleList"], (scheduleList: any) => {
-        return scheduleList?.filter((schedule: any) => schedule.id !== id);
-      });
+      queryClient.setQueryData(
+        ["ScheduleList"],
+        (scheduleList?: Schedule[]) => {
+          return (
+            scheduleList?.filter(
+              (schedule: Schedule) => schedule.scheduleId !== id
+            ) || []
+          );
+        }
+      );
     },
   });
 };

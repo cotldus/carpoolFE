@@ -1,5 +1,5 @@
 import { useScheduleList } from "@/hooks/useScheduleList";
-import { mockGetScheduleList } from "@/services/mocks";
+import { Schedule } from "@/services/interface";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,9 +10,9 @@ import TableRow from "@mui/material/TableRow";
 import ExpandableRow from "./ExpandableRow";
 
 export default function AdminJourneyTable() {
-  const headerData = ["Date", "Time", "Pickup", "Dropoff", ""];
+  const headerData = ["Date", "Time", "Pickup", "Dropoff", "Notify", "Delete"];
 
-  const { data: scheduleList = [] } = useScheduleList(mockGetScheduleList);
+  const { data } = useScheduleList();
   return (
     <form>
       <TableContainer
@@ -35,14 +35,9 @@ export default function AdminJourneyTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {scheduleList.map((row: any) => {
-              console.log("row1", row);
+            {data?.map((row: Schedule) => {
               return (
-                <ExpandableRow
-                  key={`${row.scheduleId}-journey`}
-                  row={row}
-                  id={row.scheduleId}
-                />
+                <ExpandableRow key={`${row.scheduleId}-journey`} row={row} />
               );
             })}
           </TableBody>
