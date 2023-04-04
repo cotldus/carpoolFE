@@ -1,5 +1,5 @@
 import { useUpdateSchedule } from "@/hooks/useUpdateSchedule";
-import { Schedule } from "@/services/interface";
+import { Schedule, ShowSchedule } from "@/services/interface";
 import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 import DatePickers from "@/utils/datepicker";
 import TimePickers from "@/utils/timepicker";
@@ -7,8 +7,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { Table, TableBody } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { StyledTableCell, StyledTableRow } from ".";
-import { dataLabelValueMapper, stringLabelValueMapper } from "../helper";
-import { Row } from "./Row";
+import { stringLabelValueMapper } from "../helper";
 
 export const EditLine = ({
   setEditMode,
@@ -28,9 +27,12 @@ export const EditLine = ({
     const form = e.target;
     const formData = new FormData(form);
     const formJson: unknown = Object.fromEntries(formData.entries());
+    const request = formJson as ShowSchedule
     const updateScheduleDetails: Schedule = {
-      ...(formJson as Schedule),
+      ...(request),
       scheduleId: row.scheduleId,
+      pickup: request.pickup.split(", "),
+      dropoff: request.dropoff.split(", ")
     };
     editSchedule.mutate(updateScheduleDetails);
   };

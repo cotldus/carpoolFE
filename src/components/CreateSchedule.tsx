@@ -1,20 +1,13 @@
 import { countryOptions } from "@/constants";
-import { submitSchedule } from "@/services";
-import { Schedule } from "@/services/interface";
+import { useAddSchedule } from "@/hooks/useAddSchedule";
+import { ShowSchedule } from "@/services/interface";
 import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 import DatePickers from "@/utils/datepicker";
 import { DropdownWithIcon } from "@/utils/DropdownWithIcon";
 import TimePickers from "@/utils/timepicker";
-import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Button } from "@mui/material";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-const onSubmit = async (e: any) => {
-  e.preventDefault();
-  const form = e.target;
-  const formData = new FormData(form);
-  const formJson: unknown = Object.fromEntries(formData.entries());
-  await submitSchedule(formJson as Schedule);
-};
 interface newSchedule {
   to?: string;
   from?: string;
@@ -22,7 +15,11 @@ interface newSchedule {
   dropOffLocation?: string[];
 }
 
-export const CreateSchedule = () => {
+export const CreateSchedule = ({
+  setOpenCreateJourney,
+}: {
+  setOpenCreateJourney: Dispatch<SetStateAction<boolean>>;
+}) => {
   const [newSchedule, setNewSchedule] = useState<newSchedule>({
     to: "SG",
     from: "MY",
@@ -30,6 +27,21 @@ export const CreateSchedule = () => {
   const countryOptionsFilter = countryOptions.filter(
     (item) => item.countryAbrv !== "GB"
   );
+
+  const submitSchedule = useAddSchedule();
+
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const formJson: unknown = Object.fromEntries(formData.entries());
+    const request = formJson as ShowSchedule;
+    submitSchedule.mutate({
+      ...request,
+      pickup: request.pickup.split(", "),
+      dropoff: request.dropoff.split(", "),
+    });
+  };
 
   const onHandleTo = (value: string) => {
     setNewSchedule({
@@ -45,9 +57,10 @@ export const CreateSchedule = () => {
       to: value === "SG" ? "MY" : "SG",
     });
   };
+
   useEffect(() => {
-    console.log(newSchedule);
-  }, [newSchedule]);
+    submitSchedule.isSuccess && setOpenCreateJourney(false);
+  }, [submitSchedule.isSuccess]);
 
   return (
     <form method="post" onSubmit={onSubmit}>

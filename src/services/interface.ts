@@ -61,7 +61,7 @@ export type ShowSchedule = {
   scheduleId: string;
   date: string;
   time: string;
-  dropoff: labelObject[];
+  dropoff: string;
   totalPax: number;
-  pickup: labelObject[];
+  pickup: string;
 };
