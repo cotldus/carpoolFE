@@ -7,7 +7,6 @@ export const GlobalToggles = () => {
     const locale = event.target.value;
     router.push(router.pathname, router.pathname, { locale });
   };
-  console.log("ENTER TOGGLE")
   return (
     <FormControl
       variant="standard"
@@ -20,12 +19,12 @@ export const GlobalToggles = () => {
         },
         "& fieldset": { border: "none" },
       }}
-      className="absolute sm:right-0 sm:pr-4"
+      className="absolute right-0 sm:pr-4 pr-2"
     >
-      <div className="relative border rounded self-center sm:right-0 sm:px-1 bg-gradient-to-r from-green-100 to-blue-200 hover:from-pink-200 hover:to-yellow-200 ...">
+      <div className="relative border rounded self-center sm:right-0 sm:px-1 bg-white">
         <Select onChange={changeLocale} defaultValue={"en-US"} disableUnderline>
-          <MenuItem value="en-US" className="bg-gradient-to-r from-green-50 to-blue-50 hover:from-pink-100 hover:to-yellow-100">English</MenuItem>
-          <MenuItem value="zh-CN" className="bg-gradient-to-r from-green-50 to-blue-50 hover:from-pink-100 hover:to-yellow-100">中文</MenuItem>
+          <MenuItem value="en-US" className="bg-white">English</MenuItem>
+          <MenuItem value="zh-CN" className="bg-white">中文</MenuItem>
         </Select>
       </div>
     </FormControl>

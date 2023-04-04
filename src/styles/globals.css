@@ -22,6 +22,10 @@
   @apply bg-gradient-to-b from-[#DCE3E7] via-light-grey to-sky-blue;
 }
 
+.button-blue {
+  @apply font-semibold text-black text-center hover:bg-blue-500
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

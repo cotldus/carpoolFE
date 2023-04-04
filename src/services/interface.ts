@@ -30,6 +30,7 @@ export type mockJourneyList = {
   totalPax: number;
   pickup: string[];
   dropoff: string[];
+  journeyToAndFrom: string;
   assignment: journeyAssignmentPayload[];
 };
 
@@ -55,6 +56,7 @@ export type Schedule = {
   dropoff: string[];
   totalPax: number;
   pickup: string[];
+  journeyToAndFrom?: string;
 };
 
 export type ShowSchedule = {

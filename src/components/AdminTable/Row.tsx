@@ -32,6 +32,7 @@ export const Row = ({ row }: { row: Schedule }) => {
       </StyledTableCell>
       <StyledTableCell align="right">{row.date}</StyledTableCell>
       <StyledTableCell align="right">{row.time}</StyledTableCell>
+      <StyledTableCell align="right">{row.journeyToAndFrom}</StyledTableCell>
       <StyledTableCell align="right">
         {stringLabelValueMapper(row.pickup)?.map((item) => item.label).join(", ")}
       </StyledTableCell>

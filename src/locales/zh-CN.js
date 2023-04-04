@@ -9,4 +9,5 @@ export default {
     carpool_hero: "Ka Le Pool 英雄",
     sign_in: "登录",
     pickup_location: "接人地方",
+    create_schedule: "创造行程"
 };

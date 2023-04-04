@@ -5,7 +5,7 @@ import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 import DatePickers from "@/utils/datepicker";
 import { DropdownWithIcon } from "@/utils/DropdownWithIcon";
 import TimePickers from "@/utils/timepicker";
-import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const onSubmit = async (e: any) => {
@@ -54,7 +54,7 @@ export const CreateSchedule = () => {
       <div className=" sm:space-y-0 sm:grid sm:grid-cols-1 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:grid-cols-1 w-full ">
         <div className="md:flex md:flex-col md:align-center">
           <div className="overflow-visible">
-            <div className="p-6">
+            <div className="px-6 pb-6">
               <h2 className="text-2xl leading-6 font-semibold">
                 Create new schedule
               </h2>
@@ -91,19 +91,6 @@ export const CreateSchedule = () => {
                     Drop-off location:
                   </label>
                   <AutoCompleteFieldInput name="dropoff" />
-                </div>
-                <div className="item2 col-span-1">
-                  <label placeholder="country" className="dialog-text-font-1">
-                    To:
-                  </label>
-                  <DropdownWithIcon
-                    key={"country-select-to"}
-                    defaultValue={newSchedule?.to}
-                    setValue={onHandleTo}
-                    selectionList={countryOptionsFilter}
-                    withPhoneNumber={false}
-                    className="w-full"
-                  />
                 </div>
                 <div className="item2 col-span-1">
                   <label placeholder="country" className="dialog-text-font-1">
@@ -176,7 +163,7 @@ export const CreateSchedule = () => {
               <Button
                 type="submit"
                 onClick={() => undefined}
-                className="mt-8 block w-full rounded-md py-2 text-sm font-semibold text-blue text-center hover:bg-zinc-900"
+                className="mt-8 block w-full rounded-md py-2 text-md button-blue"
               >
                 Submit
               </Button>

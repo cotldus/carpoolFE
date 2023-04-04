@@ -12,7 +12,7 @@ import { Row } from "./Row";
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: "#3366CC",
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -34,13 +34,14 @@ const AdminTable = () => {
   const { data } = useScheduleList();
   
   return (
-    <TableContainer component={Paper} className="w-full">
+    <TableContainer component={Paper}>
       <Table sx={{ maxWidth: "100%", width: 1 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Schedule ID</StyledTableCell>
             <StyledTableCell align="right">Date</StyledTableCell>
             <StyledTableCell align="right">Time</StyledTableCell>
+            <StyledTableCell align="right">Country Journey</StyledTableCell>
             <StyledTableCell align="right">Pick up</StyledTableCell>
             <StyledTableCell align="right">Dropoff</StyledTableCell>
             <StyledTableCell align="right">Pax</StyledTableCell>

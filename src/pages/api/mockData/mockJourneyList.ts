@@ -12,6 +12,7 @@ export const mockScheduleList: Schedule[] = [
     totalPax: 16,
     pickup: ["Tmn Megah De Taste", "BT36 KFC"],
     dropoff: ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"],
+    journeyToAndFrom: "MY-SG",
   },
   {
     scheduleId: "456",
@@ -20,6 +21,7 @@ export const mockScheduleList: Schedule[] = [
     totalPax: 16,
     pickup: ["Tmn Megah De Taste", "BT36 KFC"],
     dropoff: ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"],
+    journeyToAndFrom: "MY-SG",
   },
   {
     scheduleId: "159",
@@ -28,6 +30,7 @@ export const mockScheduleList: Schedule[] = [
     totalPax: 24,
     pickup: ["Tmn Megah De Taste", "BT36 KFC"],
     dropoff: ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"],
+    journeyToAndFrom: "MY-SG",
   },
   {
     scheduleId: "156",
@@ -36,6 +39,7 @@ export const mockScheduleList: Schedule[] = [
     totalPax: 24,
     pickup: ["Tmn Megah De Taste", "BT36 KFC"],
     dropoff: ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"],
+    journeyToAndFrom: "MY-SG",
   },
   {
     scheduleId: "124",
@@ -44,6 +48,7 @@ export const mockScheduleList: Schedule[] = [
     totalPax: 67,
     pickup: ["Tmn Megah De Taste"],
     dropoff: ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"],
+    journeyToAndFrom: "MY-SG",
   },
   {
     scheduleId: "175",
@@ -52,6 +57,7 @@ export const mockScheduleList: Schedule[] = [
     totalPax: 67,
     pickup: ["Tmn Megah De Taste"],
     dropoff: ["JE - Jurong East", "YS - Yishun", "PYLB - Paya Lebar"],
+    journeyToAndFrom: "MY-SG",
   },
 ];
 
