@@ -1,4 +1,5 @@
 import { useAddCar } from "@/hooks/useAddCar";
+import { Car } from "@/services/interface";
 import { Button } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
@@ -12,8 +13,8 @@ const CreateCar = ({
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const formJson = Object.fromEntries(formData.entries());
-    addCar.mutate(formJson);
+    const formJson: unknown = Object.fromEntries(formData.entries());
+    addCar.mutate(formJson as Car);
   };
 
   useEffect(() => {
@@ -62,7 +63,7 @@ const CreateCar = ({
                   <input
                     type="text"
                     id="passenger_pax"
-                    name="maxPassengers"
+                    name="maxPax"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                     placeholder="0"
                     required

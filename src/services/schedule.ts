@@ -1,15 +1,21 @@
-import axios from "axios";
+import { mockScheduleList } from "@/pages/api/mockData/mockJourneyList";
+import axios, { AxiosResponse } from "axios";
 import { config } from ".";
+import { Schedule } from "./interface";
 
-export const getScheduleList = async <T>(mock: T): Promise<T> =>
+export const getScheduleList = async () =>
   await axios
     .get("/scheduleList")
-    .then((response) => response.data)
-    .catch(() => mock);
+    .then((response: AxiosResponse<Schedule[]>) => response.data)
+    .catch(() => mockScheduleList);
 
-export const submitSchedule = async (formJson: {
-  [key: string]: FormDataEntryValue;
-}) => {
+export const getJourneyList = async () =>
+  await axios
+    .get("/schedule/list")
+    .then((res: AxiosResponse<Schedule[]>) => res.data)
+    .catch(() => mockScheduleList);
+
+export const submitSchedule = async (formJson: Schedule) => {
   await axios
     .post("/schedule/submit", formJson, config)
     .then((res) => {
@@ -38,11 +44,9 @@ export const submitSchedule = async (formJson: {
   });
 };
 
-export const updateSchedule = async (formJson: {
-  [key: string]: FormDataEntryValue;
-}) => {
+export const updateSchedule = async (formJson: Schedule) => {
   await axios
-    .patch(`/schedule/update/${formJson.id}`, formJson, config)
+    .patch(`/schedule/update/${formJson.scheduleId}`, formJson, config)
     .then((res) => {
       console.log(res);
       console.log(formJson);

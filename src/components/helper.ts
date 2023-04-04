@@ -1,5 +1,7 @@
-import { Car } from "@/services/interface";
-import { group, journeyAssignmentPayload, labelObject } from "../services/interface";
+import { Car, Driver } from "@/services/interface";
+import {
+  group, labelObject
+} from "../services/interface";
 
 export const calculatePax = (groups: group[]) =>
   groups.reduce((prev, curr) => prev + (curr?.pax || 0), 0) || 0;
@@ -12,38 +14,23 @@ export const dataLabelValueMapper = (data: Car[]) => {
   return labelValueMapped;
 };
 
-export const passengerMapper = (data: any[]) => {
+export const stringLabelValueMapper = (values: string[]) => values.map(value => ({
+  label: value,
+  value
+}))
+
+export const passengerMapper = (data: group[]) => {
   const labelValueMapped: labelObject[] = data.map((item) => ({
-    label: `${item.groupid} - ${item.pax}`,
-    value: item.groupid,
+    label: `${item?.groupid} - ${item?.pax}`,
+    value: item?.groupid,
   }));
   return labelValueMapped;
 };
 
-export const driverMapper = (data: any[]) => {
+export const driverMapper = (data: Driver[]) => {
   const labelValueMapped: labelObject[] = data.map((item) => ({
     label: item.name,
     value: item.name,
   }));
   return labelValueMapped;
-};
-
-export const createData = (
-  scheduleId: string,
-  date: string,
-  time: number,
-  pax: number,
-  pickup: string[],
-  dropoff: string[],
-  journeyAssignment: journeyAssignmentPayload[]
-) => {
-  return {
-    scheduleId,
-    date,
-    time,
-    pax,
-    pickup,
-    dropoff,
-    journeyAssignment,
-  };
 };

@@ -1,11 +1,10 @@
 import { dataLabelValueMapper } from "@/components/helper";
 import { mockCarplateList } from "@/pages/api/mockData/mockCarplateList";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { config } from ".";
+import { Car } from "./interface";
 
-export const createCar = async (formJson: {
-  [key: string]: FormDataEntryValue;
-}) => {
+export const createCar = async (formJson: Car) => {
   await axios
     .post("/car", formJson, config)
     .then((res) => {
@@ -17,14 +16,13 @@ export const createCar = async (formJson: {
       console.log(formJson);
     });
 
-    return Promise.resolve({
-      status: 200
-    })
-}
-  
+  return Promise.resolve({
+    status: 200,
+  });
+};
 
 export const getCarList = async () =>
   await axios
     .get("/carList")
-    .then((res) => res.data)
-    .catch(() => mockCarplateList);
+    .then((res: AxiosResponse<Car[]>) => dataLabelValueMapper(res.data))
+    .catch(() => dataLabelValueMapper(mockCarplateList));

@@ -1,5 +1,3 @@
-import { createData } from "@/components/helper";
-import { mockJourneyList } from "@/pages/api/mockData/mockJourneyList";
 import { CarPlateList } from "./interface";
 
 export const driverList = [
@@ -21,7 +19,7 @@ export const carplateList: readonly CarPlateList[] = [
   { label: "MNO345", value: "MNO345" },
   { label: "PQR678", value: "PQR678" },
   { label: "STU901", value: "STU901" },
-  { label: "VWX234", value: "VWX234" },
+  { label: "VWX234z", value: "VWX234" },
   { label: "YZA567", value: "YZA567" },
   { label: "BCD890", value: "BCD890" },
   { label: "EFG123", value: "EFG123" },
@@ -34,70 +32,4 @@ export const carplateList: readonly CarPlateList[] = [
   { label: "ZAB234", value: "ZAB234" },
   { label: "CDE567", value: "CDE567" },
   { label: "FGH890", value: "FGH890" },
-];
-
-export const mockGetScheduleList = mockJourneyList.map((item) =>
-  createData(
-    item.scheduleId,
-    item.date,
-    item.time,
-    item.totalPax,
-    item.pickup,
-    item.dropoff,
-    item.assignment
-  )
-);
-
-function createRowData(
-  id: string,
-  date: string,
-  time: string,
-  pickup: string,
-  departure: string,
-  pax: number
-) {
-  return { id, date, time, pickup, departure, pax };
-}
-
-export const rows = [
-  createRowData(
-    "159",
-    "2023-06-22",
-    "10:30",
-    "Tmn Megah De Taste",
-    "Jurong East",
-    24
-  ),
-  createRowData(
-    "123",
-    "2023-06-22",
-    "10:30",
-    "Tmn Megah De Taste",
-    "Jurong East",
-    37
-  ),
-  createRowData(
-    "156",
-    "2023-06-22",
-    "10:30",
-    "Tmn Megah De Taste",
-    "Jurong East",
-    24
-  ),
-  createRowData(
-    "124",
-    "2023-06-22",
-    "10:30",
-    "Tmn Megah De Taste",
-    "Jurong East",
-    67
-  ),
-  createRowData(
-    "175",
-    "2023-06-22",
-    "10:30",
-    "Tmn Megah De Taste",
-    "Jurong East",
-    49
-  ),
 ];

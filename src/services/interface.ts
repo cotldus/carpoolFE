@@ -1,5 +1,13 @@
 export type labelObject = { label?: string; value?: string; category?: string };
 
+export type Journey = {
+  journeyId?: string;
+  car?: Car;
+  driver?: string;
+  groups?: group[];
+  pax?: number;
+};
+
 export type journeyAssignmentPayload = {
   journeyId?: string;
   car?: Car;
@@ -25,13 +33,6 @@ export type mockJourneyList = {
   assignment: journeyAssignmentPayload[];
 };
 
-export type Journey = {
-  car?: Car;
-  driver?: string;
-  groups?: group[];
-  pax?: number;
-};
-
 export type Car = {
   carPlateNumber: string;
   maxPax: number;
@@ -42,3 +43,25 @@ export interface CarPlateList {
   label: string;
   value?: string;
 }
+
+export type Driver = {
+  name: string;
+};
+
+export type Schedule = {
+  scheduleId: string;
+  date: string;
+  time: string;
+  dropoff: string[];
+  totalPax: number;
+  pickup: string[];
+};
+
+export type ShowSchedule = {
+  scheduleId: string;
+  date: string;
+  time: string;
+  dropoff: labelObject[];
+  totalPax: number;
+  pickup: labelObject[];
+};

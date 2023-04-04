@@ -1,5 +1,6 @@
 import { countryOptions } from "@/constants";
 import { submitSchedule } from "@/services";
+import { Schedule } from "@/services/interface";
 import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 import DatePickers from "@/utils/datepicker";
 import { DropdownWithIcon } from "@/utils/DropdownWithIcon";
@@ -11,8 +12,8 @@ const onSubmit = async (e: any) => {
   e.preventDefault();
   const form = e.target;
   const formData = new FormData(form);
-  const formJson = Object.fromEntries(formData.entries());
-  await submitSchedule(formJson);
+  const formJson: unknown = Object.fromEntries(formData.entries());
+  await submitSchedule(formJson as Schedule);
 };
 interface newSchedule {
   to?: string;
@@ -22,14 +23,19 @@ interface newSchedule {
 }
 
 export const CreateSchedule = () => {
-  const [newSchedule, setNewSchedule] = useState<newSchedule>({to: "SG", from: "MY"});
-  const countryOptionsFilter = countryOptions.filter(item => item.countryAbrv !== "GB")
+  const [newSchedule, setNewSchedule] = useState<newSchedule>({
+    to: "SG",
+    from: "MY",
+  });
+  const countryOptionsFilter = countryOptions.filter(
+    (item) => item.countryAbrv !== "GB"
+  );
 
   const onHandleTo = (value: string) => {
     setNewSchedule({
       ...newSchedule,
       to: value,
-      from:value === "SG" ? "MY" : "SG",
+      from: value === "SG" ? "MY" : "SG",
     });
   };
   const onHandleFrom = (value: string) => {

@@ -1,14 +1,11 @@
-import { mockJourneyList } from "@/pages/api/mockData/mockJourneyList";
-import axios from "axios";
+import { mockSchedule12Journeys } from "@/pages/api/mockData/mockJourneyList";
+import axios, { AxiosResponse } from "axios";
 import { config } from ".";
-import { Journey, journeyAssignmentPayload } from "./interface";
+import { Journey } from "./interface";
 
-export const saveJourney = async (
-  journey: Journey,
-  journeyId: string
-) => {
+export const saveJourney = async (journey: Journey) => {
   await axios
-    .put(`/journey/save/${journeyId}`, journey, config)
+    .put(`/journey/save/${journey.journeyId}`, journey, config)
     .then((res) => {
       console.log(res);
       console.log("save", journey);
@@ -19,27 +16,25 @@ export const saveJourney = async (
     });
 
   return Promise.resolve({
-    status: 200
-  })
+    status: 200,
+  });
 };
 
 export const getJourneyList = async (scheduleId: string) =>
   await axios
     .get(`/journeyList/?scheduleId=${scheduleId}`)
-    .then((res) => res.data)
-    .catch(
-      () =>
-        mockJourneyList.find((journey) => journey.scheduleId === scheduleId)
-          ?.assignment
-    );
+    .then((res: AxiosResponse<Journey[]>) => res.data)
+    .catch(() => (scheduleId === "12" ? mockSchedule12Journeys : []));
 
 export const addJourney = (scheduleId: string) => {
   axios
     .patch(`/journey/new/${scheduleId}`)
-    .then((response) => response.data)
+    .then((response: AxiosResponse<{ journeyId: string }>) => response.data)
     .catch((e) => null);
   return Promise.resolve({
-    data: Math.floor(Math.random() * 100).toString(),
+    data: {
+      journeyId: Math.floor(Math.random() * 100).toString(),
+    },
     status: 200,
   });
 };

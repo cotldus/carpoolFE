@@ -1,7 +1,13 @@
+import { useCarList } from "@/hooks/useCarList";
+import { useDeleteJourney } from "@/hooks/useDeleteJourney";
+import { useDriverList } from "@/hooks/useDriverList";
+import { useGroupsList } from "@/hooks/useGroupsList";
+import { useSaveJourney } from "@/hooks/useSaveJourney";
 import { mockCarplateList } from "@/pages/api/mockData/mockCarplateList";
 import { mockGroupList } from "@/pages/api/mockData/mockGroupList";
 import { AutoCompleteFieldDropdown } from "@/utils/AutoCompleteFieldDropdown";
 import MultipleSelect from "@/utils/MultiSelect";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Table,
   TableBody,
@@ -10,30 +16,22 @@ import {
   TableRow,
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { calculatePax, dataLabelValueMapper } from "../helper";
-import {
-  journeyAssignmentPayload,
-  labelObject,
-} from "../../services/interface";
-import { useCarList } from "@/hooks/useCarList";
-import { useDriverList } from "@/hooks/useDriverList";
-import { useGroupsList } from "@/hooks/useGroupsList";
-import { useSaveJourney } from "@/hooks/useSaveJourney";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useDeleteJourney } from "@/hooks/useDeleteJourney";
+import { Journey, labelObject } from "../../services/interface";
+import { calculatePax } from "../helper";
 
 export const ExpandAdminTable = (props: {
-  assignmentDetails: journeyAssignmentPayload;
+  assignmentDetails: Journey;
   scheduleId: string;
 }) => {
   const { assignmentDetails, scheduleId } = props;
 
   const saveJourney = useSaveJourney(scheduleId);
-  const getJourney = {
+  const getJourney: Journey = {
     car: assignmentDetails.car,
     driver: assignmentDetails.driver,
     groups: assignmentDetails.groups,
     pax: assignmentDetails.groups ? calculatePax(assignmentDetails.groups) : 0,
+    journeyId: assignmentDetails.journeyId,
   };
 
   const [journey, setJourney] = useState(getJourney);
@@ -46,13 +44,9 @@ export const ExpandAdminTable = (props: {
 
   useEffect(() => {
     if (isFirstRender.current) {
-      console.log("first");
       isFirstRender.current = false;
     } else {
-      saveJourney.mutate({
-        updatedJourney: journey,
-        journeyId: assignmentDetails.journeyId || "",
-      });
+      saveJourney.mutate(journey);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [journey]);
@@ -76,7 +70,7 @@ export const ExpandAdminTable = (props: {
             <AutoCompleteFieldDropdown
               name="car"
               existingValue={assignmentDetails.car?.carPlateNumber}
-              objectList={dataLabelValueMapper(carList)}
+              objectList={carList || []}
               setContext={(value) =>
                 setJourney({
                   ...journey,
@@ -90,7 +84,7 @@ export const ExpandAdminTable = (props: {
           <TableCell sx={{ width: 300 }}>
             <AutoCompleteFieldDropdown
               name="driver"
-              objectList={driverList}
+              objectList={driverList || []}
               existingValue={assignmentDetails.driver}
               setContext={(value: labelObject) =>
                 setJourney({
@@ -104,7 +98,7 @@ export const ExpandAdminTable = (props: {
             <MultipleSelect
               name="groups"
               optionsList={
-                groupsList?.map((item: any) => item.label || "") || []
+                groupsList?.map((item?: labelObject) => item?.label || "") || []
               }
               setContext={(value: string[]) => {
                 const groups =
@@ -132,7 +126,11 @@ export const ExpandAdminTable = (props: {
             />
           </TableCell>
           <TableCell width="40px">
-            <DeleteIcon onClick={() => deleteJourney.mutate(assignmentDetails.journeyId || "")}/>
+            <DeleteIcon
+              onClick={() =>
+                deleteJourney.mutate(assignmentDetails.journeyId || "")
+              }
+            />
           </TableCell>
         </TableBody>
       </Table>

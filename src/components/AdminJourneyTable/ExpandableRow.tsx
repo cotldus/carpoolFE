@@ -13,15 +13,12 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useState, Fragment } from "react";
 import { ExpandAdminTable } from "./ExpandAdminTable";
-import { createData } from "../helper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDeleteSchedule } from "@/hooks/useDeleteSchedule";
+import { Journey, Schedule } from "@/services/interface";
 
-export default function ExpandableRow(props: {
-  row: ReturnType<typeof createData>;
-  id: string;
-}) {
-  const { row, id: scheduleId } = props;
+export default function ExpandableRow({ row }: { row: Schedule }) {
+  const { scheduleId, date, time, pickup, dropoff } = row;
   const [open, setOpen] = useState(false);
   const addJourney = useAddJourney(scheduleId);
   const addNewAssignmentRow = async () => addJourney.mutate();
@@ -40,10 +37,10 @@ export default function ExpandableRow(props: {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell align="right">{row.date}</TableCell>
-        <TableCell align="right">{row.time}</TableCell>
+        <TableCell align="right">{date}</TableCell>
+        <TableCell align="right">{time}</TableCell>
         <TableCell align="right">
-          {row.pickup.reduce((locations, location, id) => {
+          {pickup.reduce((locations, location, id) => {
             return (
               <>
                 {id > 0 && (
@@ -57,7 +54,7 @@ export default function ExpandableRow(props: {
           }, <></>)}
         </TableCell>
         <TableCell align="right">
-          {row.dropoff.reduce((locations, location, id) => {
+          {dropoff.reduce((locations, location, id) => {
             return (
               <>
                 {id > 0 && (
@@ -74,7 +71,7 @@ export default function ExpandableRow(props: {
         <TableCell align="right">
           <Button
             onClick={() =>
-              alert(`Send whatsapp message for schedule ${row.scheduleId}`)
+              alert(`Send whatsapp message for schedule ${scheduleId}`)
             }
           >
             Notify
@@ -103,9 +100,9 @@ export default function ExpandableRow(props: {
                   <Queue />
                   Add
                 </IconButton>
-                {journeyAssignment?.map((details: any, id: any) => (
+                {journeyAssignment?.map((details: Journey) => (
                   <ExpandAdminTable
-                    key={id}
+                    key={`journey-${details.journeyId}`}
                     assignmentDetails={details}
                     scheduleId={scheduleId}
                   />
