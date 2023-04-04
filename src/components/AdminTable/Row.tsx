@@ -13,9 +13,9 @@ export type Row = {
   id: string;
   date: string;
   time: string;
-  departure: labelObject[];
+  dropoff: labelObject[];
   pickup: labelObject[];
-  pax: number;
+  totalPax: number;
 };
 
 export const Row = ({ row }: { row: Schedule }) => {

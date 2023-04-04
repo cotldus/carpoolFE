@@ -6,7 +6,7 @@ import { Car } from "./interface";
 
 export const createCar = async (formJson: Car) => {
   await axios
-    .post("/car", formJson, config)
+    .post("/car/create", formJson, config)
     .then((res) => {
       console.log(res);
       console.log(formJson);
