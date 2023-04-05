@@ -63,11 +63,11 @@ export type Schedule = {
   [ScheduleFields.DIRECTION]?: string;
 };
 
-export type ShowSchedule = {
+export type ScheduleForm = {
   [ScheduleFields.SCHEDULEID]: string;
   [ScheduleFields.DATE]: string;
   [ScheduleFields.TIME]: string;
-  [ScheduleFields.DROPOFF]: labelObject[];
+  [ScheduleFields.DROPOFF]: string;
   [ScheduleFields.TOTALPAX]: number;
-  [ScheduleFields.PICKUP]: labelObject[];
+  [ScheduleFields.PICKUP]: string;
 };

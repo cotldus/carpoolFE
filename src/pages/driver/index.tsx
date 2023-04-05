@@ -1,14 +1,15 @@
 import AdminTableV2 from "@/components/AdminJourneyTable/Index";
 import CreateCar from "@/components/CreateCar";
 import Layout from "@/components/Layout";
-import { useCarList } from "@/hooks/useCarList";
+import { useCar } from "@/hooks/useCar";
 import { Close } from "@mui/icons-material";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { ReactElement, useState } from "react";
 
 function Driver() {
   const [openCreateCar, setOpenCreateCar] = useState<boolean>(false);
-  useCarList();
+  useCar();
+
   return (
     <div className="">
       <div className="inline-block justify-center mt-16 px-6 w-full">
@@ -28,10 +29,7 @@ function Driver() {
           </div>
         </div>
       </div>
-      <Dialog
-        open={openCreateCar}
-        onClose={() => setOpenCreateCar(false)}
-      >
+      <Dialog open={openCreateCar} onClose={() => setOpenCreateCar(false)}>
         <div className="dialog-bkg">
           <DialogTitle
             sx={{ padding: 1, justifyContent: "right", display: "flex" }}

@@ -1,7 +1,7 @@
 import { countryOptions } from "@/constants";
-import { Schedule, ScheduleFields } from "@/services/interface";
+import { ScheduleFields } from "@/services/interface";
 import { useAddSchedule } from "@/hooks/useAddSchedule";
-import { ShowSchedule } from "@/services/interface";
+import { ScheduleForm } from "@/services/interface";
 import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 import DatePickers from "@/utils/datepicker";
 import { DropdownWithIcon } from "@/utils/DropdownWithIcon";
@@ -36,7 +36,7 @@ export const CreateSchedule = ({
     const form = e.target;
     const formData = new FormData(form);
     const formJson: unknown = Object.fromEntries(formData.entries());
-    const request = formJson as ShowSchedule;
+    const request = formJson as ScheduleForm;
     submitSchedule.mutate({
       ...request,
       pickup: request.pickup.split(", "),

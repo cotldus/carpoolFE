@@ -1,5 +1,5 @@
 import { useUpdateSchedule } from "@/hooks/useUpdateSchedule";
-import { Schedule, ScheduleFields } from "@/services/interface";
+import { Schedule, ScheduleFields, ScheduleForm } from "@/services/interface";
 import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 import DatePickers from "@/utils/datepicker";
 import TimePickers from "@/utils/timepicker";
@@ -27,12 +27,12 @@ export const EditLine = ({
     const form = e.target;
     const formData = new FormData(form);
     const formJson: unknown = Object.fromEntries(formData.entries());
-    const request = formJson as ShowSchedule
+    const request = formJson as ScheduleForm;
     const updateScheduleDetails: Schedule = {
-      ...(request),
+      ...request,
       scheduleId: row.scheduleId,
       pickup: request.pickup.split(", "),
-      dropoff: request.dropoff.split(", ")
+      dropoff: request.dropoff.split(", "),
     };
     editSchedule.mutate(updateScheduleDetails);
   };
