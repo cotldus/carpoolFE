@@ -1,6 +1,6 @@
 import { useCar } from "@/hooks/useCar";
-import { useDriverList } from "@/hooks/useDriverList";
-import { useGroupsList } from "@/hooks/useGroupsList";
+import { useDriver } from "@/hooks/useDriver";
+import { usePassengers } from "@/hooks/usePassengers";
 import { useJourney } from "@/hooks/useJourney";
 import { mockCarplateList } from "@/pages/api/mockData/mockCarplateList";
 import { mockGroupList } from "@/pages/api/mockData/mockGroupList";
@@ -12,7 +12,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from "@mui/material";
 import { isEmpty } from "lodash";
 import { useEffect, useRef, useState } from "react";
@@ -38,8 +38,12 @@ export const ExpandAdminTable = (props: {
   const [journey, setJourney] = useState(getJourney);
 
   const { data: carList, error, isLoading } = getCarList;
-  const { data: driverList } = useDriverList();
-  const { data: groupsList } = useGroupsList(scheduleId);
+  const {
+    getDriverList: { data: driverList },
+  } = useDriver();
+  const {
+    getGroupsList: { data: groupsList },
+  } = usePassengers(scheduleId);
   const isFirstRender = useRef(true);
 
   useEffect(() => {
