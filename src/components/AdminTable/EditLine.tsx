@@ -1,4 +1,4 @@
-import { useUpdateSchedule } from "@/hooks/useUpdateSchedule";
+import { useSchedule } from "@/hooks/useSchedule";
 import { Schedule, ScheduleFields, ScheduleForm } from "@/services/interface";
 import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 import DatePickers from "@/utils/datepicker";
@@ -16,7 +16,7 @@ export const EditLine = ({
   setEditMode: Dispatch<SetStateAction<boolean>>;
   row: Schedule;
 }) => {
-  const editSchedule = useUpdateSchedule();
+  const { editSchedule } = useSchedule();
 
   useEffect(() => {
     editSchedule.isSuccess && setEditMode(false);

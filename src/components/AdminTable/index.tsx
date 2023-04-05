@@ -1,5 +1,4 @@
-import { useDeleteSchedule } from "@/hooks/useDeleteSchedule";
-import { useScheduleList } from "@/hooks/useScheduleList";
+import { useSchedule } from "@/hooks/useSchedule";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -31,8 +30,9 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const AdminTable = () => {
-  const { data } = useScheduleList();
-  
+  const { getScheduleList } = useSchedule();
+  const { data } = getScheduleList;
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ maxWidth: "100%", width: 1 }} aria-label="customized table">

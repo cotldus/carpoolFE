@@ -1,5 +1,5 @@
-import { useDeleteSchedule } from "@/hooks/useDeleteSchedule";
 import { useJourney } from "@/hooks/useJourney";
+import { useSchedule } from "@/hooks/useSchedule";
 import { Journey, Schedule } from "@/services/interface";
 import { Queue } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -21,7 +21,7 @@ export default function ExpandableRow({ row }: { row: Schedule }) {
   const [open, setOpen] = useState(false);
   const { addJourney, getJourneyList } = useJourney(scheduleId);
   const addNewAssignmentRow = async () => addJourney.mutate();
-  const deleteSchedule = useDeleteSchedule();
+  const { deleteSchedule } = useSchedule();
   const { data: journeysAssigned } = getJourneyList;
 
   return (

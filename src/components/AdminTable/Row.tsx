@@ -1,5 +1,4 @@
-import { useDeleteSchedule } from "@/hooks/useDeleteSchedule";
-import { useDuplicateSchedule } from "@/hooks/useDuplicateSchedule";
+import { useSchedule } from "@/hooks/useSchedule";
 import { Schedule } from "@/services/interface";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -11,8 +10,7 @@ import { EditLine } from "./EditLine";
 
 export const Row = ({ row }: { row: Schedule }) => {
   const [editMode, setEditMode] = useState(false);
-  const duplicateSchedule = useDuplicateSchedule();
-  const deleteSchedule = useDeleteSchedule();
+  const { deleteSchedule, duplicateSchedule } = useSchedule();
 
   if (editMode) return <EditLine setEditMode={setEditMode} row={row} />;
 
