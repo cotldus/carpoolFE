@@ -1,29 +1,28 @@
-import { useAddJourney } from "@/hooks/useAddJourney";
-import { useJourneyList } from "@/hooks/useJourneyList";
+import { useJourney } from "@/hooks/useJourney";
+import { useSchedule } from "@/hooks/useSchedule";
+import { Journey, Schedule } from "@/services/interface";
 import { Queue } from "@mui/icons-material";
-import {
-  TableRow,
-  TableCell,
-  IconButton,
-  Button,
-  Collapse,
-  Box,
-} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { useState, Fragment } from "react";
+import {
+  Box,
+  Button,
+  Collapse,
+  IconButton,
+  TableCell,
+  TableRow
+} from "@mui/material";
+import { Fragment, useState } from "react";
 import { ExpandAdminTable } from "./ExpandAdminTable";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useDeleteSchedule } from "@/hooks/useDeleteSchedule";
-import { Journey, Schedule } from "@/services/interface";
 
 export default function ExpandableRow({ row }: { row: Schedule }) {
   const { scheduleId, date, time, pickup, dropoff } = row;
   const [open, setOpen] = useState(false);
-  const addJourney = useAddJourney(scheduleId);
+  const { addJourney, getJourneyList } = useJourney(scheduleId);
   const addNewAssignmentRow = async () => addJourney.mutate();
-  const deleteSchedule = useDeleteSchedule();
-  const { data: journeyAssignment } = useJourneyList(scheduleId);
+  const { deleteSchedule } = useSchedule();
+  const { data: journeysAssigned } = getJourneyList;
 
   return (
     <Fragment>
@@ -100,7 +99,7 @@ export default function ExpandableRow({ row }: { row: Schedule }) {
                   <Queue />
                   Add
                 </IconButton>
-                {journeyAssignment?.map((details: Journey) => (
+                {journeysAssigned?.map((details: Journey) => (
                   <ExpandAdminTable
                     key={`journey-${details.journeyId}`}
                     assignmentDetails={details}

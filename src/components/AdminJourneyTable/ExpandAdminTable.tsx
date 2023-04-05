@@ -1,8 +1,7 @@
-import { useCarList } from "@/hooks/useCarList";
-import { useDeleteJourney } from "@/hooks/useDeleteJourney";
-import { useDriverList } from "@/hooks/useDriverList";
-import { useGroupsList } from "@/hooks/useGroupsList";
-import { useSaveJourney } from "@/hooks/useSaveJourney";
+import { useCar } from "@/hooks/useCar";
+import { useDriver } from "@/hooks/useDriver";
+import { usePassengers } from "@/hooks/usePassengers";
+import { useJourney } from "@/hooks/useJourney";
 import { mockCarplateList } from "@/pages/api/mockData/mockCarplateList";
 import { mockGroupList } from "@/pages/api/mockData/mockGroupList";
 import { AutoCompleteFieldDropdown } from "@/utils/AutoCompleteFieldDropdown";
@@ -13,11 +12,12 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from "@mui/material";
+import { isEmpty } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { Journey, JourneyFields, labelObject } from "../../services/interface";
-import { calculatePax } from "../helper";
+import { calculatePax, dataLabelValueMapper } from "../helper";
 
 export const ExpandAdminTable = (props: {
   assignmentDetails: Journey;
@@ -25,7 +25,7 @@ export const ExpandAdminTable = (props: {
 }) => {
   const { assignmentDetails, scheduleId } = props;
 
-  const saveJourney = useSaveJourney(scheduleId);
+  const { saveJourney, deleteJourney } = useJourney(scheduleId);
   const getJourney: Journey = {
     car: assignmentDetails.car,
     driver: assignmentDetails.driver,
@@ -33,13 +33,17 @@ export const ExpandAdminTable = (props: {
     pax: assignmentDetails.groups ? calculatePax(assignmentDetails.groups) : 0,
     journeyId: assignmentDetails.journeyId,
   };
+  const { getCarList } = useCar();
 
   const [journey, setJourney] = useState(getJourney);
 
-  const { data: carList, error, isLoading } = useCarList();
-  const { data: driverList } = useDriverList();
-  const { data: groupsList } = useGroupsList(scheduleId);
-  const deleteJourney = useDeleteJourney(scheduleId);
+  const { data: carList, error, isLoading } = getCarList;
+  const {
+    getDriverList: { data: driverList },
+  } = useDriver();
+  const {
+    getGroupsList: { data: groupsList },
+  } = usePassengers(scheduleId);
   const isFirstRender = useRef(true);
 
   useEffect(() => {
@@ -70,7 +74,11 @@ export const ExpandAdminTable = (props: {
             <AutoCompleteFieldDropdown
               name={JourneyFields.CAR}
               existingValue={assignmentDetails.car?.carPlateNumber}
-              objectList={carList || []}
+              objectList={
+                !isEmpty(carList) && carList
+                  ? dataLabelValueMapper(carList)
+                  : []
+              }
               setContext={(value) =>
                 setJourney({
                   ...journey,

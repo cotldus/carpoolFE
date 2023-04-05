@@ -1,4 +1,4 @@
-import { useScheduleList } from "@/hooks/useScheduleList";
+import { useSchedule } from "@/hooks/useSchedule";
 import { Schedule } from "@/services/interface";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -11,15 +11,16 @@ import ExpandableRow from "./ExpandableRow";
 
 export default function AdminJourneyTable() {
   const headerData = ["Date", "Time", "Pickup", "Dropoff", "Notify", "Delete"];
-
-  const { data } = useScheduleList();
+  const { getScheduleList } = useSchedule();
+  const { data } = getScheduleList;
+  
   return (
     <form>
-      <TableContainer
-        component={Paper}
-        sx={{ width: "100%" }}
-      >
-        <Table aria-label="collapsible table" sx={{ maxWidth: "100%", width: 1 }}>
+      <TableContainer component={Paper} sx={{ width: "100%" }}>
+        <Table
+          aria-label="collapsible table"
+          sx={{ maxWidth: "100%", width: 1 }}
+        >
           <TableHead sx={{ backgroundColor: "#3366CC" }}>
             <TableRow
               sx={{

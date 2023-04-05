@@ -1,10 +1,11 @@
-import { createCar } from "@/services";
+import { createCar, getCarList as getCarListService } from "@/services";
 import { Car } from "@/services/interface";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export const useAddCar = () => {
+export const useCar = () => {
   const queryClient = useQueryClient();
-  return useMutation({
+
+  const addCar = useMutation({
     mutationFn: (newCar: Car) => createCar(newCar),
     onSuccess: (res, newCar) => {
       queryClient.setQueryData(["carList"], (carList?: Car[]) => {
@@ -13,4 +14,11 @@ export const useAddCar = () => {
       });
     },
   });
+
+  const getCarList = useQuery(["carList"], getCarListService);
+
+  return {
+    addCar,
+    getCarList
+  };
 };

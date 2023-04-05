@@ -1,4 +1,3 @@
-import { dataLabelValueMapper } from "@/components/helper";
 import { mockCarplateList } from "@/pages/api/mockData/mockCarplateList";
 import axios, { AxiosResponse } from "axios";
 import { config } from ".";
@@ -24,5 +23,5 @@ export const createCar = async (formJson: Car) => {
 export const getCarList = async () =>
   await axios
     .get("/carList")
-    .then((res: AxiosResponse<Car[]>) => dataLabelValueMapper(res.data))
-    .catch(() => dataLabelValueMapper(mockCarplateList));
+    .then((res: AxiosResponse<Car[]>) => res.data)
+    .catch(() => mockCarplateList);

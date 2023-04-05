@@ -1,4 +1,4 @@
-import { useAddCar } from "@/hooks/useAddCar";
+import { useCar } from "@/hooks/useCar";
 import { Car, CarFields } from "@/services/interface";
 import { Button } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect } from "react";
@@ -8,7 +8,7 @@ const CreateCar = ({
 }: {
   setOpenCreateCar: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const addCar = useAddCar();
+  const { addCar } = useCar();
   const onSubmit = async (e: any) => {
     e.preventDefault();
     const form = e.target;
