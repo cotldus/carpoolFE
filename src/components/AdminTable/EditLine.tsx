@@ -29,6 +29,7 @@ export const EditLine = ({
     const formJson: unknown = Object.fromEntries(formData.entries());
     const request = formJson as ScheduleForm;
     const updateScheduleDetails: Schedule = {
+      ...row,
       ...request,
       scheduleId: row.scheduleId,
       pickup: request.pickup.split(", "),
@@ -38,7 +39,7 @@ export const EditLine = ({
   };
 
   return (
-    <StyledTableCell style={{ padding: 0 }} colSpan={7}>
+    <StyledTableCell style={{ padding: 0 }} colSpan={8}>
       <form onSubmit={onSubmit}>
         <Table sx={{ maxWidth: "100%", width: 1 }}>
           <TableBody>

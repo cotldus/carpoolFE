@@ -30,9 +30,9 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const AdminTable = () => {
-  const { getScheduleList } = useSchedule();
-  const { data } = getScheduleList;
-
+  const {
+    getScheduleList: { data },
+  } = useSchedule();
   return (
     <TableContainer component={Paper}>
       <Table sx={{ maxWidth: "100%", width: 1 }} aria-label="customized table">

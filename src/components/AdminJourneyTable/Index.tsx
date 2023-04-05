@@ -11,9 +11,10 @@ import ExpandableRow from "./ExpandableRow";
 
 export default function AdminJourneyTable() {
   const headerData = ["Date", "Time", "Pickup", "Dropoff", "Notify", "Delete"];
-  const { getScheduleList } = useSchedule();
-  const { data } = getScheduleList;
-  
+  const {
+    getScheduleList: { data },
+  } = useSchedule();
+
   return (
     <form>
       <TableContainer component={Paper} sx={{ width: "100%" }}>

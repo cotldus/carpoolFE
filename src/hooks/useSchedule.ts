@@ -4,7 +4,7 @@ import {
   getScheduleList as getScheduleListService,
   updateSchedule,
   deleteSchedule as deleteScheduleService,
-} from "@/services/schedule";
+} from "@/services/index";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 
 export const useSchedule = () => {
