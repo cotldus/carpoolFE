@@ -1,8 +1,7 @@
 import { useCar } from "@/hooks/useCar";
-import { useDeleteJourney } from "@/hooks/useDeleteJourney";
 import { useDriverList } from "@/hooks/useDriverList";
 import { useGroupsList } from "@/hooks/useGroupsList";
-import { useSaveJourney } from "@/hooks/useSaveJourney";
+import { useJourney } from "@/hooks/useJourney";
 import { mockCarplateList } from "@/pages/api/mockData/mockCarplateList";
 import { mockGroupList } from "@/pages/api/mockData/mockGroupList";
 import { AutoCompleteFieldDropdown } from "@/utils/AutoCompleteFieldDropdown";
@@ -13,7 +12,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
+  TableRow
 } from "@mui/material";
 import { isEmpty } from "lodash";
 import { useEffect, useRef, useState } from "react";
@@ -26,7 +25,7 @@ export const ExpandAdminTable = (props: {
 }) => {
   const { assignmentDetails, scheduleId } = props;
 
-  const saveJourney = useSaveJourney(scheduleId);
+  const { saveJourney, deleteJourney } = useJourney(scheduleId);
   const getJourney: Journey = {
     car: assignmentDetails.car,
     driver: assignmentDetails.driver,
@@ -34,14 +33,13 @@ export const ExpandAdminTable = (props: {
     pax: assignmentDetails.groups ? calculatePax(assignmentDetails.groups) : 0,
     journeyId: assignmentDetails.journeyId,
   };
-  const { retrieveCarList } = useCar();
+  const { getCarList } = useCar();
 
   const [journey, setJourney] = useState(getJourney);
 
-  const { data: carList, error, isLoading } = retrieveCarList;
+  const { data: carList, error, isLoading } = getCarList;
   const { data: driverList } = useDriverList();
   const { data: groupsList } = useGroupsList(scheduleId);
-  const deleteJourney = useDeleteJourney(scheduleId);
   const isFirstRender = useRef(true);
 
   useEffect(() => {

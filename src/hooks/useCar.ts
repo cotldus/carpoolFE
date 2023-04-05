@@ -1,7 +1,6 @@
-import { createCar } from "@/services";
+import { createCar, getCarList as getCarListService } from "@/services";
 import { Car } from "@/services/interface";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getCarList } from "@/services";
 
 export const useCar = () => {
   const queryClient = useQueryClient();
@@ -16,10 +15,10 @@ export const useCar = () => {
     },
   });
 
-  const retrieveCarList = useQuery(["carList"], getCarList);
+  const getCarList = useQuery(["carList"], getCarListService);
 
   return {
     addCar,
-    retrieveCarList
+    getCarList
   };
 };
