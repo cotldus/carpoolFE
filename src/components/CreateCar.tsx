@@ -1,5 +1,5 @@
 import { useAddCar } from "@/hooks/useAddCar";
-import { Car } from "@/services/interface";
+import { Car, CarFields } from "@/services/interface";
 import { Button } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
@@ -46,7 +46,7 @@ const CreateCar = ({
                 <input
                   type="text"
                   id="car_plate_number"
-                  name="carPlateNumber"
+                  name={CarFields.CARPLATE_NUMBER}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="Car plate number"
                   required
@@ -62,7 +62,7 @@ const CreateCar = ({
                 <input
                   type="text"
                   id="passenger_pax"
-                  name="maxPax"
+                  name={CarFields.MAX_PAX}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="0"
                   required

@@ -23,9 +23,14 @@ export type group =
     }
   | undefined;
 
+export enum CarFields {
+  CARPLATE_NUMBER = "carPlateNumber",
+  MAX_PAX = "maxPax"
+}
+
 export type Car = {
-  carPlateNumber: string;
-  maxPax: number;
+  [CarFields.CARPLATE_NUMBER]: string;
+  [CarFields.MAX_PAX]: number;
 };
 
 export interface CarPlateList {
@@ -38,21 +43,31 @@ export type Driver = {
   name: string;
 };
 
+export enum ScheduleFields {
+  SCHEDULEID = "scheduleId",
+  DATE = "date",
+  TIME = "time",
+  DROPOFF = "dropoff",
+  TOTALPAX = "totalPax",
+  PICKUP = "pickup",
+  DIRECTION = "journeyToAndFrom",
+}
+
 export type Schedule = {
-  scheduleId: string;
-  date: string;
-  time: string;
-  dropoff: string[];
-  totalPax: number;
-  pickup: string[];
-  journeyToAndFrom?: string;
+  [ScheduleFields.SCHEDULEID]: string;
+  [ScheduleFields.DATE]: string;
+  [ScheduleFields.TIME]: string;
+  [ScheduleFields.DROPOFF]: string[];
+  [ScheduleFields.TOTALPAX]: number;
+  [ScheduleFields.PICKUP]: string[];
+  [ScheduleFields.DIRECTION]?: string;
 };
 
 export type ShowSchedule = {
-  scheduleId: string;
-  date: string;
-  time: string;
-  dropoff: labelObject[];
-  totalPax: number;
-  pickup: labelObject[];
+  [ScheduleFields.SCHEDULEID]: string;
+  [ScheduleFields.DATE]: string;
+  [ScheduleFields.TIME]: string;
+  [ScheduleFields.DROPOFF]: labelObject[];
+  [ScheduleFields.TOTALPAX]: number;
+  [ScheduleFields.PICKUP]: labelObject[];
 };
