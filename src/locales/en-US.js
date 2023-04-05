@@ -7,5 +7,6 @@ export default {
     phone_number: "Phone Number",
     password: "Password",
     carpool_hero: "Carpool Hero",
-    sign_in: "Sign In"
+    sign_in: "Sign In",
+    create_schedule: "Create Journey"
 };

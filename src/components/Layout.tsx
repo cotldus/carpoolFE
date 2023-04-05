@@ -12,13 +12,6 @@ export default function Layout({
 }) {
   const { data, status } = useSession();
   console.log("USER SESSION: ", data);
-  // return (
-  //   <>
-  //     <Navbar />
-  //     <Toggles/>
-  //     <main>{children}</main>
-  //   </>
-  // );
 
   useEffect(() => {
     if (status === "unauthenticated") Router.replace("/login");
@@ -26,9 +19,9 @@ export default function Layout({
 
   if (status === "authenticated")
     return (
-      <div className="inline-flex w-full">
+      <div className="inline-flex w-full bg-custom-blue-grad">
         <Sidebar/>
-        <main >{children}</main>
+        <main className="w-full">{children}</main>
       </div>
     );
 

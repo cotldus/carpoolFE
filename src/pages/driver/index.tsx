@@ -7,30 +7,30 @@ import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { ReactElement, useState } from "react";
 
 function Driver() {
-  const [openCreateJourney, setOpenCreateJourney] = useState<boolean>(false);
+  const [openCreateCar, setOpenCreateCar] = useState<boolean>(false);
   useCarList();
   return (
-    <div className="flex-col">
-      <div className="inline-block justify-center mt-16 px-2">
+    <div className="">
+      <div className="inline-block justify-center mt-16 px-6 w-full">
         <div className="relative p-4">
           <Button
             variant="outlined"
-            onClick={() => setOpenCreateJourney(true)}
+            onClick={() => setOpenCreateCar(true)}
             className="absolute right-0 left-auto"
             size="small"
           >
             Create Car
           </Button>
         </div>
-        <div className="justify-center pt-6 w-[90vw]">
+        <div className="justify-center pt-6 w-full">
           <div className="mt-4 space-y-4 sm:mt-4 sm:space-y-0 sm:gap-6 lg:mx-auto xl:max-w-none xl:mx-0 w-full">
             <AdminTableV2 />
           </div>
         </div>
       </div>
       <Dialog
-        open={openCreateJourney}
-        onClose={() => setOpenCreateJourney(false)}
+        open={openCreateCar}
+        onClose={() => setOpenCreateCar(false)}
       >
         <div className="dialog-bkg">
           <DialogTitle
@@ -40,14 +40,14 @@ function Driver() {
             <Button
               className="right"
               sx={{ padding: 0, margin: 0, minWidth: "24px" }}
-              onClick={() => setOpenCreateJourney(false)}
+              onClick={() => setOpenCreateCar(false)}
             >
               <Close color="info" />
             </Button>
           </DialogTitle>
-          <DialogContent sx={{ padding: 0 }} className="">
+          <DialogContent sx={{ padding: 0, minWidth: "200px" }} className="">
             <div className="flex justify-center">
-              <CreateCar setOpenCreateJourney={setOpenCreateJourney} />
+              <CreateCar setOpenCreateCar={setOpenCreateCar} />
             </div>
           </DialogContent>
         </div>

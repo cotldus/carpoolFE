@@ -1,5 +1,5 @@
 import { useUpdateSchedule } from "@/hooks/useUpdateSchedule";
-import { Schedule, ShowSchedule } from "@/services/interface";
+import { Schedule, ScheduleFields } from "@/services/interface";
 import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
 import DatePickers from "@/utils/datepicker";
 import TimePickers from "@/utils/timepicker";
@@ -47,26 +47,26 @@ export const EditLine = ({
                 {row.scheduleId}
               </StyledTableCell>
               <StyledTableCell align="right">
-                <DatePickers name="date" initValue={row.date} />
+                <DatePickers name={ScheduleFields.DATE} initValue={row.date} />
               </StyledTableCell>
               <StyledTableCell align="right">
-                <TimePickers name="time" initValue={row.time} />
+                <TimePickers name={ScheduleFields.TIME} initValue={row.time} />
               </StyledTableCell>
               <StyledTableCell align="right">
                 <AutoCompleteFieldInput
-                  name="pickup"
+                  name={ScheduleFields.PICKUP}
                   initValue={stringLabelValueMapper(row.pickup)}
                 />
               </StyledTableCell>
               <StyledTableCell align="right">
                 <AutoCompleteFieldInput
-                  name="dropoff"
+                  name={ScheduleFields.DROPOFF}
                   initValue={stringLabelValueMapper(row.dropoff)}
                 />
               </StyledTableCell>
               <StyledTableCell align="right">
                 <input
-                  name="totalPax"
+                  name={ScheduleFields.TOTALPAX}
                   type="text"
                   id="passenger_pax"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"

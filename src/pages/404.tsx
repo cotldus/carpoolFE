@@ -11,8 +11,6 @@ export default function Custom404() {
           alt="Picture of the losted people"
           width={400}
           height={400}
-          //   width="350px"
-          //   height="300px"
         />
       </div>
       <div className="item1 col-span-1 border-l-2 border-spacing-2 border-black md:py-12 py-2">

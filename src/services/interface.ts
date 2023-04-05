@@ -1,19 +1,19 @@
 export type labelObject = { label?: string; value?: string; category?: string };
 
-export type Journey = {
-  journeyId?: string;
-  car?: Car;
-  driver?: string;
-  groups?: group[];
-  pax?: number;
-};
+export enum JourneyFields {
+  JOURNEYID = "journeyId",
+  CAR = "car",
+  DRIVER = "driver",
+  GROUPS = "groups",
+  PAX = "pax",
+}
 
-export type journeyAssignmentPayload = {
-  journeyId?: string;
-  car?: Car;
-  driver?: string;
-  groups?: group[];
-  groupPax?: number;
+export type Journey = {
+  [JourneyFields.JOURNEYID]?: string;
+  [JourneyFields.CAR]?: Car;
+  [JourneyFields.DRIVER]?: string;
+  [JourneyFields.GROUPS]?: group[];
+  [JourneyFields.PAX]?: number;
 };
 
 export type group =
@@ -23,19 +23,14 @@ export type group =
     }
   | undefined;
 
-export type mockJourneyList = {
-  scheduleId: string;
-  date: string;
-  time: number;
-  totalPax: number;
-  pickup: string[];
-  dropoff: string[];
-  assignment: journeyAssignmentPayload[];
-};
+export enum CarFields {
+  CARPLATE_NUMBER = "carPlateNumber",
+  MAX_PAX = "maxPax"
+}
 
 export type Car = {
-  carPlateNumber: string;
-  maxPax: number;
+  [CarFields.CARPLATE_NUMBER]: string;
+  [CarFields.MAX_PAX]: number;
 };
 
 export interface CarPlateList {
@@ -48,20 +43,31 @@ export type Driver = {
   name: string;
 };
 
+export enum ScheduleFields {
+  SCHEDULEID = "scheduleId",
+  DATE = "date",
+  TIME = "time",
+  DROPOFF = "dropoff",
+  TOTALPAX = "totalPax",
+  PICKUP = "pickup",
+  DIRECTION = "journeyToAndFrom",
+}
+
 export type Schedule = {
-  scheduleId: string;
-  date: string;
-  time: string;
-  dropoff: string[];
-  totalPax: number;
-  pickup: string[];
+  [ScheduleFields.SCHEDULEID]: string;
+  [ScheduleFields.DATE]: string;
+  [ScheduleFields.TIME]: string;
+  [ScheduleFields.DROPOFF]: string[];
+  [ScheduleFields.TOTALPAX]: number;
+  [ScheduleFields.PICKUP]: string[];
+  [ScheduleFields.DIRECTION]?: string;
 };
 
 export type ShowSchedule = {
-  scheduleId: string;
-  date: string;
-  time: string;
-  dropoff: string;
-  totalPax: number;
-  pickup: string;
+  [ScheduleFields.SCHEDULEID]: string;
+  [ScheduleFields.DATE]: string;
+  [ScheduleFields.TIME]: string;
+  [ScheduleFields.DROPOFF]: labelObject[];
+  [ScheduleFields.TOTALPAX]: number;
+  [ScheduleFields.PICKUP]: labelObject[];
 };

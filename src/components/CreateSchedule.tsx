@@ -1,4 +1,5 @@
 import { countryOptions } from "@/constants";
+import { Schedule, ScheduleFields } from "@/services/interface";
 import { useAddSchedule } from "@/hooks/useAddSchedule";
 import { ShowSchedule } from "@/services/interface";
 import { AutoCompleteFieldInput } from "@/utils/AutoCompleteFieldInput";
@@ -67,7 +68,7 @@ export const CreateSchedule = ({
       <div className=" sm:space-y-0 sm:grid sm:grid-cols-1 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:grid-cols-1 w-full ">
         <div className="md:flex md:flex-col md:align-center">
           <div className="overflow-visible">
-            <div className="p-6">
+            <div className="px-6 pb-6">
               <h2 className="text-2xl leading-6 font-semibold">
                 Create new schedule
               </h2>
@@ -79,7 +80,7 @@ export const CreateSchedule = ({
                   >
                     Pick-Up Location:
                   </label>
-                  <AutoCompleteFieldInput name="pickup" />
+                  <AutoCompleteFieldInput name={ScheduleFields.PICKUP} />
                 </div>
                 <div className="item2 col-span-1">
                   <label placeholder="country" className="dialog-text-font-1">
@@ -103,20 +104,7 @@ export const CreateSchedule = ({
                   >
                     Drop-off location:
                   </label>
-                  <AutoCompleteFieldInput name="dropoff" />
-                </div>
-                <div className="item2 col-span-1">
-                  <label placeholder="country" className="dialog-text-font-1">
-                    To:
-                  </label>
-                  <DropdownWithIcon
-                    key={"country-select-to"}
-                    defaultValue={newSchedule?.to}
-                    setValue={onHandleTo}
-                    selectionList={countryOptionsFilter}
-                    withPhoneNumber={false}
-                    className="w-full"
-                  />
+                  <AutoCompleteFieldInput name={ScheduleFields.DROPOFF} />
                 </div>
                 <div className="item2 col-span-1">
                   <label placeholder="country" className="dialog-text-font-1">
@@ -140,7 +128,7 @@ export const CreateSchedule = ({
                   >
                     Depature date:
                   </label>
-                  <DatePickers name="date" />
+                  <DatePickers name={ScheduleFields.DATE} />
                 </div>
                 <div>
                   <label
@@ -149,7 +137,7 @@ export const CreateSchedule = ({
                   >
                     Depature time:
                   </label>
-                  <TimePickers name="time" />
+                  <TimePickers name={ScheduleFields.TIME} />
                 </div>
               </div>
               <div className="sm:grid sm:grid-cols-2 sm:mx-0 xl:grid-cols-2 xl:mx-0 pt-4">
@@ -161,7 +149,7 @@ export const CreateSchedule = ({
                     Number of Pax:
                   </label>
                   <input
-                    name="totalPax"
+                    name={ScheduleFields.TOTALPAX}
                     type="text"
                     id="passenger_pax"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
@@ -189,7 +177,7 @@ export const CreateSchedule = ({
               <Button
                 type="submit"
                 onClick={() => undefined}
-                className="mt-8 block w-full rounded-md py-2 text-sm font-semibold text-blue text-center hover:bg-zinc-900"
+                className="mt-8 block w-full rounded-md py-2 text-md button-blue"
               >
                 Submit
               </Button>
