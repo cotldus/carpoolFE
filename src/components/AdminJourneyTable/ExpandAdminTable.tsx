@@ -13,10 +13,10 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
+  TableRow
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { Journey, labelObject } from "../../services/interface";
+import { Journey, JourneyFields, labelObject } from "../../services/interface";
 import { calculatePax } from "../helper";
 
 export const ExpandAdminTable = (props: {
@@ -68,7 +68,7 @@ export const ExpandAdminTable = (props: {
         <TableBody>
           <TableCell sx={{ width: 300 }}>
             <AutoCompleteFieldDropdown
-              name="car"
+              name={JourneyFields.CAR}
               existingValue={assignmentDetails.car?.carPlateNumber}
               objectList={carList || []}
               setContext={(value) =>
@@ -83,7 +83,7 @@ export const ExpandAdminTable = (props: {
           </TableCell>
           <TableCell sx={{ width: 300 }}>
             <AutoCompleteFieldDropdown
-              name="driver"
+              name={JourneyFields.DRIVER}
               objectList={driverList || []}
               existingValue={assignmentDetails.driver}
               setContext={(value: labelObject) =>
@@ -96,7 +96,7 @@ export const ExpandAdminTable = (props: {
           </TableCell>
           <TableCell sx={{ width: 300 }}>
             <MultipleSelect
-              name="groups"
+              name={JourneyFields.GROUPS}
               optionsList={
                 groupsList?.map((item?: labelObject) => item?.label || "") || []
               }
@@ -117,7 +117,7 @@ export const ExpandAdminTable = (props: {
           </TableCell>
           <TableCell width="80px">
             <input
-              name="pax"
+              name={JourneyFields.PAX}
               type="text"
               id="passenger_pax"
               className="w-full text-right"

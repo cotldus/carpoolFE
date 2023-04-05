@@ -4,9 +4,9 @@ import { Button } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
 const CreateCar = ({
-  setOpenCreateJourney,
+  setOpenCreateCar,
 }: {
-  setOpenCreateJourney: Dispatch<SetStateAction<boolean>>;
+  setOpenCreateCar: Dispatch<SetStateAction<boolean>>;
 }) => {
   const addCar = useAddCar();
   const onSubmit = async (e: any) => {
@@ -18,7 +18,7 @@ const CreateCar = ({
   };
 
   useEffect(() => {
-    addCar.isSuccess && setOpenCreateJourney(false);
+    addCar.isSuccess && setOpenCreateCar(false);
   }, [addCar.isSuccess]);
 
   return (

@@ -1,8 +1,4 @@
-import {
-  Journey,
-  mockJourneyList as MockJourneyList,
-  Schedule,
-} from "../../../services/interface";
+import { Journey, Schedule } from "../../../services/interface";
 
 export const mockScheduleList: Schedule[] = [
   {

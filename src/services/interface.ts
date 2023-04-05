@@ -1,19 +1,19 @@
 export type labelObject = { label?: string; value?: string; category?: string };
 
-export type Journey = {
-  journeyId?: string;
-  car?: Car;
-  driver?: string;
-  groups?: group[];
-  pax?: number;
-};
+export enum JourneyFields {
+  JOURNEYID = "journeyId",
+  CAR = "car",
+  DRIVER = "driver",
+  GROUPS = "groups",
+  PAX = "pax",
+}
 
-export type journeyAssignmentPayload = {
-  journeyId?: string;
-  car?: Car;
-  driver?: string;
-  groups?: group[];
-  groupPax?: number;
+export type Journey = {
+  [JourneyFields.JOURNEYID]?: string;
+  [JourneyFields.CAR]?: Car;
+  [JourneyFields.DRIVER]?: string;
+  [JourneyFields.GROUPS]?: group[];
+  [JourneyFields.PAX]?: number;
 };
 
 export type group =
@@ -22,17 +22,6 @@ export type group =
       pax: number;
     }
   | undefined;
-
-export type mockJourneyList = {
-  scheduleId: string;
-  date: string;
-  time: number;
-  totalPax: number;
-  pickup: string[];
-  dropoff: string[];
-  journeyToAndFrom: string;
-  assignment: journeyAssignmentPayload[];
-};
 
 export type Car = {
   carPlateNumber: string;
