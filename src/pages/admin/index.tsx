@@ -53,7 +53,7 @@ function Admin() {
           </DialogTitle>
           <DialogContent sx={{ padding: 0 }} className="">
             <div className="flex justify-center">
-              <CreateSchedule />
+              <CreateSchedule setOpenCreateJourney={setOpenCreateJourney}/>
             </div>
           </DialogContent>
         </div>
