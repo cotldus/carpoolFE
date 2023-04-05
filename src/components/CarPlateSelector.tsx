@@ -1,8 +1,8 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
-import { carplateList } from "@/services/mocks";
 import { CarPlateList } from "@/services/interface";
+import { mockFormattedCarplateList } from "@/pages/api/mockData/mockCarplateList";
 
 const filter = createFilterOptions<CarPlateList>();
 
@@ -47,7 +47,7 @@ export default function CarPlateSelector() {
       clearOnBlur
       handleHomeEndKeys
       id="car-plate-select"
-      options={carplateList}
+      options={mockFormattedCarplateList}
       getOptionLabel={(option) => {
         // Value selected with enter, right from the input
         if (typeof option === "string") {
