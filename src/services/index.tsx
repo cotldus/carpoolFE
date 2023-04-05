@@ -2,7 +2,7 @@ import { createCar, getCarList } from "./car";
 import { getDriverList } from "./driver";
 import { addJourney, getJourneyList, saveJourney } from "./journey";
 import { getGroupsList } from "./passenger";
-import { getScheduleList, submitSchedule } from "./schedule";
+import { getScheduleList, submitSchedule, updateSchedule, deleteSchedule } from "./schedule";
 
 export const config = {
   headers: {
@@ -21,4 +21,6 @@ export {
   addJourney,
   getScheduleList,
   submitSchedule,
+  updateSchedule,
+  deleteSchedule
 };
