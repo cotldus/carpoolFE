@@ -25,7 +25,7 @@ export type group =
 
 export enum CarFields {
   CARPLATE_NUMBER = "carPlateNumber",
-  MAX_PAX = "maxPax"
+  MAX_PAX = "maxPax",
 }
 
 export type Car = {
@@ -70,4 +70,18 @@ export type ScheduleForm = {
   [ScheduleFields.DROPOFF]: string;
   [ScheduleFields.TOTALPAX]: number;
   [ScheduleFields.PICKUP]: string;
+};
+
+export enum User {
+  USER_NAME = "username",
+  PASSWORD = "password",
+  CONTACT_NUMBER = "contact_number",
+  ROLE = "role",
+}
+
+export type CreateUser = {
+  [User.USER_NAME]: string;
+  [User.PASSWORD]: string;
+  [User.CONTACT_NUMBER]: string;
+  [User.ROLE]: string;
 };
