@@ -9,12 +9,6 @@ export const getScheduleList = async () =>
     .then((response: AxiosResponse<Schedule[]>) => response.data)
     .catch(() => mockScheduleList);
 
-export const getJourneyList = async () =>
-  await axios
-    .get("/schedule/list")
-    .then((res: AxiosResponse<Schedule[]>) => res.data)
-    .catch(() => mockScheduleList);
-
 export const submitSchedule = async (formJson: Schedule) => {
   await axios
     .post("/schedule/submit", formJson, config)
